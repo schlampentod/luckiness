@@ -19,6 +19,8 @@ import java.math.BigInteger;
 @Setter
 public class RestController {
 
+    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(100L);
+
     private DormantBloomFilter bloomFilter;
 
     {
@@ -37,24 +39,53 @@ public class RestController {
     }
 
     // http://localhost:8080/rest/v1/lucky/check/245364787645342312142536754
-    @RequestMapping(value = "/check/{providedKeyValue}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/check/{providedKey}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public CheckKeyResultDto about(@PathVariable String providedKeyValue) throws InterruptedException {
+    public CheckKeyResultDto about(@PathVariable String providedKey) throws InterruptedException {
 
-        ECKey key;
-        String testBtcAddress;
+        System.out.println("\r\nprovidedKey: " + providedKey);
 
-        key = getNewECKey(providedKeyValue);
-        testBtcAddress = getBtcAddress(key);
+        //ECKey key = getNewECKey(providedKey);
+        //String testBtcAddress = getBtcAddress(key);
 
         // String privateKeyAsHex = key.getPrivateKeyAsHex();
         // String publicKeyAsHex = key.getPublicKeyAsHex();
 
-        return new CheckKeyResultDto(bloomFilter.has(testBtcAddress));
+        return new CheckKeyResultDto(checkBatchFor(providedKey));
+    }
+
+    public boolean checkBatchFor(String providedKey) {
+        BigInteger origKey = new BigInteger(providedKey);
+
+        BigInteger from = origKey.subtract(CHECK_RANGE);
+        BigInteger to = origKey.add(CHECK_RANGE);
+
+        BigInteger thisVal = from;
+
+        do {
+
+            ECKey key = getNewECKey(thisVal);
+            String testBtcAddress = getBtcAddress(key);
+
+            //System.out.println("Checking: " + thisVal);
+
+            if (bloomFilter.has(testBtcAddress)) {
+                return true;
+            }
+
+            thisVal = thisVal.add(BigInteger.ONE);
+
+        } while (thisVal.compareTo(to) <= 0);
+
+        return false;
     }
 
     public static ECKey getNewECKey(String providedKeyValue) {
         return ECKey.fromPrivate(new BigInteger(providedKeyValue));
+    }
+
+    public static ECKey getNewECKey(BigInteger key) {
+        return ECKey.fromPrivate(key);
     }
 
     public static String getBtcAddress(ECKey key) {
