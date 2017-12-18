@@ -1,7 +1,7 @@
 /**
  *
  */
-app.directive('luckyDirective', ['$interval', 'luckyFactory', function ($interval, luckyFactory) {
+app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', function ($interval, luckyFactory, $timeout) {
 
     function link(scope, element, attrs) {
 
@@ -13,6 +13,11 @@ app.directive('luckyDirective', ['$interval', 'luckyFactory', function ($interva
         scope.luckySliderId = "lucky_slider_" + index;
 
         scope.luckyBarRange = luckyFactory.getKeyRangeByIndex(index, luckyFactory.SLOTS_PER_BAR);
+
+        if (scope.luckyBarRange.keyRangeIsNonFull) {
+            var customWidth = scope.luckyBarRange.keyRangeFrom + "px";
+            $(element).width(customWidth);
+        }
 
         // Subscribe
         element.mousemove(function (evt) {

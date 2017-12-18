@@ -3,7 +3,7 @@
 <div ng-controller="luckyController as luckyCtrl">
 
     <div ng-repeat="n in luckyCtrl.luckyBarIndexes track by $index"
-         lucky-directive="{{$index}}">
+         lucky-directive="{{$index}}" class="lucky_bar" id="{{luckyBarId}}">
     </div>
 
 </div>
