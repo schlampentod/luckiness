@@ -1,8 +1,13 @@
 /**
  *
  */
-app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', function ($scope, luckyService, luckyFactory) {
+app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', function ($scope, luckyService, luckyFactory, $interval) {
     var vm = this;
+
+    vm.luckyCtrlPma = {
+        luckyTotalGeneratedKeys: 0,
+        luckyBatchGenerationInterval: null
+    };
 
     vm.luckyBarIndexes = new Array(26);
 
@@ -22,6 +27,12 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', fun
         vm.luckyBarSumValue = luckyService.getSelectedLuckyValue(vm.luckyBarOffsetValues).toString(10);
     }, true);
 
+    $scope.$watch(function () {
+        return vm.luckyBarSumValue;
+    }, function (newVal, oldVal) {
+        vm.luckyCtrlPma.luckyTotalGeneratedKeys++;
+    });
+
     vm.onParseProvidedValueClick = function () {
         var parsedOffsets = luckyService.splitProvidedLuckyValue(vm.luckyProvidedExactValue);
         _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
@@ -37,6 +48,17 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', fun
 
     vm.onGenerateRandomClick = function () {
         generateRandomOffsets();
+    };
+
+    vm.onStartRandomBatchClick = function () {
+        if (vm.luckyCtrlPma.luckyBatchGenerationInterval) {
+            $interval.cancel(vm.luckyCtrlPma.luckyBatchGenerationInterval);
+            vm.luckyCtrlPma.luckyBatchGenerationInterval = null;
+        } else {
+            vm.luckyCtrlPma.luckyBatchGenerationInterval = $interval(function () {
+                generateRandomOffsets();
+            }, 50);
+        }
     };
 
     //
