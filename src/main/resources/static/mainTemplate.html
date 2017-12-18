@@ -5,6 +5,11 @@
 
 <div ng-controller="luckyController as luckyCtrl">
 
+    <input type="text" ng-model="luckyCtrl.luckyProvidedExactValue">
+    <button ng-click="luckyCtrl.onParseProvidedValueClick()">Parse</button>
+
+    |
+
     <button ng-click="luckyCtrl.onGenerateZeroClick()"> Zero </button>
     <button ng-click="luckyCtrl.onGenerateRandomClick()"> Random</button>
 
@@ -20,7 +25,5 @@
     <br />
     <br />
     <br />
-    <br />
-
 
 </div>

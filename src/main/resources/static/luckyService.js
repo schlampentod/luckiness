@@ -20,6 +20,15 @@ app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', funct
         return rv;
     };
 
+    srv.splitProvidedLuckyValue = function (providedValue) {
+        var rv = new Array(26);
+
+        // TODO fixme
+        rv.fill(33);
+
+        return rv;
+    };
+
     srv.getLuckyBarNetValue = function (offsetVal, barIndex, slotsPerBar) {
         var rangeValue = luckyFactory.getSnippetRangeByIndex(barIndex, slotsPerBar);
         return rangeValue.multiply(offsetVal);

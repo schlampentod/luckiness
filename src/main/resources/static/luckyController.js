@@ -9,6 +9,8 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', fun
     vm.luckyBarOffsetValues = [];
     vm.luckyBarSumValue = luckyFactory.MIN_BTC_KEY;
 
+    vm.luckyProvidedExactValue = "";
+
     _.forEach(vm.luckyBarIndexes, function (idx, i) {
         vm.luckyBarOffsetValues.push(500);
     });
@@ -20,12 +22,17 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', fun
         vm.luckyBarSumValue = luckyService.getSelectedLuckyValue(vm.luckyBarOffsetValues).toString(10);
     }, true);
 
+    vm.onParseProvidedValueClick = function () {
+        var parsedOffsets = luckyService.splitProvidedLuckyValue(vm.luckyProvidedExactValue);
+        _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
+            vm.luckyBarOffsetValues[i] = parsedOffsets[i];
+        });
+    };
 
     vm.onGenerateZeroClick = function () {
         _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
             vm.luckyBarOffsetValues[i] = 0;
         });
-
     };
 
     vm.onGenerateRandomClick = function () {
