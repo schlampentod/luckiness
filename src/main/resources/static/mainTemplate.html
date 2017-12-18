@@ -8,7 +8,7 @@
     <button ng-click="luckyCtrl.onGenerateRandomClick()"> Random</button>
 
     <div ng-repeat="n in luckyCtrl.luckyBarIndexes track by $index"
-         lucky-directive="{{$index}}" class="lucky_bar" id="{{luckyBarId}}">
+         lucky-directive="{{$index}}" ng-model="luckyCtrl.luckyBarOffsetValues[$index]" class="lucky_bar" id="{{luckyBarId}}">
     </div>
 
 </div>

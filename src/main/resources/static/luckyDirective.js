@@ -1,34 +1,52 @@
 /**
  *
  */
-app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', function ($interval, luckyFactory, $timeout) {
+app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', '$compile', '$parse', function ($interval, luckyFactory, $timeout, $compile, $parse) {
 
-    function link(scope, element, attrs) {
+    function link(scope, element, attrs, ngModel) {
 
         var index = parseInt(attrs["luckyDirective"]);
 
-        console.info("Created: " + index);
+        // console.info("Created: " + index);
+
+        ngModel.$render = function () {
+            var actualValue = ngModel.$modelValue;
+            scope.luckySliderOffset = actualValue;
+            $timeout(function () {
+                onLuckySliderMoved(scope.luckySliderOffset);
+            });
+        };
 
         scope.luckyBarId = "lucky_bar_" + index;
         scope.luckySliderId = "lucky_slider_" + index;
 
         scope.luckyBarRange = luckyFactory.getKeyRangeByIndex(index, luckyFactory.SLOTS_PER_BAR);
+        scope.luckySliderOffset = 0;
 
-        if (scope.luckyBarRange.keyRangeIsNonFull) {
+        /*if (scope.luckyBarRange.keyRangeIsNonFull) {
             var customWidth = scope.luckyBarRange.keyRangeFrom + "px";
             $(element).width(customWidth);
-        }
+        }*/
 
         // Subscribe
         element.mousemove(function (evt) {
+            scope.luckySliderOffset = evt.offsetX;
+            onLuckySliderMoved(scope.luckySliderOffset);
+        });
 
-            var offset = evt.offsetX;
+        function onLuckySliderMoved(newOffset) {
             var sliderElem = getLuckySliderElem();
 
-            console.info("Moved: " + index + " to " + offset);
+            console.info("Moved: " + index + " to " + newOffset);
 
-            sliderElem.css("margin-left", offset + "px");
-        });
+            sliderElem.css("margin-left", newOffset + "px");
+
+            if (newOffset !== ngModel.$viewValue) {
+                scope.$evalAsync(function () {
+                    ngModel.$setViewValue(newOffset);
+                });
+            }
+        }
 
         // Subscribe
         element.click(function (evt) {
@@ -39,10 +57,20 @@ app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', functi
             var luckySliderElem = $("#" + scope.luckySliderId);
             return luckySliderElem;
         }
+
+        scope.$watch(function () {
+            return ngModel.$modelValue;
+        }, function (newValue, oldValue) {
+            if (scope.luckySliderOffset !== newValue) {
+                debugger;
+            }
+        }, true);
     }
 
     return {
         link: link,
-        templateUrl: 'luckyDirectiveTemplate.html'
+        templateUrl: 'luckyDirectiveTemplate.html',
+        restrict: 'EA',
+        require: 'ngModel'
     };
 }]);
