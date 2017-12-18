@@ -5,11 +5,22 @@
 
 <div ng-controller="luckyController as luckyCtrl">
 
+    <button ng-click="luckyCtrl.onGenerateZeroClick()"> Zero </button>
     <button ng-click="luckyCtrl.onGenerateRandomClick()"> Random</button>
 
     <div ng-repeat="n in luckyCtrl.luckyBarIndexes track by $index"
          lucky-directive="{{$index}}" ng-model="luckyCtrl.luckyBarOffsetValues[$index]" class="lucky_bar" id="{{luckyBarId}}">
     </div>
+
+    <hr />
+
+    Key: {{luckyCtrl.luckyBarSumValue}}
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
 
 
 </div>

@@ -20,7 +20,7 @@ app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', '$comp
         scope.luckyBarId = "lucky_bar_" + index;
         scope.luckySliderId = "lucky_slider_" + index;
 
-        scope.luckyBarRange = luckyFactory.getKeyRangeByIndex(index, luckyFactory.SLOTS_PER_BAR);
+        scope.luckyBarRangeValue = luckyFactory.getSnippetRangeByIndex(index, luckyFactory.SLOTS_PER_BAR);
         scope.luckySliderOffset = 0;
 
         /*if (scope.luckyBarRange.keyRangeIsNonFull) {
@@ -37,7 +37,7 @@ app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', '$comp
         function onLuckySliderMoved(newOffset) {
             var sliderElem = getLuckySliderElem();
 
-            console.info("Moved: " + index + " to " + newOffset);
+            // console.info("Moved: " + index + " to " + newOffset);
 
             sliderElem.css("margin-left", newOffset + "px");
 

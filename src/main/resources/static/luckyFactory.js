@@ -10,19 +10,8 @@ app.factory('luckyFactory', function () {
         SLOTS_PER_BAR: bigInt("1000"),
         MIN_BTC_KEY: bigInt("1"),
         MAX_BTC_KEY: bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337"),
-        getKeyRangeByIndex: function (barIndex, slotsPerBar) {
-            var snippetRange = this.MAX_BTC_KEY.divide(this.SLOTS_PER_BAR.pow(barIndex));
-
-            return {
-                keyRangeFrom: snippetRange,
-                keyRangeIsNonFull: snippetRange.lesser(1000),
-                keyRangeTill: ""
-            };
-        },
-        generateAddress: function () {
-            /*var keyPair = bitcoin.ECPair.makeRandom();
-            var address = keyPair.getAddress();
-            return address;*/
+        getSnippetRangeByIndex: function (barIndex, slotsPerBar) {
+            return this.MAX_BTC_KEY.divide(slotsPerBar.pow(barIndex));
         }
     }
 });
