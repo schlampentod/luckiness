@@ -30,16 +30,16 @@ app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', '$comp
 
         // Subscribe
         element.mousemove(function (evt) {
-            scope.luckySliderOffset = evt.offsetX;
+            scope.luckySliderOffset = evt.offsetX - 1;
             onLuckySliderMoved(scope.luckySliderOffset);
         });
 
         function onLuckySliderMoved(newOffset) {
             var sliderElem = getLuckySliderElem();
 
-            // console.info("Moved: " + index + " to " + newOffset);
+            console.info("Moved: " + index + " to " + newOffset);
 
-            sliderElem.css("margin-left", newOffset + "px");
+            sliderElem.css("margin-left", (newOffset-0) + "px");
 
             if (newOffset !== ngModel.$viewValue) {
                 scope.$evalAsync(function () {
