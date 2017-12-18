@@ -22,7 +22,10 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', fun
 
 
     vm.onGenerateZeroClick = function () {
-        // DODO fixme
+        _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
+            vm.luckyBarOffsetValues[i] =0;
+        });
+
     };
 
     vm.onGenerateRandomClick = function () {
