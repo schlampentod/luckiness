@@ -5,20 +5,19 @@
     <style>
         .lucky_bar {width:1000px; height:20px; background-color:cadetblue; margin:1px;}
         .lucky_slider {width:1px; height:20px; position:relative; background-color:red;}
-
     </style>
 
     <script src="3.2.1_jquery.min.js"></script>
     <script src="1.6.4_angular.min.js"></script>
 
-    <script src="script.js"></script>
+    <script src="app.js"></script>
+    <script src="luckyController.js"></script>
+    <script src="luckyDirective.js"></script>
 </head>
 
-<body ng-app="luckynes" ng-controller="luckyController as luckyCtrl">
+<body ng-app="luckynes">
 
-    <div ng-repeat="n in luckyCtrl.luckyBarIndexes track by $index"
-         lucky-directive="{{$index}}">
-    </div>
+    <ng-include src=" 'mainTemplate.html' " ></ng-include>
 
 </body>
 </html>

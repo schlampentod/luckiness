@@ -1,0 +1,9 @@
+
+
+<div ng-controller="luckyController as luckyCtrl">
+
+    <div ng-repeat="n in luckyCtrl.luckyBarIndexes track by $index"
+         lucky-directive="{{$index}}">
+    </div>
+
+</div>
