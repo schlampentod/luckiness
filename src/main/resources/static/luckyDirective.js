@@ -1,7 +1,7 @@
 /**
  *
  */
-app.directive('luckyDirective', ['$interval', 'dateFilter', function ($interval, dateFilter) {
+app.directive('luckyDirective', ['$interval', 'luckyFactory', function ($interval, luckyFactory) {
 
     function link(scope, element, attrs) {
 
@@ -12,9 +12,12 @@ app.directive('luckyDirective', ['$interval', 'dateFilter', function ($interval,
         scope.luckyBarId = "lucky_bar_" + index;
         scope.luckySliderId = "lucky_slider_" + index;
 
+        scope.luckyBarRange = luckyFactory.getKeyRangeByIndex(index, luckyFactory.SLOTS_PER_BAR);
+
+        // Subscribe
         element.mousemove(function (evt) {
 
-            var offset  = evt.offsetX;
+            var offset = evt.offsetX;
             var sliderElem = getLuckySliderElem();
 
             console.info("Moved: " + index + " to " + offset);
@@ -22,6 +25,7 @@ app.directive('luckyDirective', ['$interval', 'dateFilter', function ($interval,
             sliderElem.css("margin-left", offset + "px");
         });
 
+        // Subscribe
         element.click(function (evt) {
             console.info("Clicked: " + index);
         });
