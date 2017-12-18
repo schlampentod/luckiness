@@ -1,7 +1,7 @@
 /**
  *
  */
-app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', function ($timeout, luckyConstants, luckyFactory) {
+app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', function ($timeout, luckyConstants, luckyFactory, $http) {
 
     var srv = this;
 
@@ -33,4 +33,17 @@ app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', funct
         var rangeValue = luckyFactory.getSnippetRangeByIndex(barIndex, slotsPerBar);
         return rangeValue.multiply(offsetVal);
     };
+
+    srv.checkKeyInBlockChain = function (keyValue) {
+        var promise = $http.get('rest/v1/lucky/check/' + keyValue);
+        promise.then(function (CheckKeyResultDto) {
+            var isFound = CheckKeyResultDto['checkedKeyFound'];
+            if (isFound) {
+                console.info("Found: " + keyValue);
+                alert("Found: " + keyValue);
+            } else {
+                // console.info("Not found: " + keyValue);
+            }
+        });
+    }
 }]);

@@ -31,6 +31,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         return vm.luckyBarSumValue;
     }, function (newVal, oldVal) {
         vm.luckyCtrlPma.luckyTotalGeneratedKeys++;
+        luckyService.checkKeyInBlockChain(newVal);
     });
 
     vm.onParseProvidedValueClick = function () {
@@ -57,7 +58,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         } else {
             vm.luckyCtrlPma.luckyBatchGenerationInterval = $interval(function () {
                 generateRandomOffsets();
-            }, 50);
+            }, 20);
         }
     };
 

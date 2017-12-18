@@ -19,7 +19,7 @@ import java.math.BigInteger;
 @Setter
 public class RestController {
 
-    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(100L);
+    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(6L);
 
     private DormantBloomFilter bloomFilter;
 
@@ -41,9 +41,9 @@ public class RestController {
     // http://localhost:8080/rest/v1/lucky/check/245364787645342312142536754
     @RequestMapping(value = "/check/{providedKey}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public CheckKeyResultDto about(@PathVariable String providedKey) throws InterruptedException {
+    public CheckKeyResultDto check(@PathVariable String providedKey) throws InterruptedException {
 
-        System.out.println("\r\nprovidedKey: " + providedKey);
+        long start = System.currentTimeMillis();
 
         //ECKey key = getNewECKey(providedKey);
         //String testBtcAddress = getBtcAddress(key);
@@ -51,7 +51,11 @@ public class RestController {
         // String privateKeyAsHex = key.getPrivateKeyAsHex();
         // String publicKeyAsHex = key.getPublicKeyAsHex();
 
-        return new CheckKeyResultDto(checkBatchFor(providedKey));
+        try {
+            return new CheckKeyResultDto(checkBatchFor(providedKey));
+        } finally {
+            System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
+        }
     }
 
     public boolean checkBatchFor(String providedKey) {
@@ -70,6 +74,16 @@ public class RestController {
             //System.out.println("Checking: " + thisVal);
 
             if (bloomFilter.has(testBtcAddress)) {
+
+                String privateKeyAsHex = key.getPrivateKeyAsHex();
+                String publicKeyAsHex = key.getPublicKeyAsHex();
+
+                System.out.println(
+                        " Found private key:\n" +
+                                "      " + key.getPrivateKeyAsHex() + "\n" +
+                                " And public key:\n" +
+                                "      " + key.getPublicKeyAsHex());
+
                 return true;
             }
 
