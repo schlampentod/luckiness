@@ -29,8 +29,8 @@ app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', '$comp
         }*/
 
         // Subscribe
-        element.mousemove(function (evt) {
-            scope.luckySliderOffset = evt.offsetX - 1;
+        getLuckyBarElem().mousemove(function (evt) {
+            scope.luckySliderOffset = evt.offsetX;
             onLuckySliderMoved(scope.luckySliderOffset);
         });
 
@@ -39,7 +39,7 @@ app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', '$comp
 
             // console.info("Moved: " + index + " to " + newOffset);
 
-            sliderElem.css("margin-left", (newOffset-0) + "px");
+            sliderElem.css("margin-left", (newOffset - 0) + "px");
 
             if (newOffset !== ngModel.$viewValue) {
                 scope.$evalAsync(function () {
@@ -49,13 +49,17 @@ app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', '$comp
         }
 
         // Subscribe
-        element.click(function (evt) {
+        getLuckyBarElem().click(function (evt) {
             console.info("Clicked: " + index);
         });
 
         function getLuckySliderElem() {
             var luckySliderElem = $("#" + scope.luckySliderId);
             return luckySliderElem;
+        }
+
+        function getLuckyBarElem() {
+            return element.find(".lucky_bar");
         }
 
         scope.$watch(function () {

@@ -35,6 +35,10 @@ app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', '$htt
     };
 
     srv.checkKeyInBlockChain = function (keyValue) {
+        if (keyValue.toString() == "" || keyValue.toString() == "0") {
+            console.info("Unable to check key: " + keyValue);
+            return;
+        }
         var promise = $http.get('rest/v1/lucky/check/' + keyValue);
         promise.then(function (CheckKeyResultDto) {
             var isFound = CheckKeyResultDto['checkedKeyFound'];
