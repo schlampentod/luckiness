@@ -15,6 +15,11 @@ app.factory('luckyFactory', function () {
                 keyRangeFrom: min,
                 keyRangeTill: min.add(this.SLOTS_PER_BAR)
             };
+        },
+        generateAddress: function () {
+            /*var keyPair = bitcoin.ECPair.makeRandom();
+            var address = keyPair.getAddress();
+            return address;*/
         }
     }
 });
