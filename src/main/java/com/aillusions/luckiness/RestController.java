@@ -53,8 +53,11 @@ public class RestController {
 
         try {
             return new CheckKeyResultDto(checkBatchFor(providedKey));
+        } catch (Exception e) {
+            System.out.println("Invalid key: " + providedKey);
+            return new CheckKeyResultDto(false);
         } finally {
-            System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
+            // System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
         }
     }
 
