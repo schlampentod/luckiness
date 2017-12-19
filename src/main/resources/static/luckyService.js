@@ -1,6 +1,7 @@
 /**
  *
  */
+
 app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', function ($timeout, luckyConstants, luckyFactory, $http) {
 
     var srv = this;
@@ -21,10 +22,26 @@ app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', '$htt
     };
 
     srv.splitProvidedLuckyValue = function (providedValue) {
-        var rv = new Array(26);
+        var bigValue = bigInt(providedValue);
 
-        // TODO fixme
-        rv.fill(33);
+        console.info("In: " + providedValue + " cast: " + bigValue.toString());
+
+        var rv = new Array(26);
+        var one = bigInt("1");
+        var scale = bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337");
+        for (var i = 0; i < 26; i++) {
+            if ((bigValue.divmod(scale)).remainder != 0) {
+                rv[i] = (bigValue.divmod(scale)).quotient;
+
+            }
+            if ((bigValue.divmod(scale)).remainder == 0) {
+                rv[i] = bigValue.divmod(scale).quotient;
+            }
+            bigValue = bigValue.subtract(scale.multiply((bigValue.divmod(scale)).quotient));
+            scale = scale.divide(1000);
+            ;
+        }
+        ;
 
         return rv;
     };

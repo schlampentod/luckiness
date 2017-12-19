@@ -1,6 +1,7 @@
 /**
  *
  */
+
 app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', function ($scope, luckyService, luckyFactory, $interval) {
     var vm = this;
 
