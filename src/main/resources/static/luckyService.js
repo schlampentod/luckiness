@@ -30,19 +30,12 @@ app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', '$htt
         var one = bigInt("1");
         var scale = bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337");
         for (var i = 0; i < 26; i++) {
-            if ((bigValue.divmod(scale)).remainder != 0) {
-                rv[i] = (bigValue.divmod(scale)).quotient;
+            rv[i] = (bigValue.divmod(scale)).quotient;
 
-            }
-            if ((bigValue.divmod(scale)).remainder == 0) {
-                rv[i] = bigValue.divmod(scale).quotient;
-            }
             bigValue = bigValue.subtract(scale.multiply((bigValue.divmod(scale)).quotient));
             scale = scale.divide(1000);
             ;
-        }
-        ;
-
+        };
         return rv;
     };
 
