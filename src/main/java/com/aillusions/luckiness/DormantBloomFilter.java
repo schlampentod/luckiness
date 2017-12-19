@@ -20,7 +20,7 @@ public class DormantBloomFilter {
         filter = BloomFilter.create(
                 Funnels.stringFunnel(Charset.forName(UTF_8)),
                 listOfLines.size(),
-                1F / listOfLines.size());
+                0.00000000000000001/*1F / listOfLines.size()*/);
 
         for (String address : listOfLines) {
             filter.put(address);

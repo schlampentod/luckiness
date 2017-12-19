@@ -82,9 +82,11 @@ public class RestController {
                 String publicKeyAsHex = key.getPublicKeyAsHex();
 
                 System.out.println(
-                        " Found private key:\n" +
+                        " Found private key hex:\n" +
                                 "      " + key.getPrivateKeyAsHex() + "\n" +
-                                " And public key:\n" +
+                                " And public address:\n" +
+                                "      " + testBtcAddress +
+                                " And public key :\n" +
                                 "      " + key.getPublicKeyAsHex());
 
                 return true;
