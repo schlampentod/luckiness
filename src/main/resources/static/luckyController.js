@@ -40,6 +40,21 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         luckyService.checkKeyInBlockChain(newVal);
     });
 
+    $scope.getkeys = function(event){
+        var one = bigInt("1");
+        var bigValue = bigInt(vm.luckyProvidedExactValue);
+        if (event.keyCode == 38) {
+            bigValue=bigValue.add(one);
+            vm.luckyProvidedExactValue=bigValue.toString();
+        }
+        if (event.keyCode == 40) {
+            bigValue=bigValue.subtract(one);
+            vm.luckyProvidedExactValue=bigValue.toString();
+        }
+    };
+
+
+
 
     $scope.$watch(function () {
         return vm.luckyProvidedExactValue;

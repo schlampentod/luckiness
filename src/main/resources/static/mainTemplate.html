@@ -8,7 +8,7 @@
 
     <hr />
 
-    <input type="text" ng-model="luckyCtrl.luckyProvidedExactValue">
+    <input type="text" ng-keydown="getkeys($event)" ng-model="luckyCtrl.luckyProvidedExactValue">
     <button ng-click="luckyCtrl.onParseProvidedValueClick()">Parse</button>
 
     |

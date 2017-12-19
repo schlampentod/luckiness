@@ -27,7 +27,6 @@ app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', '$htt
         console.info("In: " + providedValue + " cast: " + bigValue.toString());
 
         var rv = new Array(26);
-        var one = bigInt("1");
         var scale = bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337");
         for (var i = 0; i < 26; i++) {
             rv[i] = (bigValue.divmod(scale)).quotient;
