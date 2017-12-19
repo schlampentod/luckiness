@@ -36,6 +36,7 @@ app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', '$htt
             scale = scale.divide(1000);
             ;
         };
+
         return rv;
     };
 
