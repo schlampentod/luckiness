@@ -41,9 +41,15 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         });
     };
 
-    vm.onGenerateZeroClick = function () {
+    vm.onGenerateMinClick = function () {
         _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
             vm.luckyBarOffsetValues[i] = 0;
+        });
+    };
+
+    vm.onGenerateMaxClick = function () {
+        _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
+            vm.luckyBarOffsetValues[i] = 1000;// TODO fixme
         });
     };
 

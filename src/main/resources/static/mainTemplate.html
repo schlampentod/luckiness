@@ -13,7 +13,11 @@
 
     |
 
-    <button ng-click="luckyCtrl.onGenerateZeroClick()"> Zero</button>
+    <button ng-click="luckyCtrl.onGenerateMinClick()"> Min </button>
+    <button ng-click="luckyCtrl.onGenerateMaxClick()"> Max </button>
+
+    |
+
     <button ng-click="luckyCtrl.onGenerateRandomClick()"> Random</button>
     <button ng-click="luckyCtrl.onStartRandomBatchClick()" ng-switch="luckyCtrl.luckyCtrlPma.luckyBatchGenerationInterval==null">
         <span ng-switch-when="true">Start</span>
