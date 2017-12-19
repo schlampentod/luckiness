@@ -10,12 +10,16 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         luckyBatchGenerationInterval: null
     };
 
+    vm.luckyCtrlDerivedKeys = {
+        luckyKeyPublicAddress: null
+    };
+
     vm.luckyBarIndexes = new Array(26);
 
     vm.luckyBarOffsetValues = [];
     vm.luckyBarSumValue = luckyFactory.MIN_BTC_KEY;
 
-    vm.luckyProvidedExactValue = "57953998617275373084870362867211165091510292431969421612915497067826907654817500";
+    vm.luckyProvidedExactValue = "";
 
     _.forEach(vm.luckyBarIndexes, function (idx, i) {
         vm.luckyBarOffsetValues.push(500);
@@ -26,6 +30,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     }, function (newVal, oldVal) {
         //console.info(JSON.stringify(newVal));
         vm.luckyBarSumValue = luckyService.getSelectedLuckyValue(vm.luckyBarOffsetValues).toString(10);
+        // vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress = luckyFactory.getBitcoinAddressForKey(vm.luckyBarSumValue);
     }, true);
 
     $scope.$watch(function () {
