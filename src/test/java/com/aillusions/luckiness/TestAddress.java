@@ -1,5 +1,6 @@
 package com.aillusions.luckiness;
 
+import com.aillusions.luckiness.web.RestController;
 import junit.framework.TestCase;
 import org.bitcoinj.core.ECKey;
 

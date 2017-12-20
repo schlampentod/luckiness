@@ -1,5 +1,8 @@
-package com.aillusions.luckiness;
+package com.aillusions.luckiness.web;
 
+import com.aillusions.luckiness.AsyncService;
+import com.aillusions.luckiness.DormantAddressProvider;
+import com.aillusions.luckiness.DormantBloomFilter;
 import lombok.Setter;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
@@ -59,6 +62,20 @@ public class RestController {
         } finally {
             // System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
         }
+    }
+
+    // http://localhost:8080/rest/v1/lucky/addresses/245364787645342312142536754
+    @RequestMapping(value = "/addresses/{providedKey}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public AddressesResultDto addresses(@PathVariable String providedKey) throws InterruptedException {
+
+        ECKey key = getNewECKey(providedKey);
+        String testBtcAddress = getBtcAddress(key);
+
+        String privateKeyAsHex = key.getPrivateKeyAsHex();
+        String publicKeyAsHex = key.getPublicKeyAsHex();
+
+        return new AddressesResultDto(privateKeyAsHex, publicKeyAsHex, testBtcAddress);
     }
 
     public boolean checkBatchFor(String providedKey) {
