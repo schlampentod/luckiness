@@ -2,27 +2,29 @@
  * binch.js: Big Number Layered Chooser
  */
 (function (binch, $, undefined) {
-    //Private Property
-    var isHot = true;
 
-    //Public Property
-    binch.ingredient = "Bacon Strips";
+    var MIN_BIG_NUMBER = 0;
+    var MAN_BIG_NUMBER = 10000;
 
-    //Public Method
-    binch.fry = function () {
-        var oliveOil;
+    var barLength = 1000;
 
-        addItem("\t\n Butter \n\t");
-        addItem(oliveOil);
-        console.log("Frying " + binch.ingredient);
-    };
+    binch.choserBarsNumber = 26; // TODO compute
+    binch.choserBarOffsets = new Array(binch.choserBarsNumber); // TODO compute
+    binch.choserBarOffsets.fill(0);
 
-    //Private Method
-    function addItem(item) {
-        if (item !== undefined) {
-            console.log("Adding " + $.trim(item));
-        }
+    init();
+
+    //
+    //
+    //
+
+    function init() {
+        logInfo("initialized: " + binch.choserBarOffsets);
     }
+
+    function logInfo(msg) {
+        console.info("binch.js: " + msg);
+    }
+
 }(window.binch = window.binch || {}, jQuery));
 
-console.info("binch.js: " + binch.ingredient);
