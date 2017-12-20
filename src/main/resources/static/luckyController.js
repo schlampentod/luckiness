@@ -2,7 +2,7 @@
  *
  */
 
-app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', function ($scope, luckyService, luckyFactory, $interval) {
+app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval','$http', function ($scope, luckyService, luckyFactory, $interval, $http) {
     var vm = this;
 
     vm.luckyCtrlPma = {
@@ -50,9 +50,13 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     };
 
 
-    $scope.$watch(function () {
-        return vm.luckyProvidedExactValue;
+    $scope.$watch(function () {//наблюдаем и отправляем запросики, и забиваем Address-суличку..
+        return vm.luckyBarSumValue;
     }, function (newVal, oldVal) {
+            var promise = $http.get('http://localhost:8080/rest/v1/lucky/addresses/'+vm.luckyBarSumValue);
+            promise.then(function (response) {
+                vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress=response.data.publicAddressAsHex;
+            });
         /*var parsedOffsets = luckyService.splitProvidedLuckyValue(oldVal);
         _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
             vm.luckyBarOffsetValues[i] = parsedOffsets[i];
@@ -61,10 +65,10 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
 
     vm.onParseProvidedValueClick = function () {
-        /*var parsedOffsets = luckyService.splitProvidedLuckyValue(vm.luckyProvidedExactValue);
+        var parsedOffsets = luckyService.splitProvidedLuckyValue(vm.luckyProvidedExactValue);
         _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
             vm.luckyBarOffsetValues[i] = parsedOffsets[i];
-        });*/
+        });
     };
 
     vm.onGenerateMinClick = function () {
