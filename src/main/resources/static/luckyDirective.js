@@ -1,7 +1,7 @@
 /**
  *
  */
-app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', '$compile', '$parse', function ($interval, luckyFactory, $timeout, $compile, $parse) {
+app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$compile', '$parse', function ($interval, luckyService, $timeout, $compile, $parse) {
 
     function link(scope, element, attrs, ngModel) {
 
@@ -20,7 +20,7 @@ app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', '$comp
         scope.luckyBarId = "lucky_bar_" + index;
         scope.luckySliderId = "lucky_slider_" + index;
 
-        scope.luckyBarRangeValue = luckyFactory.getSnippetRangeByIndex(index, luckyFactory.SLOTS_PER_BAR);
+        scope.luckyBarRangeValue = luckyService.currentChooser.getBarDataByIndex(index).binchBarSnippetRange;// luckyFactory.getSnippetRangeByIndex(index, luckyFactory.SLOTS_PER_BAR);
         scope.luckySliderOffset = 0;
 
         /*if (scope.luckyBarRange.keyRangeIsNonFull) {
@@ -30,6 +30,9 @@ app.directive('luckyDirective', ['$interval', 'luckyFactory', '$timeout', '$comp
 
         // Subscribe
         getLuckyBarElem().mousemove(function (evt) {
+            if (!evt.offsetX) {
+                return;
+            }
             scope.luckySliderOffset = evt.offsetX;
             onLuckySliderMoved(scope.luckySliderOffset);
         });

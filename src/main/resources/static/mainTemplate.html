@@ -24,8 +24,8 @@
         <span ng-switch-when="false">Stop</span>
     </button>
 
-    <div ng-repeat="n in luckyCtrl.luckyBarIndexes track by $index"
-         lucky-directive="{{$index}}" ng-model="luckyCtrl.luckyBarOffsetValues[$index]"
+    <div ng-repeat="n in luckyCtrl.luckyBinchBarsOffsets track by $index"
+         lucky-directive="{{$index}}" ng-model="luckyCtrl.luckyBinchBarsOffsets[$index]"
          id="{{luckyBarId}}">
     </div>
 

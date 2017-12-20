@@ -14,23 +14,19 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         luckyKeyPublicAddress: null
     };
 
-    vm.luckyBarIndexes = new Array(26);
+    vm.luckyBinchBarsOffsets = [];
 
-    vm.luckyBarOffsetValues = [];
-    vm.luckyBarSumValue = luckyFactory.MIN_BTC_KEY;
+    populateBarOffsets();
+
+    vm.luckyBarSumValue = luckyService.currentChooser.chosenValue.toString(10);
 
     vm.luckyProvidedExactValue = "";
 
-    _.forEach(vm.luckyBarIndexes, function (idx, i) {
-        vm.luckyBarOffsetValues.push(500);
-    });
-
     $scope.$watch(function () {
-        return vm.luckyBarOffsetValues;
+        return vm.luckyBinchBarsOffsets;
     }, function (newVal, oldVal) {
-        //console.info(JSON.stringify(newVal));
-        vm.luckyBarSumValue = luckyService.getSelectedLuckyValue(vm.luckyBarOffsetValues).toString(10);
-        // vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress = luckyFactory.getBitcoinAddressForKey(vm.luckyBarSumValue);
+        luckyService.currentChooser.setChooserBarsOffsets(vm.luckyBinchBarsOffsets);
+        vm.luckyBarSumValue = luckyService.currentChooser.chosenValue.toString(10);
     }, true);
 
     $scope.$watch(function () {
@@ -40,50 +36,47 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         luckyService.checkKeyInBlockChain(newVal);
     });
 
-    $scope.getkeys = function(event){
+    $scope.getkeys = function (event) {
         var one = bigInt("1");
         var bigValue = bigInt(vm.luckyProvidedExactValue);
         if (event.keyCode == 38) {
-            bigValue=bigValue.add(one);
-            vm.luckyProvidedExactValue=bigValue.toString();
+            bigValue = bigValue.add(one);
+            vm.luckyProvidedExactValue = bigValue.toString();
         }
         if (event.keyCode == 40) {
-            bigValue=bigValue.subtract(one);
-            vm.luckyProvidedExactValue=bigValue.toString();
+            bigValue = bigValue.subtract(one);
+            vm.luckyProvidedExactValue = bigValue.toString();
         }
     };
-
-
 
 
     $scope.$watch(function () {
         return vm.luckyProvidedExactValue;
     }, function (newVal, oldVal) {
-        var parsedOffsets = luckyService.splitProvidedLuckyValue(oldVal);
+        /*var parsedOffsets = luckyService.splitProvidedLuckyValue(oldVal);
         _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
             vm.luckyBarOffsetValues[i] = parsedOffsets[i];
-        });
+        });*/
     });
 
 
-
     vm.onParseProvidedValueClick = function () {
-        var parsedOffsets = luckyService.splitProvidedLuckyValue(vm.luckyProvidedExactValue);
+        /*var parsedOffsets = luckyService.splitProvidedLuckyValue(vm.luckyProvidedExactValue);
         _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
             vm.luckyBarOffsetValues[i] = parsedOffsets[i];
-        });
+        });*/
     };
 
     vm.onGenerateMinClick = function () {
-        _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
-            vm.luckyBarOffsetValues[i] = 0;
-        });
+        luckyService.currentChooser.generateMinValue();
+        populateBarOffsets();
+        vm.luckyBarSumValue = luckyService.currentChooser.chosenValue.toString(10);
     };
 
     vm.onGenerateMaxClick = function () {
-        _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
-            vm.luckyBarOffsetValues[i] = 1000;// TODO fixme
-        });
+        luckyService.currentChooser.generateMaxValue();
+        populateBarOffsets();
+        vm.luckyBarSumValue = luckyService.currentChooser.chosenValue.toString(10);
     };
 
     vm.onGenerateRandomClick = function () {
@@ -106,8 +99,15 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     //
 
     function generateRandomOffsets() {
-        _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
-            vm.luckyBarOffsetValues[i] = Math.floor(Math.random() * 1000);
+        luckyService.currentChooser.generateRandomBarOffsets();
+        populateBarOffsets();
+        vm.luckyBarSumValue = luckyService.currentChooser.chosenValue.toString(10);
+    }
+
+    function populateBarOffsets() {
+        vm.luckyBinchBarsOffsets = [];
+        _.forEach(luckyService.currentChooser.binchBars, function (bb, i) {
+            vm.luckyBinchBarsOffsets.push(bb.binchBarOffsetPx);
         });
     }
 
