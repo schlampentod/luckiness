@@ -4,6 +4,7 @@ import com.aillusions.luckiness.AsyncService;
 import com.aillusions.luckiness.DormantAddressProvider;
 import com.aillusions.luckiness.DormantBloomFilter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
@@ -68,6 +69,11 @@ public class RestController {
     @RequestMapping(value = "/addresses/{providedKey}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public AddressesResultDto addresses(@PathVariable String providedKey) throws InterruptedException {
+
+        if (StringUtils.isBlank(providedKey) || "0".equals(providedKey)) {
+            System.out.println("addresses: unable to transform big number: " + providedKey + " to bitcoin key.");
+            return new AddressesResultDto(null, null, null);
+        }
 
         ECKey key = getNewECKey(providedKey);
         String testBtcAddress = getBtcAddress(key);

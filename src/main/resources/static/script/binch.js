@@ -1,5 +1,5 @@
 /**
- * binch.js: Big Number Layered Chooser
+ * binch.js: Big Number Precise Chooser
  *
  * Depends on:
  * - https://github.com/peterolson/BigInteger.js
