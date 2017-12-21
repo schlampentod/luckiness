@@ -7,12 +7,17 @@ app.service('luckyAddressService', ['$timeout', 'luckyConstants', 'luckyFactory'
 
     srv.resolveBitcoinAddressByKey = function (keyValue) {
 
+        console.info("luckyAddressService: resolving: " + keyValue);
+
         var deferred = $q.defer();
 
-        var promise = $http.get('/rest/v1/lucky/addresses/' + keyValue);
+        var promise = $http.get('/rest/v1/lucky/resolve/' + keyValue);
         promise.then(function (response) {
+
             var AddressesResultDto = response.data;
             deferred.resolve(AddressesResultDto);
+
+            console.info("luckyAddressService: resolved to: " + AddressesResultDto['publicAddressAsHex']);
         });
 
         return deferred.promise;

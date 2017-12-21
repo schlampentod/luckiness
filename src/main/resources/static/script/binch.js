@@ -68,6 +68,8 @@
         _.forEach(binch.binchBars, function (bar, i) {
             bar.binchBarOffsetPx = 0;
         });
+
+        getLastBar().binchBarOffsetPx = 1;
     };
 
     binch.generateMaxValue = function () {
@@ -137,6 +139,10 @@
             binchBarOffsetPx: 500,
             binchBarSnippetRange: getSnippetRangeByIndex(idx, barLengthPx).toString(10)
         }
+    }
+
+    function getLastBar() {
+        return binch.binchBars[binch.binchBars.length - 1];
     }
 
     init();

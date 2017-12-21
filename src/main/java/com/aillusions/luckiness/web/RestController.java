@@ -4,7 +4,9 @@ import com.aillusions.luckiness.AsyncService;
 import com.aillusions.luckiness.DormantAddressProvider;
 import com.aillusions.luckiness.DormantBloomFilter;
 import lombok.Setter;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.bitcoinj.core.Address;
+import org.bitcoinj.core.CustomECKey;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
@@ -55,17 +57,17 @@ public class RestController {
             validateKeyValue(providedKey);
             return new CheckKeyResultDto(checkBatchFor(providedKey));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Unable to check key: " + ExceptionUtils.getMessage(e));
             return new CheckKeyResultDto(false);
         } finally {
             // System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
         }
     }
 
-    // http://localhost:8080/rest/v1/lucky/addresses/245364787645342312142536754
-    @RequestMapping(value = "/addresses/{providedKey}", method = RequestMethod.GET, produces = "application/json")
+    // http://localhost:8080/rest/v1/lucky/resolve/245364787645342312142536754
+    @RequestMapping(value = "/resolve/{providedKey}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public AddressesResultDto addresses(@PathVariable String providedKey) throws InterruptedException {
+    public AddressesResultDto resolve(@PathVariable String providedKey) throws InterruptedException {
 
         long start = System.currentTimeMillis();
 
@@ -76,11 +78,11 @@ public class RestController {
             String privateKeyAsHex = key.getPrivateKeyAsHex();
             String publicKeyAsHex = key.getPublicKeyAsHex();
 
-            // System.out.println(providedKey + " -> " + testBtcAddress + " in " + (System.currentTimeMillis() - start) + " ms: ");
+            System.out.println(providedKey + " -> " + testBtcAddress + " in " + (System.currentTimeMillis() - start) + " ms: ");
 
             return new AddressesResultDto(privateKeyAsHex, publicKeyAsHex, testBtcAddress);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Unable to resolve key: " + ExceptionUtils.getMessage(e));
             return new AddressesResultDto(null, null, null);
         }
     }
@@ -89,6 +91,10 @@ public class RestController {
         BigInteger origKey = new BigInteger(providedKey);
 
         BigInteger from = origKey.subtract(CHECK_RANGE);
+        if (from.compareTo(BigInteger.ZERO) < 0) {
+            from = origKey;
+        }
+
         BigInteger to = origKey.add(CHECK_RANGE);
 
         BigInteger thisVal = from;
@@ -124,11 +130,11 @@ public class RestController {
     }
 
     public static ECKey getNewECKey(String providedKeyValue) {
-        return ECKey.fromPrivate(validateKeyValue(providedKeyValue));
+        return new CustomECKey(validateKeyValue(providedKeyValue));
     }
 
     public static ECKey getNewECKey(BigInteger key) {
-        return ECKey.fromPrivate(validateKeyValue(key));
+        return new CustomECKey(validateKeyValue(key));
     }
 
     public static BigInteger validateKeyValue(String providedKeyValue) {
