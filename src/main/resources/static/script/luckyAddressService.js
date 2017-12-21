@@ -1,7 +1,7 @@
 /**
  *
  */
-app.service('luckyAddressService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', '$q', function ($timeout, luckyConstants, luckyFactory, $http, $q) {
+app.service('luckyAddressService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', '$q','$window', function ($timeout, luckyConstants, luckyFactory, $http, $q, $window) {
 
     var srv = this;
 
@@ -36,9 +36,10 @@ app.service('luckyAddressService', ['$timeout', 'luckyConstants', 'luckyFactory'
 
                 var isFound = CheckKeyResultDto['checkedKeyFound'];
                 if (isFound) {
+                    var numberOfKey=$window.localStorage.length;       //если ключ совпал - забить в локалсторадж
+                    $window.localStorage.setItem(numberOfKey,keyValue);
                     console.info("Found: " + keyValue);
                 }
-
                 deferred.resolve(CheckKeyResultDto);
             });
         }

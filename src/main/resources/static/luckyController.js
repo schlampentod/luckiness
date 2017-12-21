@@ -2,7 +2,7 @@
  *
  */
 
-app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'luckyAddressService', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, luckyAddressService) {
+app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'luckyAddressService','$window', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, luckyAddressService, $window) {
 
     var vm = this;
 
