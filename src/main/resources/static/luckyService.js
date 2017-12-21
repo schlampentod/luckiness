@@ -28,4 +28,6 @@ app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', '$htt
             }
         });
     }
+
+
 }]);

@@ -22,18 +22,30 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     vm.luckyProvidedExactValue = "";
 
-    $scope.$watch(function () {
-        return vm.luckyBinchBarsOffsets;
+    $scope.$watch(function () {//по изменению массива расположений баров генерить "Key" и "Address"
+            return vm.luckyBinchBarsOffsets;
     }, function (newVal, oldVal) {
         luckyService.currentChooser.setChooserBarsOffsets(vm.luckyBinchBarsOffsets);
         vm.luckyBarSumValue = luckyService.currentChooser.chosenValue.toString(10);
     }, true);
 
-    $scope.$watch(function () {
+    $scope.$watch(function () {//наблюдаем и отправляем запросики, и забиваем Address-суличку..
         return vm.luckyBarSumValue;
     }, function (newVal, oldVal) {
         vm.luckyCtrlPma.luckyTotalGeneratedKeys++;
         luckyService.checkKeyInBlockChain(newVal);
+        var promise = $http.get('http://localhost:8080/rest/v1/lucky/addresses/'+vm.luckyBarSumValue);
+        promise.then(function (response) {
+            vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress=response.data.publicAddressAsHex;
+        });
+    });
+
+    $scope.$watch(function () {//по изменению текстового поля генерить масив баров
+        return vm.luckyProvidedExactValue;
+    }, function (newVal, oldVal) {
+        var parsedOffsets = luckyService.currentChooser.setProvidedChosenStringValue(vm.luckyProvidedExactValue);
+        luckyService.currentChooser.generateKeysOfValue(parsedOffsets);
+        populateBarOffsets();
     });
 
     $scope.getkeys = function (event) {
@@ -49,26 +61,10 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         }
     };
 
-
-    $scope.$watch(function () {//наблюдаем и отправляем запросики, и забиваем Address-суличку..
-        return vm.luckyBarSumValue;
-    }, function (newVal, oldVal) {
-            var promise = $http.get('http://localhost:8080/rest/v1/lucky/addresses/'+vm.luckyBarSumValue);
-            promise.then(function (response) {
-                vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress=response.data.publicAddressAsHex;
-            });
-        /*var parsedOffsets = luckyService.splitProvidedLuckyValue(oldVal);
-        _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
-            vm.luckyBarOffsetValues[i] = parsedOffsets[i];
-        });*/
-    });
-
-
-    vm.onParseProvidedValueClick = function () {
-        var parsedOffsets = luckyService.splitProvidedLuckyValue(vm.luckyProvidedExactValue);
-        _.forEach(vm.luckyBarOffsetValues, function (idx, i) {
-            vm.luckyBarOffsetValues[i] = parsedOffsets[i];
-        });
+    vm.onParseProvidedValueClick = function () {//по клику сгениреть масив расположений баров на хтмл
+        var parsedOffsets = luckyService.currentChooser.setProvidedChosenStringValue(vm.luckyProvidedExactValue);
+        luckyService.currentChooser.generateKeysOfValue(parsedOffsets);
+        populateBarOffsets();
     };
 
     vm.onGenerateMinClick = function () {

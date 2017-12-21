@@ -78,6 +78,12 @@
         });
     };
 
+    binch.generateKeysOfValue = function(value){
+        _.forEach(binch.binchBars, function (bar, i) {
+            bar.binchBarOffsetPx = value[i];
+        });
+    };
+
     binch.getBarDataByIndex = function (idx) {
         return binch.binchBars[idx];
     };
