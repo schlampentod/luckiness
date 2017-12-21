@@ -48,9 +48,9 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     $scope.$watch(function () {//по изменению текстового поля генерить масив баров
         return vm.luckyProvidedExactValue;
     }, function (newVal, oldVal) {
-        var parsedOffsets = luckyService.currentChooser.setProvidedChosenStringValue(vm.luckyProvidedExactValue);
-        luckyService.currentChooser.generateKeysOfValue(parsedOffsets);
-        readBinchStatus();
+        //var parsedOffsets = luckyService.currentChooser.setProvidedChosenStringValue(vm.luckyProvidedExactValue);
+        //luckyService.currentChooser.generateKeysOfValue(parsedOffsets);
+        //readBinchStatus();
     });
 
     $scope.getkeys = function (event) {
