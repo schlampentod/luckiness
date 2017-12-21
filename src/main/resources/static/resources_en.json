@@ -7,5 +7,6 @@
   "Parse": "Parse",
   "Min": "Min",
   "Max": "Max",
-  "Random": "Random"
+  "Random": "Random",
+  "Keys":"List of keys"
 }
