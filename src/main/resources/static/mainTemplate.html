@@ -13,10 +13,15 @@
 
     <hr />
 
-    <input type="text" ng-keydown="getkeys($event)" ng-model="luckyCtrl.luckyProvidedExactValue">
-    <button ng-click="luckyCtrl.onParseProvidedValueClick()">{{'Parse' | translate}}</button>
 
-    |
+    <div class="lucky_bars_container">
+        <div ng-repeat="n in luckyCtrl.luckyBinchBarsOffsets track by $index"
+             lucky-directive="{{$index}}" ng-model="luckyCtrl.luckyBinchBarsOffsets[$index]"
+             id="{{luckyBarId}}">
+        </div>
+    </div>
+
+    <hr/>
 
     <button ng-click="luckyCtrl.onGenerateMinClick()">{{'Min' | translate}} </button>
     <button ng-click="luckyCtrl.onGenerateMaxClick()">{{'Max' | translate}} </button>
@@ -29,17 +34,12 @@
         <span ng-switch-when="false">{{'Stop' | translate}}</span>
     </button>
 
-    <div class="lucky_bars_container">
-        <div ng-repeat="n in luckyCtrl.luckyBinchBarsOffsets track by $index"
-             lucky-directive="{{$index}}" ng-model="luckyCtrl.luckyBinchBarsOffsets[$index]"
-             id="{{luckyBarId}}">
-        </div>
-    </div>
+    <br/>
+    <br/>
 
-    <hr/>
-
-    {{'Key' | translate}}: {{luckyCtrl.luckyBarSumValue}}
+    {{'Key' | translate}}: <input type="text" ng-keydown="getkeys($event)" ng-model="luckyCtrl.luckyBarSumValue" style="width:900px; outline:none; font-size:14px;">
     <br />
+
     Address: {{luckyCtrl.luckyCtrlDerivedKeys.luckyKeyPublicAddress}}
 
     <br/>

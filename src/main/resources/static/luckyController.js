@@ -17,18 +17,23 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     vm.luckyBinchBarsOffsets = [];
     vm.luckyBarSumValue = "";
-    vm.luckyProvidedExactValue = "";
 
-    $scope.$watch(function () {//по изменению массива расположений баров генерить "Key" и "Address"
+    $scope.$watch(function () { // по изменению массива расположений баров генерить "Key" и "Address"
         return vm.luckyBinchBarsOffsets;
     }, function (newVal, oldVal) {
         luckyService.currentChooser.setChooserBarsOffsets(vm.luckyBinchBarsOffsets);
-        vm.luckyBarSumValue = luckyService.currentChooser.chosenValue.toString(10);
+        readBinchStatus();
     }, true);
 
-    $scope.$watch(function () {//наблюдаем и отправляем запросики, и забиваем Address-суличку..
+    $scope.$watch(function () { // наблюдаем и отправляем запросики, и забиваем Address-суличку..
         return vm.luckyBarSumValue;
     }, function (newVal, oldVal) {
+
+        if (vm.luckyBarSumValue !== luckyService.currentChooser.chosenValue.toString(10)) {
+            luckyService.currentChooser.setProvidedChosenStringValue(vm.luckyBarSumValue);
+            readBinchStatus();
+            return;
+        }
 
         vm.luckyCtrlPma.luckyTotalGeneratedKeys++;
 
@@ -43,12 +48,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         luckyAddressService.resolveBitcoinAddressByKey(vm.luckyBarSumValue).then(function (AddressesResultDto) {
             vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress = AddressesResultDto['publicAddressAsHex'];
         });
-    });
 
-    $scope.$watch(function () {//по изменению текстового поля генерить масив баров
-        return vm.luckyProvidedExactValue;
-    }, function (newVal, oldVal) {
-        vm.onParseProvidedValueClick();
     });
 
     $scope.getkeys = function (event) {
@@ -64,12 +64,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     $scope.changeLanguage = function (lang) {
         $translate.use(lang);
-    };
-
-    vm.onParseProvidedValueClick = function () {//по клику сгениреть масив расположений баров на хтмл
-        var parsedOffsets = luckyService.currentChooser.setProvidedChosenStringValue(vm.luckyProvidedExactValue);
-        luckyService.currentChooser.generateKeysOfValue(parsedOffsets);
-        readBinchStatus();
     };
 
     vm.onGenerateMinClick = function () {

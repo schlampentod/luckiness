@@ -17,7 +17,6 @@
     var barLengthPx = 1000;
 
     var chooserBarsNumber = 26; // TODO compute
-    var chooserBarsOffsets = new Array(chooserBarsNumber); // TODO compute
 
     //
     // Public fields
@@ -41,23 +40,28 @@
     };
 
     binch.setChooserBarsOffsets = function (barsOffsets) {
-        chooserBarsOffsets = barsOffsets;
-        binch.chosenValue = getSelectedLuckyValue(chooserBarsOffsets);
+
+        _.forEach(binch.binchBars, function (bar, i) {
+            bar.binchBarOffsetPx = barsOffsets[i];
+        });
+
+        binch.chosenValue = getSelectedLuckyValue(barsOffsets);
     };
 
     binch.setProvidedChosenStringValue = function (providedValue) {
         var bigValue = bigInt(providedValue);
 
-        var rv = new Array(26);
+        var newOffsets = new Array(26);
+
         var scale = MAX_BIG_NUMBER;
         for (var i = 0; i < 26; i++) {
-            rv[i] = (bigValue.divmod(scale)).quotient;
+            newOffsets[i] = (bigValue.divmod(scale)).quotient;
 
             bigValue = bigValue.subtract(scale.multiply((bigValue.divmod(scale)).quotient));
             scale = scale.divide(1000);
         }
 
-        return rv;
+        binch.setChooserBarsOffsets(newOffsets);
     };
 
     binch.generateMinValue = function () {
@@ -79,12 +83,6 @@
         });
     };
 
-    binch.generateKeysOfValue = function (value) {
-        _.forEach(binch.binchBars, function (bar, i) {
-            bar.binchBarOffsetPx = value[i];
-        });
-    };
-
     binch.getBarDataByIndex = function (idx) {
         return binch.binchBars[idx];
     };
@@ -94,15 +92,11 @@
     //
 
     function init() {
-
         _.forEach(binch.binchBars, function (binchBar, i) {
             binch.binchBars[i] = generateBinchBar(i);
         });
 
-        chooserBarsOffsets.fill(barLengthPx / 2); // Set to middle
-
-
-        logInfo("initialized: " + chooserBarsOffsets);
+        logInfo("initialized: " + binch.binchBars.length + " bars.");
     }
 
     function logInfo(msg) {
