@@ -10,7 +10,8 @@
 
     var BIG_ONE = bigInt("1");
 
-    var MIN_BIG_NUMBER = bigInt(0);
+    var ZERO_BIG_NUMBER = bigInt(0);
+    var MIN_BIG_NUMBER = bigInt(1);
     var MAX_BIG_NUMBER = bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337");
 
     var barLengthPx = 1000;
@@ -31,10 +32,12 @@
 
     binch.incrementChosenValue = function () {
         binch.chosenValue = binch.chosenValue.add(BIG_ONE);
+        binch.setProvidedChosenStringValue(binch.chosenValue.toString(10));
     };
 
     binch.decrementChosenValue = function () {
         binch.chosenValue = binch.chosenValue.subtract(BIG_ONE);
+        binch.setProvidedChosenStringValue(binch.chosenValue.toString(10));
     };
 
     binch.setChooserBarsOffsets = function (barsOffsets) {
@@ -44,8 +47,6 @@
 
     binch.setProvidedChosenStringValue = function (providedValue) {
         var bigValue = bigInt(providedValue);
-
-        console.info("In: " + providedValue + " cast: " + bigValue.toString());
 
         var rv = new Array(26);
         var scale = MAX_BIG_NUMBER;
@@ -126,12 +127,12 @@
 
     function getSnippetRangeByIndex(barIndex, slotsPerBar) {
 
-        var slotsPerBarBigInt = bigInt(slotsPerBar);
+        var divisor = bigInt(slotsPerBar).pow(barIndex + 1);
 
-        if (barIndex === 0) {
-            return MAX_BIG_NUMBER.divide(slotsPerBarBigInt);
+        if (MAX_BIG_NUMBER.lesserOrEquals(divisor)) {
+            return bigInt(1);
         } else {
-            return MAX_BIG_NUMBER.divide(slotsPerBarBigInt.pow(barIndex + 1));
+            return MAX_BIG_NUMBER.divide(divisor);
         }
     }
 
