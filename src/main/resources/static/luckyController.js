@@ -2,7 +2,13 @@
  *
  */
 
-app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval','$http', function ($scope, luckyService, luckyFactory, $interval, $http) {
+app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval','$http','$translate', function ($scope, luckyService, luckyFactory, $interval, $http, $translate) {
+
+    $scope.changeLanguage = function(lang){
+        $translate.use(lang);
+    }
+
+
     var vm = this;
 
     vm.luckyCtrlPma = {

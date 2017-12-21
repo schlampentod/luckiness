@@ -1,4 +1,4 @@
 /**
  *
  */
-var app = angular.module('luckynes', []);
+var app = angular.module('luckynes', ['pascalprecht.translate']);

@@ -4,24 +4,29 @@
 
 <div ng-controller="luckyController as luckyCtrl">
 
-    Total checked: {{luckyCtrl.luckyCtrlPma.luckyTotalGeneratedKeys}}
+    <div style="position: fixed; top: 0%; right: 0;">
+        <button ng-click="changeLanguage('en')">English</button>
+        <button ng-click="changeLanguage('ua')">Українська</button>
+    </div>
+
+    {{'totCheck' | translate}}: {{luckyCtrl.luckyCtrlPma.luckyTotalGeneratedKeys}}
 
     <hr />
 
     <input type="text" ng-keydown="getkeys($event)" ng-model="luckyCtrl.luckyProvidedExactValue">
-    <button ng-click="luckyCtrl.onParseProvidedValueClick()">Parse</button>
+    <button ng-click="luckyCtrl.onParseProvidedValueClick()">{{'Parse' | translate}}</button>
 
     |
 
-    <button ng-click="luckyCtrl.onGenerateMinClick()"> Min </button>
-    <button ng-click="luckyCtrl.onGenerateMaxClick()"> Max </button>
+    <button ng-click="luckyCtrl.onGenerateMinClick()">{{'Min' | translate}} </button>
+    <button ng-click="luckyCtrl.onGenerateMaxClick()">{{'Max' | translate}} </button>
 
     |
 
-    <button ng-click="luckyCtrl.onGenerateRandomClick()"> Random</button>
+    <button ng-click="luckyCtrl.onGenerateRandomClick()">{{'Random' | translate}}</button>
     <button ng-click="luckyCtrl.onStartRandomBatchClick()" ng-switch="luckyCtrl.luckyCtrlPma.luckyBatchGenerationInterval==null">
-        <span ng-switch-when="true">Start</span>
-        <span ng-switch-when="false">Stop</span>
+        <span ng-switch-when="true">{{'Start' | translate}}</span>
+        <span ng-switch-when="false">{{'Stop' | translate}}</span>
     </button>
 
     <div ng-repeat="n in luckyCtrl.luckyBinchBarsOffsets track by $index"
@@ -31,7 +36,7 @@
 
     <hr/>
 
-    Key: {{luckyCtrl.luckyBarSumValue}}
+    {{'Key' | translate}}: {{luckyCtrl.luckyBarSumValue}}
     <br />
     Address: {{luckyCtrl.luckyCtrlDerivedKeys.luckyKeyPublicAddress}}
 
@@ -39,5 +44,4 @@
     <br/>
     <br/>
     <br/>
-
 </div>
