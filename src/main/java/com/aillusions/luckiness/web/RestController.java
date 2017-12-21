@@ -55,7 +55,7 @@ public class RestController {
             validateKeyValue(providedKey);
             return new CheckKeyResultDto(checkBatchFor(providedKey));
         } catch (Exception e) {
-            System.out.println("check: unable to transform big number: " + providedKey + " to bitcoin key.");
+            System.out.println(e.getMessage());
             return new CheckKeyResultDto(false);
         } finally {
             // System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
@@ -76,11 +76,11 @@ public class RestController {
             String privateKeyAsHex = key.getPrivateKeyAsHex();
             String publicKeyAsHex = key.getPublicKeyAsHex();
 
-            System.out.println(providedKey + " -> " + testBtcAddress + " in " + (System.currentTimeMillis() - start) + " ms: ");
+            // System.out.println(providedKey + " -> " + testBtcAddress + " in " + (System.currentTimeMillis() - start) + " ms: ");
 
             return new AddressesResultDto(privateKeyAsHex, publicKeyAsHex, testBtcAddress);
         } catch (Exception e) {
-            System.out.println("addresses: unable to transform big number: " + providedKey + " to bitcoin key.");
+            System.out.println(e.getMessage());
             return new AddressesResultDto(null, null, null);
         }
     }

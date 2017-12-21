@@ -78,7 +78,7 @@
         });
     };
 
-    binch.generateKeysOfValue = function(value){
+    binch.generateKeysOfValue = function (value) {
         _.forEach(binch.binchBars, function (bar, i) {
             bar.binchBarOffsetPx = value[i];
         });
@@ -112,7 +112,7 @@
         var rv = bigInt(0);
 
         _.forEach(barOffsetValues, function (offsetVal, i) {
-            var luckyBarNet = getLuckyBarNetValue(offsetVal, i, bigInt(barLengthPx));
+            var luckyBarNet = getLuckyBarNetValue(offsetVal, i, barLengthPx);
             rv = rv.add(luckyBarNet);
         });
 
@@ -125,7 +125,14 @@
     }
 
     function getSnippetRangeByIndex(barIndex, slotsPerBar) {
-        return MAX_BIG_NUMBER.divide(slotsPerBar.pow(barIndex));
+
+        var slotsPerBarBigInt = bigInt(slotsPerBar);
+
+        if (barIndex === 0) {
+            return MAX_BIG_NUMBER.divide(slotsPerBarBigInt);
+        } else {
+            return MAX_BIG_NUMBER.divide(slotsPerBarBigInt.pow(barIndex + 1));
+        }
     }
 
     function generateBinchBar(idx) {
@@ -133,7 +140,7 @@
             binchBarIndex: idx,
             binchBarLengthPx: 1000,
             binchBarOffsetPx: 500,
-            binchBarSnippetRange: getSnippetRangeByIndex(idx, bigInt(barLengthPx)).toString(10)
+            binchBarSnippetRange: getSnippetRangeByIndex(idx, barLengthPx).toString(10)
         }
     }
 
