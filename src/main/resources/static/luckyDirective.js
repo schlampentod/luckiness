@@ -30,14 +30,14 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
 
         // Subscribe
         getLuckyBarElem().mousemove(function (evt) {
-            scope.luckySliderOffset = evt.offsetX-1;
+            scope.luckySliderOffset = evt.offsetX - 1;
             onLuckySliderMoved(scope.luckySliderOffset);
         });
 
         function onLuckySliderMoved(newOffset) {
             var sliderElem = getLuckySliderElem();
 
-            console.info("Moved: " + index + " to " + newOffset);
+            // console.info("Moved: " + index + " to " + newOffset);
 
             sliderElem.css("margin-left", (newOffset - 0) + "px");
 

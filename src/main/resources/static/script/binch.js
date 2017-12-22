@@ -103,13 +103,10 @@
         for (var i = 0; i < barsNumber; i++) {
 
             var barRangeVal = getBarByIndex(i).binchBarSnippetRange;
-            var barMaxVal = getLuckyBarNetValue(i, binch.BAR_LENGTH_PX);
 
-            var barOffset = -1;
+            var barOffset;
 
-            if (bigSumValue.lesserOrEquals(barRangeVal)) {
-                barOffset = 0;
-            } else if (isLastBar(i)) {
+            if (isLastBar(i)) {
                 barOffset = bigSumValue;
             } else {
                 var barOffset = bigSumValue.divmod(barRangeVal).quotient;
@@ -133,7 +130,7 @@
 
     function generateBinchBar(idx) {
 
-        var barMainOffset = isLastBar(idx) ? 1 : 0;
+        var barMainOffset = isLastBar(idx) ? 0 : 0;
         var barMaxOffset = isLastBar(idx) ? 114 : binch.BAR_LENGTH_PX - 1;
         var barRangeVal = calcBarRangeValue(idx, binch.BAR_LENGTH_PX);
 
