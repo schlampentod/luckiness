@@ -3,6 +3,8 @@ package com.aillusions.luckiness.web;
 import com.aillusions.luckiness.AsyncService;
 import com.aillusions.luckiness.DormantAddressProvider;
 import com.aillusions.luckiness.DormantBloomFilter;
+import com.google.common.hash.BloomFilter;
+import com.google.common.hash.Funnels;
 import lombok.Setter;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.bitcoinj.core.*;
@@ -10,7 +12,10 @@ import org.bitcoinj.params.MainNetParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -30,9 +35,19 @@ public class RestController {
 
     private DormantBloomFilter bloomFilter;
 
+    BloomFilter BLOOM_FILTER;
+
     {
         DormantAddressProvider prov = new DormantAddressProvider();
         bloomFilter = new DormantBloomFilter(prov.getDormantAddresses());
+
+        try {
+            BLOOM_FILTER = BloomFilter.readFrom(new FileInputStream("g:\\csv_dump\\addr_all.bin"),
+                    Funnels.stringFunnel(Charset.forName("UTF-8")));
+        } catch (IOException e) {
+            BLOOM_FILTER = null;
+            e.printStackTrace();
+        }
     }
 
     @Autowired
@@ -54,7 +69,11 @@ public class RestController {
 
         try {
             validateKeyValue(providedKey);
-            return new CheckKeyResultDto(checkBatchFor(providedKey));
+            if (BLOOM_FILTER != null) {
+                return new CheckKeyResultDto(checkAllfor(providedKey));
+            }else{
+                return new CheckKeyResultDto(checkBatchFor(providedKey));
+            }
         } catch (Exception e) {
             System.out.println("Unable to check key: " + ExceptionUtils.getMessage(e));
             return new CheckKeyResultDto(false);
@@ -77,7 +96,7 @@ public class RestController {
             String privateKeyAsHex = key.getPrivateKeyAsHex();
             String publicKeyAsHex = key.getPublicKeyAsHex();
 
-            System.out.println(providedKey + " -> " + testBtcAddress + " in " + (System.currentTimeMillis() - start) + " ms: ");
+            // System.out.println(providedKey + " -> " + testBtcAddress + " in " + (System.currentTimeMillis() - start) + " ms: ");
 
             return new AddressesResultDto(privateKeyAsHex, publicKeyAsHex, RestController.keyToWif(key), testBtcAddress);
         } catch (Exception e) {
@@ -166,6 +185,20 @@ public class RestController {
         return new ConvertedKeyDto(getKeyFromHex(providedHexKey).getPrivKey().toString(10));
     }
 
+    public boolean checkAllfor(String providedKey) {
+        BigInteger origKey = new BigInteger(providedKey);
+        ECKey key = getNewECKey(origKey);
+        String testBtcAddress = getBtcAddress(key);
+
+        boolean rv = BLOOM_FILTER.mightContain(testBtcAddress);
+
+        if (rv) {
+            logFound(key);
+        }
+
+        return rv;
+    }
+
     public boolean checkBatchFor(String providedKey) {
         BigInteger origKey = new BigInteger(providedKey);
 
@@ -186,18 +219,7 @@ public class RestController {
             //System.out.println("Checking: " + thisVal);
 
             if (bloomFilter.has(testBtcAddress)) {
-
-                String privateKeyAsHex = key.getPrivateKeyAsHex();
-                String publicKeyAsHex = key.getPublicKeyAsHex();
-
-                System.out.println(
-                        " Found private key hex:\n" +
-                                "      " + key.getPrivateKeyAsHex() + "\n" +
-                                " And public address:\n" +
-                                "      " + testBtcAddress +
-                                " And public key :\n" +
-                                "      " + key.getPublicKeyAsHex());
-
+                logFound(key);
                 return true;
             }
 
@@ -206,6 +228,22 @@ public class RestController {
         } while (thisVal.compareTo(to) <= 0);
 
         return false;
+    }
+
+    private void logFound(ECKey key) {
+        String privateKeyAsHex = key.getPrivateKeyAsHex();
+        String publicKeyAsHex = key.getPublicKeyAsHex();
+        String testBtcAddress = getBtcAddress(key);
+
+        System.out.println(
+                " Found private key hex:\n" +
+                        "      " + key.getPrivateKeyAsHex() + "\n" +
+                        " And public address:\n" +
+                        "      " + testBtcAddress +
+                        " And public key :\n" +
+                        "      " + key.getPublicKeyAsHex());
+
+
     }
 
     public static ECKey getNewECKey(String providedKeyValue) {

@@ -31,7 +31,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
             deferred.reject("Unable to check invalid key: " + keyValue);
         } else {
 
-            var promise = $http.get('rest/v1/lucky/check/' + keyValue);
+            var promise = $http.get('/rest/v1/lucky/check/' + keyValue);
             promise.then(function (CheckKeyResultDto) {
 
                 var isFound = CheckKeyResultDto['checkedKeyFound'];
@@ -48,7 +48,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
     };
 
     $rootScope.selectedMagicKeys;
-    $.get('http://localhost:8080/rest/v1/lucky/known').done(function (data) {//забить некоторые данные в маленикий, ебучий списочек
+    $.get('/rest/v1/lucky/known').done(function (data) {//забить некоторые данные в маленикий, ебучий списочек
         $rootScope.listOfMagicKeys=[];
         for(var i=0;i<data.knownKeyDtos.length;i++){
             $rootScope.listOfMagicKeys[i]=data.knownKeyDtos[i];
