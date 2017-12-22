@@ -87,7 +87,7 @@ public class RestController {
     // http://localhost:8080/rest/v1/lucky/known
     @RequestMapping(value = "/known", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public KnownKeysDto known()  {
+    public KnownKeysDto known() {
 
         KnownKeysDto rv = new KnownKeysDto();
         rv.getKnownKeyDtos().add(new KnownKeyDto("1"));
@@ -95,7 +95,15 @@ public class RestController {
         rv.getKnownKeyDtos().add(new KnownKeyDto("3"));
         rv.getKnownKeyDtos().add(new KnownKeyDto("4"));
         rv.getKnownKeyDtos().add(new KnownKeyDto("5"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("48635463943209834798109814161294753926839975257569795305637098542720658922315"));
         return rv;
+    }
+
+    // http://localhost:8080/rest/v1/lucky/convert/5JdeC9P7Pbd1uGdFVEsJ41EkEnADbbHGq6p1BwFxm6txNBsQnsw
+    @RequestMapping(value = "/convert/{providedBase58Key}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public ConvertedKeyDto convert(@PathVariable String providedBase58Key) {
+        return new ConvertedKeyDto(getKeyFromWIFBase58(providedBase58Key).getPrivKey().toString(10));
     }
 
     public boolean checkBatchFor(String providedKey) {
@@ -180,8 +188,8 @@ public class RestController {
     }
 
 
-    public static ECKey getKeyFromWIFBase58(String base58){
-        DumpedPrivateKey dumpedKey = DumpedPrivateKey.fromBase58(MainNetParams.get(),base58);
-       return dumpedKey.getKey();
+    public static ECKey getKeyFromWIFBase58(String base58) {
+        DumpedPrivateKey dumpedKey = DumpedPrivateKey.fromBase58(MainNetParams.get(), base58);
+        return dumpedKey.getKey();
     }
 }
