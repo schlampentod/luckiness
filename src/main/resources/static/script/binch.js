@@ -45,7 +45,6 @@
     };
 
     binch.setProvidedChosenStringValue = function (providedValueStr) {
-        logInfo("ProvidedChosenStringValue: " + providedValueStr);
         var bigValue = bigInt(providedValueStr);
         binch.setChooserBarsOffsets(calcOffsetsBySumValue(bigValue));
     };
@@ -78,6 +77,9 @@
     }
 
     function calcOffsetsBySumValue(bigSumValue) {
+
+        logInfo("calcOffsetsBySumValue: " + bigSumValue.toString(10));
+
         var newOffsets = new Array(barsNumber);
 
         /*var scale = binch.MAX_BIG_NUMBER;
@@ -97,19 +99,18 @@
 
             if (bigSumValue.lesserOrEquals(barRangeVal)) {
                 barOffset = 0;
-            } else if (i = barsNumber - 1) {
+            } else if (i == barsNumber - 1) {
                 barOffset = bigSumValue;
             } else {
-                debugger;
-                var barAmount = bigSumValue.divmod(barRangeVal).quotient;
-                barOffset = barAmount.divide(barRangeVal);
+                var barOffset = bigSumValue.divmod(barRangeVal).quotient;
+                var barAmount = barOffset.multiply(barRangeVal);
                 bigSumValue = bigSumValue.minus(barAmount);
             }
 
             newOffsets[i] = parseInt(barOffset.toString(10));
         }
 
-        debugger;
+
         logInfo('offsetsBySum: ' + newOffsets);
 
         return newOffsets;
