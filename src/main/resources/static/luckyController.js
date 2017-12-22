@@ -18,6 +18,10 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     vm.luckyBinchBarsOffsets = [];
     vm.luckyBarSumValue = "";
 
+    $( "#myselect" ).change(function() {//передать некоторые маленькие ебучие данные, в ебучее текстовое поле
+        vm.luckyBarSumValue=$("#myselect option:selected").text();
+    });
+
     $scope.$watch(function () { // по изменению массива расположений баров генерить "Key" и "Address"
         return vm.luckyBinchBarsOffsets;
     }, function (newVal, oldVal) {

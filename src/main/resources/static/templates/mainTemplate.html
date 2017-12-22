@@ -38,7 +38,7 @@
     |
 
     {{'Known' | translate}}:
-    <select id="list1"></select>
+    <select id="myselect" ng-model="selectedMagicKeys" ng-options=" x.knownKeyDecimal for x in listOfMagicKeys "></select>
 
     |
 
@@ -52,7 +52,9 @@
     <br />
 
     <span style="width:50px; display:inline-block;">{{'Key' | translate}}</span>
+
     <input type="text" ng-keydown="getkeys($event)" ng-model="luckyCtrl.luckyBarSumValue" style="width:900px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
+
 
 
     <div ng-switch="luckyCtrl.luckyCtrlDerivedKeys.luckyKeyPublicAddress!=null">

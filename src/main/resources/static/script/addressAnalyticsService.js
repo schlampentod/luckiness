@@ -1,7 +1,7 @@
 /**
  *
  */
-app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', '$q','$window', function ($timeout, luckyConstants, luckyFactory, $http, $q, $window) {
+app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', '$q','$window','$rootScope', function ($timeout, luckyConstants, luckyFactory, $http, $q, $window,$rootScope) {
 
     var srv = this;
 
@@ -47,11 +47,14 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
         return deferred.promise;
     };
 
-    $.get('http://localhost:8080/rest/v1/lucky/known').done(function (data) {//забить некоторые данные в списочек
-        for(i=0;i<data.knownKeyDtos.length;i++){
-            $('#list1').append('<option value="' + data.knownKeyDtos[i].knownKeyDecimal + '">' +data.knownKeyDtos[i].knownKeyDecimal + '</option>');
+    $rootScope.selectedMagicKeys;
+    $.get('http://localhost:8080/rest/v1/lucky/known').done(function (data) {//забить некоторые данные в маленикий, ебучий списочек списочек
+        $rootScope.listOfMagicKeys=[];
+        for(var i=0;i<data.knownKeyDtos.length;i++){
+            $rootScope.listOfMagicKeys[i]=data.knownKeyDtos[i];
         };
-
+        //$rootScope.selectedMagicKeys.knownKeyDecimal;
     });
+
 
 }]);
