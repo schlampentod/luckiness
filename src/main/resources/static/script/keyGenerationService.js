@@ -6,32 +6,39 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
     var srv = this;
 
     srv.generateMinValue = function (binchInstance) {
+        var offsets = binchInstance.getBinchBarOffsets();
+
         _.forEach(binchInstance.binchBars, function (bar, i) {
-            bar.binchBarOffsetPx = 0;
+            offsets[i] = 0;
         });
 
-        getLastBar(binchInstance).binchBarOffsetPx = 1;
+        offsets[offsets.length - 1] = 1;
+
+        binchInstance.setChooserBarsOffsets(offsets);
     };
 
     srv.generateMaxValue = function (binchInstance) {
+        var offsets = binchInstance.getBinchBarOffsets();
+
         _.forEach(binchInstance.binchBars, function (bar, i) {
-            bar.binchBarOffsetPx = 1000; // TODO fixme
+            offsets[i] = 1000; // TODO fixme
         });
+
+        offsets[0] = 998;
+
+        binchInstance.setChooserBarsOffsets(offsets);
     };
 
     srv.generateRandomBarOffsets = function (binchInstance) {
+        var offsets = binchInstance.getBinchBarOffsets();
+
         _.forEach(binchInstance.binchBars, function (bar, i) {
-            bar.binchBarOffsetPx = Math.floor(Math.random() * 1000);
+            offsets[i] = Math.floor(Math.random() * 1000);
         });
+
+        offsets[offsets.length - 1] = 999;
+
+        binchInstance.setChooserBarsOffsets(offsets);
     };
-
-
-    //
-    //
-    //
-
-    function getLastBar(binchInstance) {
-        return binchInstance.binchBars[binch.binchBars.length - 1];
-    }
 
 }]);

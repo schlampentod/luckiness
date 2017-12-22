@@ -39,6 +39,14 @@
         binch.setProvidedChosenStringValue(binch.chosenValue.toString(10));
     };
 
+    binch.getBinchBarOffsets = function () {
+        var rv = [];
+        _.forEach(binch.binchBars, function (bb, i) {
+            rv.push(bb.binchBarOffsetPx);
+        });
+        return rv;
+    };
+
     binch.setChooserBarsOffsets = function (barsOffsets) {
 
         _.forEach(binch.binchBars, function (bar, i) {

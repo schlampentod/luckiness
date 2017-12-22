@@ -116,12 +116,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     }
 
     function readBinchStatus() {
-
-        vm.luckyBinchBarsOffsets = [];
-        _.forEach(luckyService.currentChooser.binchBars, function (bb, i) {
-            vm.luckyBinchBarsOffsets.push(bb.binchBarOffsetPx);
-        });
-
+        vm.luckyBinchBarsOffsets = luckyService.currentChooser.getBinchBarOffsets();
         vm.luckyBarSumValue = luckyService.currentChooser.chosenValue.toString(10);
     }
 
