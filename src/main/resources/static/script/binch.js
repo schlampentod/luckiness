@@ -14,13 +14,13 @@
     binch.MAX_BIG_NUMBER = bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337");
     binch.BAR_LENGTH_PX = 1000;
 
-    var chooserBarsNumber = 26; // TODO compute
+    var barsNumber = 26; // TODO compute
 
     //
     // Public fields
     //
 
-    binch.binchBars = new Array(chooserBarsNumber);
+    binch.binchBars = new Array(barsNumber);
     binch.chosenValue = bigInt(0);
 
     //
@@ -41,28 +41,13 @@
             bar.binchBarOffsetPx = barsOffsets[i];
         });
 
-        binch.chosenValue = getSelectedLuckyValue(barsOffsets);
+        binch.chosenValue = calcBarsSumValue(barsOffsets);
     };
 
-    binch.setProvidedChosenStringValue = function (providedValue) {
-
-        logInfo("ProvidedChosenStringValue: " + providedValue);
-
-        var bigValue = bigInt(providedValue);
-
-        binch.chosenValue = bigValue;
-
-        var newOffsets = new Array(26);
-
-        var scale = binch.MAX_BIG_NUMBER;
-        for (var i = 0; i < 26; i++) {
-            newOffsets[i] = parseInt((bigValue.divmod(scale)).quotient.toString(10));
-
-            bigValue = bigValue.subtract(scale.multiply((bigValue.divmod(scale)).quotient));
-            scale = scale.divide(binch.BAR_LENGTH_PX);
-        }
-
-        binch.setChooserBarsOffsets(newOffsets);
+    binch.setProvidedChosenStringValue = function (providedValueStr) {
+        logInfo("ProvidedChosenStringValue: " + providedValueStr);
+        var bigValue = bigInt(providedValueStr);
+        binch.setChooserBarsOffsets(calcOffsetsBySumValue(bigValue));
     };
 
     binch.getBarDataByIndex = function (idx) {
@@ -81,28 +66,70 @@
         logInfo("initialized: " + binch.binchBars.length + " bars.");
     }
 
-    function logInfo(msg) {
-        console.info("binch.js: " + msg);
-    }
-
-    function getSelectedLuckyValue(barOffsetValues) {
+    function calcBarsSumValue(barOffsetValues) {
         var rv = bigInt(0);
 
         _.forEach(barOffsetValues, function (offsetVal, i) {
-            var luckyBarNet = getLuckyBarNetValue(offsetVal, i, binch.BAR_LENGTH_PX);
+            var luckyBarNet = getLuckyBarNetValue(i, offsetVal);
             rv = rv.add(luckyBarNet);
         });
 
         return rv;
     }
 
-    function getLuckyBarNetValue(offsetVal, barIndex, slotsPerBar) {
-        var rangeValue = getSnippetRangeByIndex(barIndex, slotsPerBar);
+    function calcOffsetsBySumValue(bigSumValue) {
+        var newOffsets = new Array(barsNumber);
+
+        /*var scale = binch.MAX_BIG_NUMBER;
+        for (var i = 0; i < 26; i++) {
+            newOffsets[i] = parseInt((bigSumValue.divmod(scale)).quotient.toString(10));
+
+            bigSumValue = bigSumValue.subtract(scale.multiply((bigSumValue.divmod(scale)).quotient));
+            scale = scale.divide(binch.BAR_LENGTH_PX);
+        }*/
+
+        for (var i = 0; i < barsNumber; i++) {
+
+            var barRangeVal = getBarByIndex(i).binchBarSnippetRange;
+            var barMaxVal = getLuckyBarNetValue(i, binch.BAR_LENGTH_PX);
+
+            var barOffset = -1;
+
+            if (bigSumValue.lesserOrEquals(barRangeVal)) {
+                barOffset = 0;
+            } else if (i = barsNumber - 1) {
+                barOffset = bigSumValue;
+            } else {
+                debugger;
+                var barAmount = bigSumValue.divmod(barRangeVal).quotient;
+                barOffset = barAmount.divide(barRangeVal);
+                bigSumValue = bigSumValue.minus(barAmount);
+            }
+
+            newOffsets[i] = parseInt(barOffset.toString(10));
+        }
+
+        debugger;
+        logInfo('offsetsBySum: ' + newOffsets);
+
+        return newOffsets;
+    }
+
+    function getLuckyBarNetValue(barIndex, offsetVal) {
+        var rangeValue = getBarByIndex(barIndex).binchBarSnippetRange;
         return rangeValue.multiply(offsetVal);
     }
 
-    function getSnippetRangeByIndex(barIndex, slotsPerBar) {
+    function generateBinchBar(idx) {
+        return {
+            binchBarIndex: idx,
+            binchBarLengthPx: binch.BAR_LENGTH_PX,
+            binchBarOffsetPx: 500,
+            binchBarSnippetRange: calcBarRangeValue(idx, binch.BAR_LENGTH_PX)
+        }
+    }
 
+    function calcBarRangeValue(barIndex, slotsPerBar) {
         var divisor = bigInt(slotsPerBar).pow(barIndex + 1);
 
         if (binch.MAX_BIG_NUMBER.lesserOrEquals(divisor)) {
@@ -112,15 +139,13 @@
         }
     }
 
-    function generateBinchBar(idx) {
-        return {
-            binchBarIndex: idx,
-            binchBarLengthPx: binch.BAR_LENGTH_PX,
-            binchBarOffsetPx: 500,
-            binchBarSnippetRange: getSnippetRangeByIndex(idx, binch.BAR_LENGTH_PX).toString(10)
-        }
+    function getBarByIndex(idx) {
+        return binch.binchBars[idx];
     }
 
+    function logInfo(msg) {
+        console.info("binch.js: " + msg);
+    }
 
     init();
 
