@@ -12,15 +12,18 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     };
 
     vm.luckyCtrlDerivedKeys = {
-        luckyKeyPublicAddress: null
+        luckyKeyPublicAddress: null,
+        luckyKeyPrivateKeyAsWIF: null
     };
 
     vm.luckyBinchBarsOffsets = [];
     vm.luckyBarSumValue = "";
 
-    $( "#myselect" ).change(function() {//передать некоторые маленькие ебучие данные, в ебучее текстовое поле
-        vm.luckyBarSumValue=$("#myselect option:selected").text();
-    });
+    $scope.selectedMagicKeys = null;
+
+    $scope.funcXyjank = function () {//передать некоторые маленькие ебучие данные, в ебучее текстовое поле
+        vm.luckyBarSumValue = $scope.selectedMagicKeys.knownKeyDecimal;//$("#myselect option:selected").text();
+    };
 
     $scope.$watch(function () { // по изменению массива расположений баров генерить "Key" и "Address"
         return vm.luckyBinchBarsOffsets;
@@ -51,9 +54,11 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
         addressAnalyticsService.resolveBitcoinAddressByKey(vm.luckyBarSumValue).then(function (AddressesResultDto) {
             vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress = AddressesResultDto['publicAddressAsHex'];
+            vm.luckyCtrlDerivedKeys.luckyKeyPrivateKeyAsWIF = AddressesResultDto['privateKeyAsWIF'];
         });
 
     });
+
 
     var massOfKeys = [];
     $scope.$watch(function () { // по изменению поля "Key" записывать все его новые значения в массив
@@ -72,25 +77,27 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
             readBinchStatus();
         }
     };
-    $scope.changeOffSets = function (event,index) {//изменять на еденицу значение офсетов и соответственно рассположения баров
+    $scope.changeOffSets = function (event, index) {//изменять на еденицу значение офсетов и соответственно рассположения баров
 
-            if (event.keyCode == 38) {
-                if(vm.luckyBinchBarsOffsets[index]<=999){
-                    vm.luckyBinchBarsOffsets[index]++;
-                    luckyService.currentChooser.setChooserBarsOffsets(vm.luckyBinchBarsOffsets);
-                    console.log(vm.luckyBinchBarsOffsets[index]);
-                    readBinchStatus();
-                };
-
-            } else if (event.keyCode == 40) {
-                if(vm.luckyBinchBarsOffsets[index]>=1){
-                    vm.luckyBinchBarsOffsets[index]--;
-                    luckyService.currentChooser.setChooserBarsOffsets(vm.luckyBinchBarsOffsets);
-                    console.log(vm.luckyBinchBarsOffsets[index]);
-                    readBinchStatus();
-                };
-
+        if (event.keyCode == 38) {
+            if (vm.luckyBinchBarsOffsets[index] <= 999) {
+                vm.luckyBinchBarsOffsets[index]++;
+                luckyService.currentChooser.setChooserBarsOffsets(vm.luckyBinchBarsOffsets);
+                console.log(vm.luckyBinchBarsOffsets[index]);
+                readBinchStatus();
             }
+            ;
+
+        } else if (event.keyCode == 40) {
+            if (vm.luckyBinchBarsOffsets[index] >= 1) {
+                vm.luckyBinchBarsOffsets[index]--;
+                luckyService.currentChooser.setChooserBarsOffsets(vm.luckyBinchBarsOffsets);
+                console.log(vm.luckyBinchBarsOffsets[index]);
+                readBinchStatus();
+            }
+            ;
+
+        }
 
     };
 

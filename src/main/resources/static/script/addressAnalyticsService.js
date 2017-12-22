@@ -16,7 +16,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
             var AddressesResultDto = response.data;
             deferred.resolve(AddressesResultDto);
-            $("#idOfWIF").text(AddressesResultDto['privateKeyAsWIF']);//вывести на странице "privateKeyAsWIF"(из ответа на запрос)
+            //$("#idOfWIF").text(AddressesResultDto['privateKeyAsWIF']);//вывести на странице "privateKeyAsWIF"(из ответа на запрос)
             // console.info("addressAnalyticsService: resolved to: " + AddressesResultDto['publicAddressAsHex']);
         });
 
@@ -48,7 +48,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
     };
 
     $rootScope.selectedMagicKeys;
-    $.get('http://localhost:8080/rest/v1/lucky/known').done(function (data) {//забить некоторые данные в маленикий, ебучий списочек списочек
+    $.get('http://localhost:8080/rest/v1/lucky/known').done(function (data) {//забить некоторые данные в маленикий, ебучий списочек
         $rootScope.listOfMagicKeys=[];
         for(var i=0;i<data.knownKeyDtos.length;i++){
             $rootScope.listOfMagicKeys[i]=data.knownKeyDtos[i];
