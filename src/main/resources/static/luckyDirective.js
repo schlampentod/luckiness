@@ -76,7 +76,7 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
 
     return {
         link: link,
-        templateUrl: 'luckyDirectiveTemplate.html',
+        templateUrl: 'templates/luckyDirectiveTemplate.html',
         restrict: 'EA',
         require: 'ngModel'
     };
