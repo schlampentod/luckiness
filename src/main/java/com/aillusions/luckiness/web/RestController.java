@@ -5,10 +5,7 @@ import com.aillusions.luckiness.DormantAddressProvider;
 import com.aillusions.luckiness.DormantBloomFilter;
 import lombok.Setter;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.CustomECKey;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.core.*;
 import org.bitcoinj.params.MainNetParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -85,6 +82,20 @@ public class RestController {
             System.out.println("Unable to resolve key: " + ExceptionUtils.getMessage(e));
             return new AddressesResultDto(null, null, null);
         }
+    }
+
+    // http://localhost:8080/rest/v1/lucky/known
+    @RequestMapping(value = "/known", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public KnownKeysDto known()  {
+
+        KnownKeysDto rv = new KnownKeysDto();
+        rv.getKnownKeyDtos().add(new KnownKeyDto("1"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("2"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("3"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("4"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("5"));
+        return rv;
     }
 
     public boolean checkBatchFor(String providedKey) {
@@ -166,5 +177,11 @@ public class RestController {
         Address addressFromKey = key.toAddress(netParams);
 
         return addressFromKey.toBase58();
+    }
+
+
+    public static ECKey getKeyFromWIFBase58(String base58){
+        DumpedPrivateKey dumpedKey = DumpedPrivateKey.fromBase58(MainNetParams.get(),base58);
+       return dumpedKey.getKey();
     }
 }
