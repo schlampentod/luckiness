@@ -2,7 +2,7 @@
  *
  */
 
-app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService','$window', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, $window) {
+app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService', '$window', 'keyGenerationService', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, $window, keyGenerationService) {
 
     var vm = this;
 
@@ -51,11 +51,11 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     });
 
-    var massOfKeys=[];
+    var massOfKeys = [];
     $scope.$watch(function () { // по изменению поля "Key" записывать все его новые значения в массив
         return vm.luckyBarSumValue;
     }, function (newVal, oldVal) {
-        massOfKeys[massOfKeys.length]=vm.luckyBarSumValue;
+        massOfKeys[massOfKeys.length] = vm.luckyBarSumValue;
     }, true);
 
     $scope.getkeys = function (event) {
@@ -74,12 +74,12 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     };
 
     vm.onGenerateMinClick = function () {
-        luckyService.currentChooser.generateMinValue();
+        keyGenerationService.generateMinValue(luckyService.currentChooser);
         readBinchStatus();
     };
 
     vm.onGenerateMaxClick = function () {
-        luckyService.currentChooser.generateMaxValue();
+        keyGenerationService.generateMaxValue(luckyService.currentChooser);
         readBinchStatus();
     };
 
@@ -99,11 +99,11 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     };
 
     vm.onOpenListOfKeysClick = function () {
-        console.log("список сгенерированных ключей:"+massOfKeys);
+        console.log("список сгенерированных ключей:" + massOfKeys);
         alert("Вывел список в консоль");
-        if(massOfKeys.length>80){
+        if (massOfKeys.length > 80) {
             alert("пизда как их дохуя.. может реально в файл скидывать?")
-        };
+        }
     };
 
     //
@@ -111,7 +111,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     //
 
     function generateRandomOffsets() {
-        luckyService.currentChooser.generateRandomBarOffsets();
+        keyGenerationService.generateRandomBarOffsets(luckyService.currentChooser);
         readBinchStatus();
     }
 

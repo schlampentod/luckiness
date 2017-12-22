@@ -57,19 +57,23 @@
     <br />
     <br />
 
-    <span style="width:50px; display:inline-block;">Addr: </span>
-    <span style="font-size:10pt; font-family:Arial, sans-serif;">{{luckyCtrl.luckyCtrlDerivedKeys.luckyKeyPublicAddress}}</span>
+    <div ng-switch="luckyCtrl.luckyCtrlDerivedKeys.luckyKeyPublicAddress!=null">
+        <div ng-switch-when="true">
+            <span style="width:50px; display:inline-block;">Addr: </span>
+            <span style="font-size:10pt; font-family:Arial, sans-serif;">{{luckyCtrl.luckyCtrlDerivedKeys.luckyKeyPublicAddress}}</span>
 
-    &nbsp;&nbsp;
-    (<a target="_blank" ng-href="https://blockchain.info/address/{{luckyCtrl.luckyCtrlDerivedKeys.luckyKeyPublicAddress}}">blockchain.info</a>
-    &nbsp; | &nbsp;
-    <a target="_blank" ng-href="https://bitaps.com/{{luckyCtrl.luckyCtrlDerivedKeys.luckyKeyPublicAddress}}">bitaps.com</a>)
+            &nbsp;&nbsp;
+            (<a target="_blank" ng-href="https://blockchain.info/address/{{luckyCtrl.luckyCtrlDerivedKeys.luckyKeyPublicAddress}}">blockchain.info</a>
+            &nbsp; | &nbsp;
+            <a target="_blank" ng-href="https://bitaps.com/{{luckyCtrl.luckyCtrlDerivedKeys.luckyKeyPublicAddress}}">bitaps.com</a>)
+        </div>
+        <div ng-switch-when="false">
+            Invalid address..
+        </div>
+    </div>
 
     <br/>
     <br/>
-
-
-
     <br/>
     <br/>
 </div>

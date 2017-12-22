@@ -64,27 +64,6 @@
         binch.setChooserBarsOffsets(newOffsets);
     };
 
-    binch.generateMinValue = function () {
-        _.forEach(binch.binchBars, function (bar, i) {
-            bar.binchBarOffsetPx = 0;
-        });
-
-        getLastBar().binchBarOffsetPx = 1;
-    };
-
-    binch.generateMaxValue = function () {
-        _.forEach(binch.binchBars, function (bar, i) {
-            bar.binchBarOffsetPx = 1000;// TODO fixme
-        });
-    };
-
-
-    binch.generateRandomBarOffsets = function () {
-        _.forEach(binch.binchBars, function (bar, i) {
-            bar.binchBarOffsetPx = Math.floor(Math.random() * 1000);
-        });
-    };
-
     binch.getBarDataByIndex = function (idx) {
         return binch.binchBars[idx];
     };
@@ -141,9 +120,6 @@
         }
     }
 
-    function getLastBar() {
-        return binch.binchBars[binch.binchBars.length - 1];
-    }
 
     init();
 
