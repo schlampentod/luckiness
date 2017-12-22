@@ -122,5 +122,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     readBinchStatus();
 
+
 }]);
 

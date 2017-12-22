@@ -47,4 +47,11 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
         return deferred.promise;
     };
 
+    $.get('http://localhost:8080/rest/v1/lucky/known').done(function (data) {//забить некоторые данные в списочек
+        for(i=0;i<data.knownKeyDtos.length;i++){
+            $('#list1').append('<option value="' + data.knownKeyDtos[i].knownKeyDecimal + '">' +data.knownKeyDtos[i].knownKeyDecimal + '</option>');
+        };
+
+    });
+
 }]);
