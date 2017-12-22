@@ -39,7 +39,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         if (vm.luckyBarSumValue !== luckyService.currentChooser.chosenValue.toString(10)) {
             luckyService.currentChooser.setProvidedChosenStringValue(vm.luckyBarSumValue);
             readBinchStatus();
-            return;
+            //return;
         }
 
         vm.luckyCtrlPma.luckyTotalGeneratedKeys++;
@@ -86,7 +86,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
                 console.log(vm.luckyBinchBarsOffsets[index]);
                 readBinchStatus();
             }
-            ;
 
         } else if (event.keyCode == 40) {
             if (vm.luckyBinchBarsOffsets[index] >= 1) {
@@ -95,8 +94,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
                 console.log(vm.luckyBinchBarsOffsets[index]);
                 readBinchStatus();
             }
-            ;
-
         }
 
     };

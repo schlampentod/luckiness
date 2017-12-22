@@ -117,8 +117,8 @@
     }
 
     function getLuckyBarNetValue(barIndex, offsetVal) {
-        var rangeValue = getBarByIndex(barIndex).binchBarScaleFactor;
-        return rangeValue.multiply(offsetVal);
+        var scaleFactor = getBarByIndex(barIndex).binchBarScaleFactor;
+        return scaleFactor.multiply(offsetVal);
     }
 
     function generateBinchBar(idx) {

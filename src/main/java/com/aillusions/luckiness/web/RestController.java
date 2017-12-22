@@ -61,7 +61,7 @@ public class RestController {
         }
     }
 
-    // http://localhost:8080/rest/v1/lucky/resolve/245364787645342312142536754
+    // http://localhost:8080/rest/v1/lucky/resolve/85373582762808404920801888792437094602169475096082456154754419692323304989563
     @RequestMapping(value = "/resolve/{providedKey}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public AddressesResultDto resolve(@PathVariable String providedKey) throws InterruptedException {
@@ -102,7 +102,7 @@ public class RestController {
         return rv;
     }
 
-    // http://localhost:8080/rest/v1/lucky/convert/base68/5JdeC9P7Pbd1uGdFVEsJ41EkEnADbbHGq6p1BwFxm6txNBsQnsw
+    // http://localhost:8080/rest/v1/lucky/convert/base68/5KFQvLvrmhFEcMpYWLCjALW7UR7EPz8tyWuP56qmhu4GnVeNCGq
     @RequestMapping(value = "/convert/base68/{providedBase58Key}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public ConvertedKeyDto convertWIF(@PathVariable String providedBase58Key) {
