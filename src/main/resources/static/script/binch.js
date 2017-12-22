@@ -5,6 +5,8 @@
  * - https://github.com/peterolson/BigInteger.js
  * - JQuery
  * - Lo-dash
+ *
+ * ScaleFactor - scale interval (ціна поділки)
  */
 (function (binch, $, undefined) {
 
@@ -88,35 +90,26 @@
 
     function calcOffsetsBySumValue(bigSumValue) {
 
-        logInfo("calcOffsetsBySumValue: " + bigSumValue.toString(10));
+        // logInfo("calcOffsetsBySumValue: " + bigSumValue.toString(10));
 
         var newOffsets = new Array(barsNumber);
 
-        /*var scale = binch.MAX_BIG_NUMBER;
-        for (var i = 0; i < 26; i++) {
-            newOffsets[i] = parseInt((bigSumValue.divmod(scale)).quotient.toString(10));
-
-            bigSumValue = bigSumValue.subtract(scale.multiply((bigSumValue.divmod(scale)).quotient));
-            scale = scale.divide(binch.BAR_LENGTH_PX);
-        }*/
-
         for (var i = 0; i < barsNumber; i++) {
 
-            var barRangeVal = getBarByIndex(i).binchBarSnippetRange;
+            var barScaleFactor = getBarByIndex(i).binchBarScaleFactor;
 
             var barOffset;
 
             if (isLastBar(i)) {
                 barOffset = bigSumValue;
             } else {
-                var barOffset = bigSumValue.divmod(barRangeVal).quotient;
-                var barAmount = barOffset.multiply(barRangeVal);
+                barOffset = bigSumValue.divmod(barScaleFactor).quotient;
+                var barAmount = barOffset.multiply(barScaleFactor);
                 bigSumValue = bigSumValue.minus(barAmount);
             }
 
             newOffsets[i] = parseInt(barOffset.toString(10));
         }
-
 
         logInfo('offsetsBySum: ' + newOffsets);
 
@@ -124,7 +117,7 @@
     }
 
     function getLuckyBarNetValue(barIndex, offsetVal) {
-        var rangeValue = getBarByIndex(barIndex).binchBarSnippetRange;
+        var rangeValue = getBarByIndex(barIndex).binchBarScaleFactor;
         return rangeValue.multiply(offsetVal);
     }
 
@@ -132,18 +125,18 @@
 
         var barMainOffset = isLastBar(idx) ? 0 : 0;
         var barMaxOffset = isLastBar(idx) ? 114 : binch.BAR_LENGTH_PX - 1;
-        var barRangeVal = calcBarRangeValue(idx, binch.BAR_LENGTH_PX);
+        var barScaleFactor = calcBarScaleFactor(idx, binch.BAR_LENGTH_PX);
 
         return {
             binchBarIndex: idx,
             binchBarMinOffsetPx: barMainOffset,
             binchBarMaxOffsetPx: barMaxOffset,
             binchBarOffsetPx: null,
-            binchBarSnippetRange: barRangeVal
+            binchBarScaleFactor: barScaleFactor
         }
     }
 
-    function calcBarRangeValue(barIndex, slotsPerBar) {
+    function calcBarScaleFactor(barIndex, slotsPerBar) {
         var divisor = bigInt(slotsPerBar).pow(barIndex + 1);
 
         if (binch.MAX_BIG_NUMBER.lesserOrEquals(divisor)) {

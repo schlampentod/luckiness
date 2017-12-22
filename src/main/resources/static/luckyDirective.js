@@ -20,7 +20,7 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
         scope.luckyBarId = "lucky_bar_" + index;
         scope.luckySliderId = "lucky_slider_" + index;
 
-        scope.luckyBarRangeValue = luckyService.currentChooser.getBarDataByIndex(index).binchBarSnippetRange.toString(10);// luckyFactory.getSnippetRangeByIndex(index, luckyFactory.SLOTS_PER_BAR);
+        scope.luckyBarRangeValue = luckyService.currentChooser.getBarDataByIndex(index).binchBarScaleFactor.toString(10);// luckyFactory.getSnippetRangeByIndex(index, luckyFactory.SLOTS_PER_BAR);
         scope.luckySliderOffset = 0;
 
         /*if (scope.luckyBarRange.keyRangeIsNonFull) {
