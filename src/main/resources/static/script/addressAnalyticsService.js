@@ -16,7 +16,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
             var AddressesResultDto = response.data;
             deferred.resolve(AddressesResultDto);
-
+            $("#idOfWIF").text(AddressesResultDto['privateKeyAsWIF']);//вывести на странице "privateKeyAsWIF"(из ответа на запрос)
             console.info("addressAnalyticsService: resolved to: " + AddressesResultDto['publicAddressAsHex']);
         });
 
