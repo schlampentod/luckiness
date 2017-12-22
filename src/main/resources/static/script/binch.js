@@ -12,7 +12,6 @@
     binch.ZERO_BIG_NUMBER = bigInt(0);
     binch.MIN_BIG_NUMBER = bigInt(1);
     binch.MAX_BIG_NUMBER = bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337");
-    binch.MAX_BIG_NUMBER = bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337");
     binch.BAR_LENGTH_PX = 1000;
 
     var chooserBarsNumber = 26; // TODO compute
@@ -46,7 +45,9 @@
     };
 
     binch.setProvidedChosenStringValue = function (providedValue) {
-        
+
+        logInfo("ProvidedChosenStringValue: " + providedValue);
+
         var bigValue = bigInt(providedValue);
 
         binch.chosenValue = bigValue;
@@ -55,7 +56,7 @@
 
         var scale = binch.MAX_BIG_NUMBER;
         for (var i = 0; i < 26; i++) {
-            newOffsets[i] = (bigValue.divmod(scale)).quotient;
+            newOffsets[i] = parseInt((bigValue.divmod(scale)).quotient.toString(10));
 
             bigValue = bigValue.subtract(scale.multiply((bigValue.divmod(scale)).quotient));
             scale = scale.divide(binch.BAR_LENGTH_PX);

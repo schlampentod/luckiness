@@ -42,11 +42,19 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
     };
 
     srv.incrementChosenValue = function (binchInstance) {
+        if(binch.MAX_BIG_NUMBER.lesserOrEquals(binch.chosenValue)){
+            return;
+        }
+
         var newValue = binch.chosenValue.add(binchInstance.BIG_ONE);
         binch.setProvidedChosenStringValue(newValue.toString(10));
     };
 
     srv.decrementChosenValue = function (binchInstance) {
+        if(binch.chosenValue.lesserOrEquals(binch.MIN_BIG_NUMBER)){
+            return;
+        }
+
         var newValue = binch.chosenValue.subtract(binchInstance.BIG_ONE);
         binch.setProvidedChosenStringValue(newValue.toString(10));
     };
