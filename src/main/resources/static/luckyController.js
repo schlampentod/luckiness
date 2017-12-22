@@ -2,7 +2,7 @@
  *
  */
 
-app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'luckyAddressService','$window', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, luckyAddressService, $window) {
+app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService','$window', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, $window) {
 
     var vm = this;
 
@@ -37,7 +37,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
         vm.luckyCtrlPma.luckyTotalGeneratedKeys++;
 
-        luckyAddressService.checkKeyInBlockChain(newVal).then(function (CheckKeyResultDto) {
+        addressAnalyticsService.checkKeyInBlockChain(newVal).then(function (CheckKeyResultDto) {
             if (CheckKeyResultDto['checkedKeyFound']) {
                 alert("Found: " + newVal);
             }
@@ -45,7 +45,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
             console.error(errors);
         });
 
-        luckyAddressService.resolveBitcoinAddressByKey(vm.luckyBarSumValue).then(function (AddressesResultDto) {
+        addressAnalyticsService.resolveBitcoinAddressByKey(vm.luckyBarSumValue).then(function (AddressesResultDto) {
             vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress = AddressesResultDto['publicAddressAsHex'];
         });
 

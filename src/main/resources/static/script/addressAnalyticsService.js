@@ -1,13 +1,13 @@
 /**
  *
  */
-app.service('luckyAddressService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', '$q','$window', function ($timeout, luckyConstants, luckyFactory, $http, $q, $window) {
+app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', '$q','$window', function ($timeout, luckyConstants, luckyFactory, $http, $q, $window) {
 
     var srv = this;
 
     srv.resolveBitcoinAddressByKey = function (keyValue) {
 
-        console.info("luckyAddressService: resolving: " + keyValue);
+        console.info("addressAnalyticsService: resolving: " + keyValue);
 
         var deferred = $q.defer();
 
@@ -17,7 +17,7 @@ app.service('luckyAddressService', ['$timeout', 'luckyConstants', 'luckyFactory'
             var AddressesResultDto = response.data;
             deferred.resolve(AddressesResultDto);
 
-            console.info("luckyAddressService: resolved to: " + AddressesResultDto['publicAddressAsHex']);
+            console.info("addressAnalyticsService: resolved to: " + AddressesResultDto['publicAddressAsHex']);
         });
 
         return deferred.promise;

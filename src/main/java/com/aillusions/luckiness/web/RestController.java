@@ -84,6 +84,7 @@ public class RestController {
         }
     }
 
+    // TODO https://lbc.cryptoguru.org/trophies
     // http://localhost:8080/rest/v1/lucky/known
     @RequestMapping(value = "/known", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
