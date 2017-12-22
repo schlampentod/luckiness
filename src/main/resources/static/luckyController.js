@@ -61,10 +61,10 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     $scope.getkeys = function (event) {
 
         if (event.keyCode == 38) {
-            luckyService.currentChooser.incrementChosenValue();
+            keyGenerationService.incrementChosenValue(luckyService.currentChooser);
             readBinchStatus();
         } else if (event.keyCode == 40) {
-            luckyService.currentChooser.decrementChosenValue();
+            keyGenerationService.decrementChosenValue(luckyService.currentChooser);
             readBinchStatus();
         }
     };

@@ -8,10 +8,4 @@ app.service('luckyService', ['$timeout', 'luckyConstants', 'luckyFactory', '$htt
 
     srv.currentChooser = binch;
 
-    srv.myServiceFunc = function () {
-        return luckyConstants.luckyConstant1;
-    };
-
-
-
 }]);

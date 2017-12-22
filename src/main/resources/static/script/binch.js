@@ -8,13 +8,12 @@
  */
 (function (binch, $, undefined) {
 
-    var BIG_ONE = bigInt("1");
-
-    var ZERO_BIG_NUMBER = bigInt(0);
-    var MIN_BIG_NUMBER = bigInt(1);
-    var MAX_BIG_NUMBER = bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337");
-
-    var barLengthPx = 1000;
+    binch.BIG_ONE = bigInt("1");
+    binch.ZERO_BIG_NUMBER = bigInt(0);
+    binch.MIN_BIG_NUMBER = bigInt(1);
+    binch.MAX_BIG_NUMBER = bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337");
+    binch.MAX_BIG_NUMBER = bigInt("115792089237316195423570985008687907852837564279074904382605163141518161494337");
+    binch.BAR_LENGTH_PX = 1000;
 
     var chooserBarsNumber = 26; // TODO compute
 
@@ -28,16 +27,6 @@
     //
     // Public methods
     //
-
-    binch.incrementChosenValue = function () {
-        binch.chosenValue = binch.chosenValue.add(BIG_ONE);
-        binch.setProvidedChosenStringValue(binch.chosenValue.toString(10));
-    };
-
-    binch.decrementChosenValue = function () {
-        binch.chosenValue = binch.chosenValue.subtract(BIG_ONE);
-        binch.setProvidedChosenStringValue(binch.chosenValue.toString(10));
-    };
 
     binch.getBinchBarOffsets = function () {
         var rv = [];
@@ -57,16 +46,19 @@
     };
 
     binch.setProvidedChosenStringValue = function (providedValue) {
+        
         var bigValue = bigInt(providedValue);
+
+        binch.chosenValue = bigValue;
 
         var newOffsets = new Array(26);
 
-        var scale = MAX_BIG_NUMBER;
+        var scale = binch.MAX_BIG_NUMBER;
         for (var i = 0; i < 26; i++) {
             newOffsets[i] = (bigValue.divmod(scale)).quotient;
 
             bigValue = bigValue.subtract(scale.multiply((bigValue.divmod(scale)).quotient));
-            scale = scale.divide(1000);
+            scale = scale.divide(binch.BAR_LENGTH_PX);
         }
 
         binch.setChooserBarsOffsets(newOffsets);
@@ -96,7 +88,7 @@
         var rv = bigInt(0);
 
         _.forEach(barOffsetValues, function (offsetVal, i) {
-            var luckyBarNet = getLuckyBarNetValue(offsetVal, i, barLengthPx);
+            var luckyBarNet = getLuckyBarNetValue(offsetVal, i, binch.BAR_LENGTH_PX);
             rv = rv.add(luckyBarNet);
         });
 
@@ -112,19 +104,19 @@
 
         var divisor = bigInt(slotsPerBar).pow(barIndex + 1);
 
-        if (MAX_BIG_NUMBER.lesserOrEquals(divisor)) {
+        if (binch.MAX_BIG_NUMBER.lesserOrEquals(divisor)) {
             return bigInt(1);
         } else {
-            return MAX_BIG_NUMBER.divide(divisor);
+            return binch.MAX_BIG_NUMBER.divide(divisor);
         }
     }
 
     function generateBinchBar(idx) {
         return {
             binchBarIndex: idx,
-            binchBarLengthPx: 1000,
+            binchBarLengthPx: binch.BAR_LENGTH_PX,
             binchBarOffsetPx: 500,
-            binchBarSnippetRange: getSnippetRangeByIndex(idx, barLengthPx).toString(10)
+            binchBarSnippetRange: getSnippetRangeByIndex(idx, binch.BAR_LENGTH_PX).toString(10)
         }
     }
 

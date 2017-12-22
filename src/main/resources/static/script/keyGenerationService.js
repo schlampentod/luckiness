@@ -41,4 +41,14 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
         binchInstance.setChooserBarsOffsets(offsets);
     };
 
+    srv.incrementChosenValue = function (binchInstance) {
+        var newValue = binch.chosenValue.add(binchInstance.BIG_ONE);
+        binch.setProvidedChosenStringValue(newValue.toString(10));
+    };
+
+    srv.decrementChosenValue = function (binchInstance) {
+        var newValue = binch.chosenValue.subtract(binchInstance.BIG_ONE);
+        binch.setProvidedChosenStringValue(newValue.toString(10));
+    };
+
 }]);
