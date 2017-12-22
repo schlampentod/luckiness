@@ -7,7 +7,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
     srv.resolveBitcoinAddressByKey = function (keyValue) {
 
-        console.info("addressAnalyticsService: resolving: " + keyValue);
+        // console.info("addressAnalyticsService: resolving: " + keyValue);
 
         var deferred = $q.defer();
 
@@ -17,7 +17,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
             var AddressesResultDto = response.data;
             deferred.resolve(AddressesResultDto);
             $("#idOfWIF").text(AddressesResultDto['privateKeyAsWIF']);//вывести на странице "privateKeyAsWIF"(из ответа на запрос)
-            console.info("addressAnalyticsService: resolved to: " + AddressesResultDto['publicAddressAsHex']);
+            // console.info("addressAnalyticsService: resolved to: " + AddressesResultDto['publicAddressAsHex']);
         });
 
         return deferred.promise;

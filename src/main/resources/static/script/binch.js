@@ -38,7 +38,12 @@
     binch.setChooserBarsOffsets = function (barsOffsets) {
 
         _.forEach(binch.binchBars, function (bar, i) {
-            bar.binchBarOffsetPx = barsOffsets[i];
+            if (barsOffsets[i] <= bar.binchBarMaxOffsetPx) {
+                bar.binchBarOffsetPx = barsOffsets[i];
+            } else {
+                bar.binchBarOffsetPx = bar.binchBarMaxOffsetPx;
+                console.info("Truncating bar [" + i + "] offset: from " + barsOffsets[i] + " to " + bar.binchBarMaxOffsetPx);
+            }
         });
 
         binch.chosenValue = calcBarsSumValue(barsOffsets);
@@ -61,6 +66,8 @@
         _.forEach(binch.binchBars, function (binchBar, i) {
             binch.binchBars[i] = generateBinchBar(i);
         });
+
+        binch.setChooserBarsOffsets(getDefaultInitialOffsets());
 
         logInfo("initialized: " + binch.binchBars.length + " bars.");
     }
@@ -99,7 +106,7 @@
 
             if (bigSumValue.lesserOrEquals(barRangeVal)) {
                 barOffset = 0;
-            } else if (i == barsNumber - 1) {
+            } else if (isLastBar(i)) {
                 barOffset = bigSumValue;
             } else {
                 var barOffset = bigSumValue.divmod(barRangeVal).quotient;
@@ -122,11 +129,16 @@
     }
 
     function generateBinchBar(idx) {
+
+        var barMaxOffset = isLastBar(idx) ? 114 : binch.BAR_LENGTH_PX;
+        var barRangeVal = calcBarRangeValue(idx, binch.BAR_LENGTH_PX);
+
         return {
             binchBarIndex: idx,
-            binchBarLengthPx: binch.BAR_LENGTH_PX,
-            binchBarOffsetPx: 500,
-            binchBarSnippetRange: calcBarRangeValue(idx, binch.BAR_LENGTH_PX)
+            binchBarMinOffsetPx: 0,
+            binchBarMaxOffsetPx: barMaxOffset,
+            binchBarOffsetPx: null,
+            binchBarSnippetRange: barRangeVal
         }
     }
 
@@ -146,6 +158,16 @@
 
     function logInfo(msg) {
         console.info("binch.js: " + msg);
+    }
+
+    function isLastBar(idx) {
+        return idx === (barsNumber - 1);
+    }
+
+    function getDefaultInitialOffsets() {
+        var initialOffsets = new Array(barsNumber);
+        initialOffsets.fill(binch.BAR_LENGTH_PX / 2);
+        return initialOffsets;
     }
 
     init();
