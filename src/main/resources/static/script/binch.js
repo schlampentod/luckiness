@@ -38,11 +38,14 @@
     binch.setChooserBarsOffsets = function (barsOffsets) {
 
         _.forEach(binch.binchBars, function (bar, i) {
-            if (barsOffsets[i] <= bar.binchBarMaxOffsetPx) {
-                bar.binchBarOffsetPx = barsOffsets[i];
-            } else {
+            if (barsOffsets[i] < bar.binchBarMinOffsetPx) {
+                bar.binchBarOffsetPx = bar.binchBarMinOffsetPx;
+                console.info("Truncated bar [" + i + "] offset: from " + barsOffsets[i] + " to " + bar.binchBarOffsetPx);
+            } else if (barsOffsets[i] > bar.binchBarMaxOffsetPx) {
+                console.info("Truncated bar [" + i + "] offset: from " + barsOffsets[i] + " to " + bar.binchBarOffsetPx);
                 bar.binchBarOffsetPx = bar.binchBarMaxOffsetPx;
-                console.info("Truncating bar [" + i + "] offset: from " + barsOffsets[i] + " to " + bar.binchBarMaxOffsetPx);
+            } else {
+                bar.binchBarOffsetPx = barsOffsets[i];
             }
         });
 
@@ -130,12 +133,13 @@
 
     function generateBinchBar(idx) {
 
-        var barMaxOffset = isLastBar(idx) ? 114 : binch.BAR_LENGTH_PX;
+        var barMainOffset = isLastBar(idx) ? 1 : 0;
+        var barMaxOffset = isLastBar(idx) ? 114 : binch.BAR_LENGTH_PX - 1;
         var barRangeVal = calcBarRangeValue(idx, binch.BAR_LENGTH_PX);
 
         return {
             binchBarIndex: idx,
-            binchBarMinOffsetPx: 0,
+            binchBarMinOffsetPx: barMainOffset,
             binchBarMaxOffsetPx: barMaxOffset,
             binchBarOffsetPx: null,
             binchBarSnippetRange: barRangeVal

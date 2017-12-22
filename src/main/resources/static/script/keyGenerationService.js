@@ -9,10 +9,8 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
         var offsets = binchInstance.getBinchBarOffsets();
 
         _.forEach(binchInstance.binchBars, function (bar, i) {
-            offsets[i] = 0;
+            offsets[i] = bar.binchBarMinOffsetPx;
         });
-
-        offsets[offsets.length - 1] = 1;
 
         binchInstance.setChooserBarsOffsets(offsets);
     };
@@ -21,10 +19,8 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
         var offsets = binchInstance.getBinchBarOffsets();
 
         _.forEach(binchInstance.binchBars, function (bar, i) {
-            offsets[i] = 1000; // TODO fixme
+            offsets[i] = bar.binchBarMaxOffsetPx;
         });
-
-        offsets[0] = 998;
 
         binchInstance.setChooserBarsOffsets(offsets);
     };
@@ -33,16 +29,14 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
         var offsets = binchInstance.getBinchBarOffsets();
 
         _.forEach(binchInstance.binchBars, function (bar, i) {
-            offsets[i] = Math.floor(Math.random() * 1000);
+            offsets[i] = Math.floor(Math.random() * bar.binchBarMaxOffsetPx);
         });
-
-        offsets[offsets.length - 1] = 999;
 
         binchInstance.setChooserBarsOffsets(offsets);
     };
 
     srv.incrementChosenValue = function (binchInstance) {
-        if(binch.MAX_BIG_NUMBER.lesserOrEquals(binch.chosenValue)){
+        if (binch.MAX_BIG_NUMBER.lesserOrEquals(binch.chosenValue)) {
             return;
         }
 
@@ -51,7 +45,7 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
     };
 
     srv.decrementChosenValue = function (binchInstance) {
-        if(binch.chosenValue.lesserOrEquals(binch.MIN_BIG_NUMBER)){
+        if (binch.chosenValue.lesserOrEquals(binch.MIN_BIG_NUMBER)) {
             return;
         }
 
