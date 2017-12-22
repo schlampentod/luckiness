@@ -77,14 +77,15 @@ public class RestController {
 
             System.out.println(providedKey + " -> " + testBtcAddress + " in " + (System.currentTimeMillis() - start) + " ms: ");
 
-            return new AddressesResultDto(privateKeyAsHex, publicKeyAsHex, testBtcAddress);
+            return new AddressesResultDto(privateKeyAsHex, publicKeyAsHex, RestController.keyToWif(key), testBtcAddress);
         } catch (Exception e) {
             System.out.println("Unable to resolve key: " + ExceptionUtils.getMessage(e));
-            return new AddressesResultDto(null, null, null);
+            return new AddressesResultDto();
         }
     }
 
     // TODO https://lbc.cryptoguru.org/trophies
+    // TODO https://www.blockshack.com/
     // http://localhost:8080/rest/v1/lucky/known
     @RequestMapping(value = "/known", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
@@ -197,11 +198,15 @@ public class RestController {
     }
 
     public static ECKey getKeyFromHex(String hex) {
-        return  RestController.getNewECKey(new BigInteger(hex, 16));
+        return RestController.getNewECKey(new BigInteger(hex, 16));
     }
 
     public static ECKey getKeyFromWIFBase58(String base58) {
         DumpedPrivateKey dumpedKey = DumpedPrivateKey.fromBase58(MainNetParams.get(), base58);
         return dumpedKey.getKey();
+    }
+
+    public static String keyToWif(ECKey key) {
+        return key.getPrivateKeyAsWiF(MainNetParams.get());
     }
 }

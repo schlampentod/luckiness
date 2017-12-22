@@ -3,7 +3,6 @@ package com.aillusions.luckiness;
 import com.aillusions.luckiness.web.RestController;
 import junit.framework.TestCase;
 import org.bitcoinj.core.ECKey;
-import org.bitcoinj.params.MainNetParams;
 
 import java.math.BigInteger;
 
@@ -26,7 +25,7 @@ public class TestAddress extends TestCase {
             String privateKeyHex = "0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D";
             BigInteger privateKeyBigInt = new BigInteger(privateKeyHex, 16);
             ECKey key = RestController.getNewECKey(privateKeyBigInt);
-            String wifBase58 = key.getPrivateKeyAsWiF(MainNetParams.get());
+            String wifBase58 = RestController.keyToWif(key);
             System.out.println("wifBase58: " + wifBase58);
             assertEquals("5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ", wifBase58);
         }
