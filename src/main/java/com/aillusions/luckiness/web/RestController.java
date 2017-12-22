@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * @author aillusions
@@ -130,6 +132,12 @@ public class RestController {
         rv.getKnownKeyDtos().add(new KnownKeyDto("84910071079903469711540322182995519010752598753241787550350295165653577042301"));
         rv.getKnownKeyDtos().add(new KnownKeyDto("26620332071894918181543005365761258030749426457641997779997397538985897748066"));
 
+        Collections.sort(rv.getKnownKeyDtos(), new Comparator<KnownKeyDto>() {
+            @Override
+            public int compare(KnownKeyDto o1, KnownKeyDto o2) {
+                return new BigInteger(o1.getKnownKeyDecimal()).compareTo(new BigInteger(o2.getKnownKeyDecimal()));
+            }
+        });
         /*5JYXsLxHETxLGAghRQdixF4DGzV5ktopu4wjsuVmjCMZ58Yk24r
         5JdeC9P7Pbd1uGdFVEsJ41EkEnADbbHGq6p1BwFxm6txNBsQnsw
         5KRrMAF43VBU3dtkVAPa8yctHMVxTcMdDm6vuZ4QXAwYZpvLYRd
