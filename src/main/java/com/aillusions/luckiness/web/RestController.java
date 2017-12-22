@@ -95,15 +95,23 @@ public class RestController {
         rv.getKnownKeyDtos().add(new KnownKeyDto("3"));
         rv.getKnownKeyDtos().add(new KnownKeyDto("4"));
         rv.getKnownKeyDtos().add(new KnownKeyDto("5"));
-        rv.getKnownKeyDtos().add(new KnownKeyDto("48635463943209834798109814161294753926839975257569795305637098542720658922315"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("48635463943209834798109814161294753926839975257569795305637098542720658922315")); // 5JdeC9P7Pbd1uGdFVEsJ41EkEnADbbHGq6p1BwFxm6txNBsQnsw > 12AKRNHpFhDSBDD9rSn74VAzZSL3774PxQ
+        rv.getKnownKeyDtos().add(new KnownKeyDto("85373582762808404920801888792437094602169475096082456154754419692323304989563")); // 5KFQvLvrmhFEcMpYWLCjALW7UR7EPz8tyWuP56qmhu4GnVeNCGq > 12NEsPS2tPhjXJHd3kGkTvQ7ECGypuxbeo
         return rv;
     }
 
-    // http://localhost:8080/rest/v1/lucky/convert/5JdeC9P7Pbd1uGdFVEsJ41EkEnADbbHGq6p1BwFxm6txNBsQnsw
-    @RequestMapping(value = "/convert/{providedBase58Key}", method = RequestMethod.GET, produces = "application/json")
+    // http://localhost:8080/rest/v1/lucky/convert/base68/5JdeC9P7Pbd1uGdFVEsJ41EkEnADbbHGq6p1BwFxm6txNBsQnsw
+    @RequestMapping(value = "/convert/base68/{providedBase58Key}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public ConvertedKeyDto convert(@PathVariable String providedBase58Key) {
+    public ConvertedKeyDto convertWIF(@PathVariable String providedBase58Key) {
         return new ConvertedKeyDto(getKeyFromWIFBase58(providedBase58Key).getPrivKey().toString(10));
+    }
+
+    // http://localhost:8080/rest/v1/lucky/convert/hex/6B86B273FF34FCE19D6B804EFF5A3F5747ADA4EAA22F1D49C01E52DDB7875B4B
+    @RequestMapping(value = "/convert/hex/{providedHexKey}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public ConvertedKeyDto convertHex(@PathVariable String providedHexKey) {
+        return new ConvertedKeyDto(getKeyFromHex(providedHexKey).getPrivKey().toString(10));
     }
 
     public boolean checkBatchFor(String providedKey) {
@@ -187,6 +195,9 @@ public class RestController {
         return addressFromKey.toBase58();
     }
 
+    public static ECKey getKeyFromHex(String hex) {
+        return  RestController.getNewECKey(new BigInteger(hex, 16));
+    }
 
     public static ECKey getKeyFromWIFBase58(String base58) {
         DumpedPrivateKey dumpedKey = DumpedPrivateKey.fromBase58(MainNetParams.get(), base58);
