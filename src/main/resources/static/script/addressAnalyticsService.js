@@ -1,7 +1,7 @@
 /**
  *
  */
-app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', '$q','$window','$rootScope', function ($timeout, luckyConstants, luckyFactory, $http, $q, $window,$rootScope) {
+app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', '$q', '$window', '$rootScope', function ($timeout, luckyConstants, luckyFactory, $http, $q, $window, $rootScope) {
 
     var srv = this;
 
@@ -31,13 +31,14 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
             deferred.reject("Unable to check invalid key: " + keyValue);
         } else {
 
-            var promise = $http.get('/rest/v1/lucky/check/' + keyValue);
-            promise.then(function (CheckKeyResultDto) {
+            var promise = $http.get('http://192.168.1.102:8080/rest/v1/lucky/check/' + keyValue);
+            promise.then(function (response) {
 
+                var CheckKeyResultDto = response.data;
                 var isFound = CheckKeyResultDto['checkedKeyFound'];
                 if (isFound) {
-                    var numberOfKey=$window.localStorage.length;       //если ключ совпал - забить в локалсторадж
-                    $window.localStorage.setItem(numberOfKey,keyValue);
+                    var numberOfKey = $window.localStorage.length;       //если ключ совпал - забить в локалсторадж
+                    $window.localStorage.setItem(numberOfKey, keyValue);
                     console.info("Found: " + keyValue);
                 }
                 deferred.resolve(CheckKeyResultDto);
@@ -49,10 +50,11 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
     $rootScope.selectedMagicKeys;
     $.get('/rest/v1/lucky/known').done(function (data) {//забить некоторые данные в маленикий, ебучий списочек
-        $rootScope.listOfMagicKeys=[];
-        for(var i=0;i<data.knownKeyDtos.length;i++){
-            $rootScope.listOfMagicKeys[i]=data.knownKeyDtos[i];
-        };
+        $rootScope.listOfMagicKeys = [];
+        for (var i = 0; i < data.knownKeyDtos.length; i++) {
+            $rootScope.listOfMagicKeys[i] = data.knownKeyDtos[i];
+        }
+        ;
         //$rootScope.selectedMagicKeys.knownKeyDecimal;
     });
 
