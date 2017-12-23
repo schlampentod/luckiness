@@ -95,7 +95,7 @@ public class RestController {
         KnownKeysDto rv = new KnownKeysDto();
 
     /*
-        http://localhost:8080/rest/v1/lucky/convert/base68/5JdeC9P7Pbd1uGdFVEsJ41EkEnADbbHGq6p1BwFxm6txNBsQnsw
+        http://localhost:8080/rest/v1/lucky/convert/base68/5JApJM8iAcxJ3JgW5oiRVKNrvpmqvqzSvkaEBC7cEoFvSE8h1rN
     */
 
         rv.getKnownKeyDtos().add(new KnownKeyDto("1"));
@@ -141,6 +141,16 @@ public class RestController {
         rv.getKnownKeyDtos().add(new KnownKeyDto("21084577330837739369726464359992438658490297576745957612705280406384195231572"));
         rv.getKnownKeyDtos().add(new KnownKeyDto("16206629509484900278185934256394058544247806074329441863030135040696487329819"));
 
+        rv.getKnownKeyDtos().add(new KnownKeyDto("77194726158210796949047323339125271902179989777093709359638389338608753093290"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("128"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("105"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("97"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("81"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("66"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("98675694130411510693845893181359175902614576286020627467498811268541903893103"));
+        rv.getKnownKeyDtos().add(new KnownKeyDto("68084331379661139878044811113493142426362492056136683088026367871757575059"));
+
+        
         Collections.sort(rv.getKnownKeyDtos(), new Comparator<KnownKeyDto>() {
             @Override
             public int compare(KnownKeyDto o1, KnownKeyDto o2) {
