@@ -30,9 +30,38 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
 
         // Subscribe
         getLuckyBarElem().mousemove(function (evt) {
-            scope.luckySliderOffset = evt.offsetX - 1;
-            onLuckySliderMoved(scope.luckySliderOffset);
+            handleMotion(evt)
         });
+
+        getLuckyBarElem().click(function (evt) {
+
+            handleMotion(evt)
+        });
+
+        function handleMotion(evt) {
+
+            if (evt.shiftKey) {
+
+            }
+
+            if (evt.ctrlKey || evt.type == "click" || detectLeftButton(evt)) {
+                scope.luckySliderOffset = evt.offsetX - 1;
+                onLuckySliderMoved(scope.luckySliderOffset);
+            }
+
+            if (evt.altKey) {
+
+            }
+        }
+
+        function detectLeftButton(evt) {
+            evt = evt || window.event;
+            if ("buttons" in evt) {
+                return evt.buttons == 1;
+            }
+            var button = evt.which || evt.button;
+            return button == 1;
+        }
 
         function onLuckySliderMoved(newOffset) {
             var sliderElem = getLuckySliderElem();
