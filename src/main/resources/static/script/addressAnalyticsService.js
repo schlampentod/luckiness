@@ -36,11 +36,20 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
                 var CheckKeyResultDto = response.data;
                 var isFound = CheckKeyResultDto['checkedKeyFound'];
+
                 if (isFound) {
-                    var numberOfKey = $window.localStorage.length;       //если ключ совпал - забить в локалсторадж
-                    $window.localStorage.setItem(numberOfKey, keyValue);
-                    console.info("Found: " + keyValue);
+
+                    var isThisKnownKey = null !== _.find($rootScope.listOfMagicKeys, function (obj) {
+                        return obj.knownKeyDecimal == keyValue;
+                    });
+
+                    if (!isThisKnownKey) {
+                        var numberOfKey = $window.localStorage.length;       //если ключ совпал - забить в локалсторадж
+                        $window.localStorage.setItem(numberOfKey, keyValue);
+                        console.info("Found: " + keyValue);
+                    }
                 }
+
                 deferred.resolve(CheckKeyResultDto);
             });
         }
@@ -49,14 +58,11 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
     };
 
     $rootScope.selectedMagicKeys;
-    $.get('/rest/v1/lucky/known').done(function (data) {//забить некоторые данные в маленикий, ебучий списочек
+    $.get('/rest/v1/lucky/known').done(function (data) {
         $rootScope.listOfMagicKeys = [];
         for (var i = 0; i < data.knownKeyDtos.length; i++) {
             $rootScope.listOfMagicKeys[i] = data.knownKeyDtos[i];
         }
-        ;
-        //$rootScope.selectedMagicKeys.knownKeyDecimal;
     });
-
 
 }]);
