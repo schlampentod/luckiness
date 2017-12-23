@@ -22,6 +22,18 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     $scope.selectedMagicKeys = null;
 
+    var allKeyIsPressed = false;
+    $(document).keyup(function (evt) {
+        if (evt.keyCode == 65) {
+            allKeyIsPressed = false;
+        }
+    }).keydown(function (evt) {
+        if (evt.keyCode == 65) {
+            allKeyIsPressed = true;
+            // console.log('A')
+        }
+    });
+
     $scope.funcXyjank = function () {//передать некоторые маленькие ебучие данные, в ебучее текстовое поле
         vm.luckyBarSumValue = $scope.selectedMagicKeys.knownKeyDecimal;//$("#myselect option:selected").text();
     };
@@ -29,8 +41,25 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     $scope.$watch(function () { // по изменению массива расположений баров генерить "Key" и "Address"
         return vm.luckyBinchBarsOffsets;
     }, function (newVal, oldVal) {
+
+        if (allKeyIsPressed) {
+
+            var changeIdxes = findChangedBarIndexes(newVal, oldVal);
+            if (changeIdxes.length === 1) {
+                var changedIdx = changeIdxes[0];
+                var changeDelta = newVal[changedIdx] - oldVal[changedIdx];
+
+                _.forEach(vm.luckyBinchBarsOffsets, function (barOffset, i) {
+                    vm.luckyBinchBarsOffsets[i] = vm.luckyBinchBarsOffsets[i] + changeDelta;
+                });
+
+                return;
+            }
+        }
+
         luckyService.currentChooser.setChooserBarsOffsets(vm.luckyBinchBarsOffsets);
         readBinchStatus();
+
     }, true);
 
     $scope.$watch(function () { // наблюдаем и отправляем запросики, и забиваем Address-суличку..
@@ -146,6 +175,18 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     function readBinchStatus() {
         vm.luckyBinchBarsOffsets = luckyService.currentChooser.getBinchBarOffsets();
         vm.luckyBarSumValue = luckyService.currentChooser.chosenValue.toString(10);
+    }
+
+    function findChangedBarIndexes(newVal, oldVal) {
+        var rv = [];
+
+        _.forEach(newVal, function (barOffset, i) {
+            if (newVal[i] != oldVal[i]) {
+                rv.push(i);
+            }
+        });
+
+        return rv;
     }
 
     readBinchStatus();
