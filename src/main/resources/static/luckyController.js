@@ -13,7 +13,8 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     vm.luckyCtrlDerivedKeys = {
         luckyKeyPublicAddress: null,
-        luckyKeyPrivateKeyAsWIF: null
+        luckyKeyPrivateKeyAsWIF: null,
+        luckyKeyWasFound: false
     };
 
     vm.luckyBinchBarsOffsets = [];
@@ -45,9 +46,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         vm.luckyCtrlPma.luckyTotalGeneratedKeys++;
 
         addressAnalyticsService.checkKeyInBlockChain(newVal).then(function (CheckKeyResultDto) {
-            if (CheckKeyResultDto['checkedKeyFound']) {
-                alert("Found: " + newVal);
-            }
+            vm.luckyCtrlDerivedKeys.luckyKeyWasFound = CheckKeyResultDto['checkedKeyFound'];
         }, function (errors) {
             console.error(errors);
         });
