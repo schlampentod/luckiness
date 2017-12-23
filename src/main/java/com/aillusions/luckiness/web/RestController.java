@@ -156,6 +156,10 @@ public class RestController {
 
             //System.out.println("Checking: " + thisVal);
 
+            if(KnownKeysProvider.getKnownKeys().contains(thisVal.toString(10))){
+                continue;
+            }
+
             if (bloomFilter.has(testBtcAddress)) {
                 logFound(key);
                 return true;

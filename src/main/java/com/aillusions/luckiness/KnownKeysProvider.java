@@ -8,9 +8,9 @@ import java.util.Set;
 */
 public class KnownKeysProvider {
 
-    public static Set<String> getKnownKeys() {
-        Set<String> rv = new HashSet<>();
+    static Set<String> rv = new HashSet<>();
 
+    static {
         rv.add("1");
         rv.add("2");
         rv.add("3");
@@ -59,7 +59,9 @@ public class KnownKeysProvider {
         rv.add("66");
         rv.add("98675694130411510693845893181359175902614576286020627467498811268541903893103");
         rv.add("68084331379661139878044811113493142426362492056136683088026367871757575059");
+    }
 
+    public static Set<String> getKnownKeys() {
         return rv;
     }
 }
