@@ -3,8 +3,6 @@ package com.aillusions.luckiness.web;
 import com.aillusions.luckiness.AsyncService;
 import com.aillusions.luckiness.DormantAddressProvider;
 import com.aillusions.luckiness.DormantBloomFilter;
-import com.google.common.hash.BloomFilter;
-import com.google.common.hash.Funnels;
 import lombok.Setter;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.bitcoinj.core.*;
@@ -12,10 +10,7 @@ import org.bitcoinj.params.MainNetParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -28,26 +23,15 @@ import java.util.Comparator;
 @Setter
 public class RestController {
 
-    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(6L);
+    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(50L);
 
     private static final BigInteger MIN_BTC_KEY = new BigInteger("1");
     private static final BigInteger MAX_BTC_KEY = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494337");
 
     private DormantBloomFilter bloomFilter;
 
-    BloomFilter BLOOM_FILTER;
-
     {
-        DormantAddressProvider prov = new DormantAddressProvider();
-        bloomFilter = new DormantBloomFilter(prov.getDormantAddresses());
-
-        try {
-            BLOOM_FILTER = BloomFilter.readFrom(new FileInputStream("g:\\csv_dump\\addr_all.bin"),
-                    Funnels.stringFunnel(Charset.forName("UTF-8")));
-        } catch (IOException e) {
-            BLOOM_FILTER = null;
-            e.printStackTrace();
-        }
+        bloomFilter = new DormantBloomFilter(new DormantAddressProvider().getDormantAddresses());
     }
 
     @Autowired
@@ -69,16 +53,12 @@ public class RestController {
 
         try {
             validateKeyValue(providedKey);
-            if (BLOOM_FILTER != null) {
-                return new CheckKeyResultDto(checkAllfor(providedKey));
-            }else{
-                return new CheckKeyResultDto(checkBatchFor(providedKey));
-            }
+            return new CheckKeyResultDto(checkBatchFor(providedKey));
         } catch (Exception e) {
             System.out.println("Unable to check key: " + ExceptionUtils.getMessage(e));
             return new CheckKeyResultDto(false);
         } finally {
-            // System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
+            System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
         }
     }
 
@@ -190,7 +170,7 @@ public class RestController {
         ECKey key = getNewECKey(origKey);
         String testBtcAddress = getBtcAddress(key);
 
-        boolean rv = BLOOM_FILTER.mightContain(testBtcAddress);
+        boolean rv = bloomFilter.has(testBtcAddress);
 
         if (rv) {
             logFound(key);

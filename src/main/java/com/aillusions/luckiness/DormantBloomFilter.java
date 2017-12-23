@@ -3,6 +3,8 @@ package com.aillusions.luckiness;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -17,13 +19,21 @@ public class DormantBloomFilter {
 
     public DormantBloomFilter(List<String> listOfLines) {
 
-        filter = BloomFilter.create(
-                Funnels.stringFunnel(Charset.forName(UTF_8)),
-                listOfLines.size(),
-                0.00000000000000001/*1F / listOfLines.size()*/);
+        try {
+            filter = BloomFilter.readFrom(new FileInputStream("g:\\csv_dump\\addr_all.bin"),
+                    Funnels.stringFunnel(Charset.forName("UTF-8")));
+        } catch (IOException e) {
 
-        for (String address : listOfLines) {
-            filter.put(address);
+            e.printStackTrace();
+
+            filter = BloomFilter.create(
+                    Funnels.stringFunnel(Charset.forName(UTF_8)),
+                    listOfLines.size(),
+                    0.00000000000000001/*1F / listOfLines.size()*/);
+
+            for (String address : listOfLines) {
+                filter.put(address);
+            }
         }
     }
 
