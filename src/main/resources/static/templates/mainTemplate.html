@@ -16,7 +16,7 @@
 
 
     <div class="lucky_bars_container">
-        <div ng-repeat="n in luckyCtrl.luckyBinchBarsOffsets track by $index" ng-keydown="changeOffSets($event,$index,luckyBarId)"
+        <div ng-repeat="n in luckyCtrl.luckyBinchBarsOffsets track by $index" ng-keydown="changeOffSets($event,$index)"
              lucky-directive="{{$index}}" ng-model="luckyCtrl.luckyBinchBarsOffsets[$index]"
              id="{{luckyBarId}}">
         </div>

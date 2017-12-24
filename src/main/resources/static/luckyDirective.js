@@ -98,14 +98,6 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
                 debugger;
             }
         }, true);
-
-        scope.$watch(function () {
-            return scope.luckySliderOffset;
-        }, function (newValue, oldValue) {
-
-                onLuckySliderMoved(newValue);
-
-        }, true);
     }
 
     return {
