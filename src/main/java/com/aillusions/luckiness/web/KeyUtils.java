@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class KeyUtils {
 
-    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(50L);
+    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(10L);
 
     private static final BigInteger MIN_BTC_KEY = new BigInteger("1");
     private static final BigInteger MAX_BTC_KEY = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494337");
@@ -89,15 +89,15 @@ public class KeyUtils {
         BigInteger origKey = new BigInteger(providedKey);
 
         BigInteger from = origKey.subtract(CHECK_RANGE);
-        if (from.compareTo(BigInteger.ZERO) < 0) {
-            from = origKey;
-        }
-
         BigInteger to = origKey.add(CHECK_RANGE);
 
         BigInteger thisVal = from;
 
         do {
+
+            if (thisVal.compareTo(MIN_BTC_KEY) < 0 || thisVal.compareTo(MAX_BTC_KEY) > 0) {
+                continue;
+            }
 
             String thisValDec = thisVal.toString(10);
             ECKey key = getNewECKey(thisVal);
