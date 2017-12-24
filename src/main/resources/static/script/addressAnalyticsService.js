@@ -48,7 +48,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
                         var isThisKnownKey = null != knownKeyObj;
 
                         if (!isThisKnownKey) {
-                            var lengthlocalStorage = $window.localStorage.length;
+                            $rootScope.numberOfKeys = $window.localStorage.length;
                             var bool=false;
                             for(var i=0;i<lengthlocalStorage;i++){
                                 if(matchedKey==$window.localStorage.getItem(i)){
@@ -92,6 +92,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
     $rootScope.selectedKnownKey;
     $.get(/*createUrl(*/'/rest/v1/lucky/known'/*)*/).done(function (data) {
         $rootScope.listOfKnownKeys = [];
+        $rootScope.numberOfKeys=data.knownKeyDtos.length;
         for (var i = 0; i < data.knownKeyDtos.length; i++) {
             $rootScope.listOfKnownKeys[i] = data.knownKeyDtos[i];
         }
