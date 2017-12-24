@@ -34,8 +34,8 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         }
     });
 
-    $scope.funcXyjank = function () {//передать некоторые маленькие ебучие данные, в ебучее текстовое поле
-        vm.luckyBarSumValue = $scope.selectedMagicKeys.knownKeyDecimal;//$("#myselect option:selected").text();
+    $scope.funcXyjank = function () {
+        vm.luckyBarSumValue = $scope.selectedMagicKeys.knownKeyDecimal;
     };
 
     $scope.$watch(function () { // по изменению массива расположений баров генерить "Key" и "Address"

@@ -10,6 +10,10 @@
  */
 (function (binch, $, undefined) {
 
+    //
+    // Public constants
+    //
+
     binch.BIG_ONE = bigInt("1");
     binch.ZERO_BIG_NUMBER = bigInt(0);
     binch.MIN_BIG_NUMBER = bigInt(1);

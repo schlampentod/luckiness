@@ -13,11 +13,8 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
         var promise = $http.get('/rest/v1/lucky/resolve/' + keyValue);
         promise.then(function (response) {
-
             var AddressesResultDto = response.data;
             deferred.resolve(AddressesResultDto);
-            //$("#idOfWIF").text(AddressesResultDto['privateKeyAsWIF']);//вывести на странице "privateKeyAsWIF"(из ответа на запрос)
-            // console.info("addressAnalyticsService: resolved to: " + AddressesResultDto['publicAddressAsHex']);
         });
 
         return deferred.promise;
