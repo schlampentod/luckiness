@@ -25,9 +25,11 @@ public class DormantBloomFilter {
             filter = BloomFilter.readFrom(new FileInputStream("g:\\csv_dump\\addr_all.bin"),
                     Funnels.stringFunnel(Charset.forName("UTF-8")));
         } catch (IOException e) {
-
+            filter = null;
             e.printStackTrace();
+        }
 
+        if (filter == null) {
             filter = BloomFilter.create(
                     Funnels.stringFunnel(Charset.forName(UTF_8)),
                     listOfLines.size(),
@@ -38,7 +40,7 @@ public class DormantBloomFilter {
             }
         }
 
-        System.out.println("DormantBloomFilter initialized in: " + (System.currentTimeMillis() - start) + "ms.");
+        System.out.println("DormantBloomFilter initialized in: " + (System.currentTimeMillis() - start) + " ms.");
     }
 
     public boolean has(String addr) {

@@ -1,5 +1,8 @@
 package com.aillusions.luckiness;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,6 +10,12 @@ import java.util.Set;
     http://localhost:8080/rest/v1/lucky/convert/base68/5JApJM8iAcxJ3JgW5oiRVKNrvpmqvqzSvkaEBC7cEoFvSE8h1rN
 */
 public class KnownKeysProvider {
+
+    private static final Logger LOGGER  = LoggerFactory.getLogger(KnownKeysProvider.class);
+
+    {
+        LOGGER .info("Initialized known keys.");
+    }
 
     static Set<String> rv = new HashSet<>();
 
