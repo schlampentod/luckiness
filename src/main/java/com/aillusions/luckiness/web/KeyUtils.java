@@ -7,6 +7,7 @@ import org.bitcoinj.core.*;
 import org.bitcoinj.params.MainNetParams;
 
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +27,8 @@ public class KeyUtils {
         bloomFilter = new DormantBloomFilter(new DormantAddressProvider().getDormantAddresses());
     }
 
-    private static final Set<String> LOGGED_KEYS = new HashSet<>();
+    private static final Set<String> LOGGED_KEYS = Collections.synchronizedSet(new HashSet<>());
+
 
     public static ECKey getNewECKey(String providedKeyValue) {
         return new CustomECKey(validateKeyValue(providedKeyValue));
