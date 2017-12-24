@@ -40,7 +40,7 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
             return;
         }
 
-        var newValue = binch.chosenValue.add(bigInt("100")/*binchInstance.BIG_ONE*/);
+        var newValue = binch.chosenValue.add(bigInt("1000")/*binchInstance.BIG_ONE*/);
         binch.setProvidedChosenStringValue(newValue.toString(10));
     };
 
@@ -49,7 +49,7 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
             return;
         }
 
-        var newValue = binch.chosenValue.subtract(bigInt("100")/*binchInstance.BIG_ONE*/);
+        var newValue = binch.chosenValue.subtract(bigInt("1000")/*binchInstance.BIG_ONE*/);
         binch.setProvidedChosenStringValue(newValue.toString(10));
     };
 

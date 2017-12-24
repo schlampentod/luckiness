@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class KeyUtils {
 
-    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(50L);
+    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(500L);
 
     private static final BigInteger MIN_BTC_KEY = new BigInteger("1");
     private static final BigInteger MAX_BTC_KEY = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494337");
