@@ -75,7 +75,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         vm.luckyCtrlPma.luckyTotalGeneratedKeys++;
 
         addressAnalyticsService.checkKeyInBlockChain(newVal).then(function (CheckKeyResultDto) {
-            vm.luckyCtrlDerivedKeys.luckyKeyWasFound = CheckKeyResultDto['checkedKeyFound'];
+            vm.luckyCtrlDerivedKeys.luckyKeyWasFound = ( _.includes(CheckKeyResultDto['checkedKeysMatched'], newVal) && CheckKeyResultDto['checkedKeyFound']);
         }, function (errors) {
             console.error(errors);
         });
