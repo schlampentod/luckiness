@@ -83,7 +83,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
             var balance = response.data;
             deferred.resolve(balance);
         }, function (errors) {
-            alert(errors);
+            console.error(errors);
         });
 
         return deferred.promise;

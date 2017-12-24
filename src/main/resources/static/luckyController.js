@@ -2,7 +2,7 @@
  *
  */
 
-app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService', '$window', 'keyGenerationService', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, $window, keyGenerationService) {
+app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService', '$window', 'keyGenerationService', '$timeout', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, $window, keyGenerationService, $timeout) {
 
     var vm = this;
 
@@ -87,6 +87,19 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     $scope.$watch(function () { // наблюдаем и отправляем запросики, и забиваем Address-суличку..
         return vm.luckyBarSumValue;
     }, function (newVal, oldVal) {
+
+        /*if ("115792089237316195423570985008687907852837564279074904382605163141518161494337" === newVal) {
+            //$timeout(function () {
+            //vm.luckyBarSumValue = "0";
+            generateRandomOffsets();
+            return;
+            //}, 100);
+        } else if ("0" === newVal) {
+            //$timeout(function () {
+            generateRandomOffsets();
+            return;
+            //}, 100);
+        }*/
 
         if (vm.luckyBarSumValue !== luckyService.currentChooser.chosenValue.toString(10)) {
             luckyService.currentChooser.setProvidedChosenStringValue(vm.luckyBarSumValue);
@@ -181,7 +194,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         } else {
             vm.luckyCtrlPma.luckyBatchGenerationInterval = $interval(function () {
                 generateRandomOffsets();
-            }, 200);
+            }, 25);
         }
     };
 
