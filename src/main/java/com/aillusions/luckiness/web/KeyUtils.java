@@ -76,7 +76,10 @@ public class KeyUtils {
         return key.getPrivateKeyAsWiF(MainNetParams.get());
     }
 
-    public static boolean checkBatchFor(String providedKey) {
+    public static CheckBatchResponse checkBatchFor(String providedKey) {
+
+        CheckBatchResponse rv = new CheckBatchResponse();
+
         BigInteger origKey = new BigInteger(providedKey);
 
         BigInteger from = origKey.subtract(CHECK_RANGE);
@@ -90,37 +93,20 @@ public class KeyUtils {
 
         do {
 
+            String thisValDec = thisVal.toString(10);
             ECKey key = getNewECKey(thisVal);
             String testBtcAddress = getBtcAddress(key);
 
-            //System.out.println("Checking: " + thisVal);
-
-            if (KnownKeysProvider.getKnownKeys().contains(thisVal.toString(10))) {
-                continue;
-            }
-
             if (bloomFilter.has(testBtcAddress)) {
-                logFound(key);
-                return true;
+                if(!KnownKeysProvider.getKnownKeys().contains(thisValDec)){
+                    logFound(key);
+                }
+                rv.getFoundKeys().add(thisValDec);
             }
 
             thisVal = thisVal.add(BigInteger.ONE);
 
         } while (thisVal.compareTo(to) <= 0);
-
-        return false;
-    }
-
-    public static boolean checkAllfor(String providedKey) {
-        BigInteger origKey = new BigInteger(providedKey);
-        ECKey key = getNewECKey(origKey);
-        String testBtcAddress = getBtcAddress(key);
-
-        boolean rv = bloomFilter.has(testBtcAddress);
-
-        if (rv) {
-            logFound(key);
-        }
 
         return rv;
     }
@@ -140,4 +126,5 @@ public class KeyUtils {
 
 
     }
+
 }

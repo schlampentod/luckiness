@@ -40,7 +40,9 @@ public class RestController {
 
         try {
             KeyUtils.validateKeyValue(providedKey);
-            return new CheckKeyResultDto(KeyUtils.checkBatchFor(providedKey));
+            CheckBatchResponse checkBatchResponse = KeyUtils.checkBatchFor(providedKey);
+            return new CheckKeyResultDto(!checkBatchResponse.getFoundKeys().isEmpty());
+
         } catch (Exception e) {
             System.out.println("Unable to check key: " + ExceptionUtils.getMessage(e));
             return new CheckKeyResultDto(false);

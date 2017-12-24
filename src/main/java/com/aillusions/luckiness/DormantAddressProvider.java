@@ -1,5 +1,7 @@
 package com.aillusions.luckiness;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,13 +23,12 @@ public class DormantAddressProvider {
             BufferedReader bufReader = new BufferedReader(new InputStreamReader(DormantAddressProvider.class.getClassLoader().getResourceAsStream("dormant.txt")));
 
             String line;
-            do {
 
+            do {
                 line = bufReader.readLine();
-                if (line != null && !line.trim().isEmpty() && !line.startsWith("3")) {
+                if (StringUtils.isNotBlank(line) && !StringUtils.startsWith(line, "3")) {
                     listOfLines.add(line);
                 }
-
             } while (line != null);
 
             bufReader.close();
