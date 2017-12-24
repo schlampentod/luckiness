@@ -48,8 +48,19 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
                         var isThisKnownKey = null != knownKeyObj;
 
                         if (!isThisKnownKey) {
-                            var numberOfKey = $window.localStorage.length;       //если ключ совпал - забить в локалсторадж
-                            $window.localStorage.setItem(numberOfKey, matchedKey);
+                            var lengthlocalStorage = $window.localStorage.length;
+                            var bool=false;
+                            for(var i=0;i<lengthlocalStorage;i++){
+                                if(matchedKey==$window.localStorage.getItem(i)){
+                                    bool=true;
+                                    return;
+                                }
+                            };
+                            if(bool==false){
+                                var numberOfKey = $window.localStorage.length;       //если ключ совпал - забить в локалсторадж
+                                $window.localStorage.setItem(numberOfKey, matchedKey);
+                            };
+
                         }
                     });
                 }
