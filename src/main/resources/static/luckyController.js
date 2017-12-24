@@ -18,10 +18,31 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         luckyKeyWasFound: false
     };
 
+    vm.luckyBarsSameOffset = 0;
     vm.luckyBinchBarsOffsets = [];
     vm.luckyBarSumValue = "";
 
     $scope.selectedKnownKey = null;
+
+    $scope.$watch(function () {
+        return vm.luckyBarsSameOffset;
+    }, function (newVal, oldVal) {
+
+        if (newVal) {
+            _.forEach(vm.luckyBinchBarsOffsets, function (barOffset, i) {
+                vm.luckyBinchBarsOffsets[i] = parseInt(newVal);
+            })
+        }
+    });
+
+    $scope.getkeySluckyBarsSameOffset = function (event) {
+
+        if (event.keyCode == 38) {
+            vm.luckyBarsSameOffset = parseInt(vm.luckyBarsSameOffset) + 1;
+        } else if (event.keyCode == 40) {
+            vm.luckyBarsSameOffset = parseInt(vm.luckyBarsSameOffset) - 1;
+        }
+    };
 
     var allKeyIsPressed = false;
     $(document).keyup(function (evt) {
@@ -113,6 +134,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
             readBinchStatus();
         }
     };
+
     $scope.changeOffSets = function (event, index) {//изменять на еденицу значение офсетов и соответственно рассположения баров
 
         if (event.keyCode == 38) {
