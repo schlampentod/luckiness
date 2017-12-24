@@ -96,6 +96,7 @@ public class KeyUtils {
         do {
 
             if (thisVal.compareTo(MIN_BTC_KEY) < 0 || thisVal.compareTo(MAX_BTC_KEY) > 0) {
+                thisVal = thisVal.add(BigInteger.ONE);
                 continue;
             }
 

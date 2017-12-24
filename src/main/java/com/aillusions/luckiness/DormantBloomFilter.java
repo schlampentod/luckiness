@@ -22,7 +22,7 @@ public class DormantBloomFilter {
         long start = System.currentTimeMillis();
 
         try {
-            filter = BloomFilter.readFrom(new FileInputStream("g:\\csv_dump\\addr_all.bin"),
+            filter = BloomFilter.readFrom(new FileInputStream("h:\\work\\luckiness\\src\\main\\resources\\static\\bloom\\addr_all.bin"),
                     Funnels.stringFunnel(Charset.forName("UTF-8")));
         } catch (IOException e) {
             filter = null;
