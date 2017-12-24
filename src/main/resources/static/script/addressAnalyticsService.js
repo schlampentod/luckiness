@@ -39,9 +39,11 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
                     _.forEach(matchedKeys, function (matchedKey) {
 
-                        var isThisKnownKey = null !== _.find($rootScope.listOfKnownKeys, function (obj) {
+                        var knownKeyObj = _.find($rootScope.listOfKnownKeys, function (obj) {
                             return obj.knownKeyDecimal == matchedKey;
                         });
+
+                        var isThisKnownKey = null != knownKeyObj;
 
                         if (!isThisKnownKey) {
                             var numberOfKey = $window.localStorage.length;       //если ключ совпал - забить в локалсторадж
