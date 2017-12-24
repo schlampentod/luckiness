@@ -117,7 +117,8 @@ public class KeyUtils {
         String testBtcAddress = getBtcAddress(key);
 
         System.out.println(
-                " Found private key:\n" +
+                "\n\n----------------------\n\n" +
+                        " Found private key:\n" +
                         "      " + decimalKey + "\n" +
                         " And public address:\n" +
                         "      " + testBtcAddress);

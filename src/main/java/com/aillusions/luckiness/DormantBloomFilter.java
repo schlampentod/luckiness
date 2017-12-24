@@ -19,6 +19,8 @@ public class DormantBloomFilter {
 
     public DormantBloomFilter(List<String> listOfLines) {
 
+        long start = System.currentTimeMillis();
+
         try {
             filter = BloomFilter.readFrom(new FileInputStream("g:\\csv_dump\\addr_all.bin"),
                     Funnels.stringFunnel(Charset.forName("UTF-8")));
@@ -35,6 +37,8 @@ public class DormantBloomFilter {
                 filter.put(address);
             }
         }
+
+        System.out.println("DormantBloomFilter initialized in: " + (System.currentTimeMillis() - start) + "ms.");
     }
 
     public boolean has(String addr) {
