@@ -7,6 +7,7 @@
     <div style="position: fixed; top: 0%; right: 0;">
         <button ng-click="changeLanguage('en')">English</button>
         <button ng-click="changeLanguage('ua')">Українська</button>
+        <input type="text" ng-model="luckyCtrl.luckyBarsSameOffset" ng-keydown="getkeySluckyBarsSameOffset($event)">
     </div>
 
     {{'totCheck' | translate}}: {{luckyCtrl.luckyCtrlPma.luckyTotalGeneratedKeys}}
@@ -48,7 +49,7 @@
     <br/>
 
     <span style="width:50px; display:inline-block;">{{'Max' | translate}}: </span>
-    <input type="text" ng-keydown="getkeys($event)" value="115792089237316195423570985008687907852837564279074904382605163141518161494337" style="width:900px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
+    <input type="text" readonly value="115792089237316195423570985008687907852837564279074904382605163141518161494337" style="width:900px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
     <br />
 
     <span style="width:50px; display:inline-block;">{{'Key' | translate}}</span>
