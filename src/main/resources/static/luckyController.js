@@ -23,6 +23,9 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     vm.luckyBinchBarsOffsets = [];
     vm.luckyBarSumValue = "";
 
+    vm.checkSelectedBars = new Array(luckyService.currentChooser.binchBars.length);
+    vm.checkSelectedBars.fill(true);
+
     $scope.selectedKnownKey = null;
 
     $scope.$watch(function () {

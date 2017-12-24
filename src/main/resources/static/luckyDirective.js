@@ -17,6 +17,7 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
             });
         };
 
+        scope.luckyBarIndex = index;
         scope.luckyBarId = "lucky_bar_" + index;
         scope.luckySliderId = "lucky_slider_" + index;
 
