@@ -11,7 +11,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
         var deferred = $q.defer();
 
-        var promise = $http.get(createUrl('/rest/v1/lucky/resolve/' + keyValue));
+        var promise = $http.get('/rest/v1/lucky/resolve/' + keyValue);
         promise.then(function (response) {
             var AddressesResultDto = response.data;
             deferred.resolve(AddressesResultDto);

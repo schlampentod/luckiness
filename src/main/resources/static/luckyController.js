@@ -75,24 +75,24 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
         vm.luckyCtrlPma.luckyTotalGeneratedKeys++;
 
-        addressAnalyticsService.checkKeyInBlockChain(newVal).then(function (CheckKeyResultDto) {
-            vm.luckyCtrlDerivedKeys.luckyKeyWasFound = ( _.includes(CheckKeyResultDto['checkedKeysMatched'], newVal) && CheckKeyResultDto['checkedKeyFound']);
-        }, function (errors) {
-            console.error(errors);
-        });
-
         addressAnalyticsService.resolveBitcoinAddressByKey(vm.luckyBarSumValue).then(function (AddressesResultDto) {
             vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress = AddressesResultDto['publicAddressAsHex'];
             vm.luckyCtrlDerivedKeys.luckyKeyPrivateKeyAsWIF = AddressesResultDto['privateKeyAsWIF'];
 
+            addressAnalyticsService.checkKeyInBlockChain(newVal).then(function (CheckKeyResultDto) {
+                vm.luckyCtrlDerivedKeys.luckyKeyWasFound = ( _.includes(CheckKeyResultDto['checkedKeysMatched'], newVal) && CheckKeyResultDto['checkedKeyFound']);
 
-            addressAnalyticsService.getAddressBalance(vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress).then(function (balance) {
-                vm.luckyCtrlDerivedKeys.luckyKeyPublicAddressBalance = balance / 100000000;
-                console.info("Balance: of " + vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress + " is " + balance);
+                if (vm.luckyCtrlDerivedKeys.luckyKeyWasFound) {
+                    addressAnalyticsService.getAddressBalance(vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress).then(function (balance) {
+                        vm.luckyCtrlDerivedKeys.luckyKeyPublicAddressBalance = balance / 100000000;
+                        console.info("Balance: of " + vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress + " is " + balance);
+                    });
+                }
+
+            }, function (errors) {
+                console.error(errors);
             });
-
         });
-
     });
 
 
