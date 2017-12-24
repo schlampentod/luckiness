@@ -7,6 +7,8 @@ import org.bitcoinj.core.*;
 import org.bitcoinj.params.MainNetParams;
 
 import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author aillusions
@@ -23,6 +25,8 @@ public class KeyUtils {
     static {
         bloomFilter = new DormantBloomFilter(new DormantAddressProvider().getDormantAddresses());
     }
+
+    private static final Set<String> LOGGED_KEYS = new HashSet<>();
 
     public static ECKey getNewECKey(String providedKeyValue) {
         return new CustomECKey(validateKeyValue(providedKeyValue));
@@ -112,6 +116,11 @@ public class KeyUtils {
     }
 
     private static void logFound(ECKey key, String decimalKey) {
+
+        if (LOGGED_KEYS.contains(decimalKey)) {
+            return;
+        }
+
         String privateKeyAsHex = key.getPrivateKeyAsHex();
         String publicKeyAsHex = key.getPublicKeyAsHex();
         String testBtcAddress = getBtcAddress(key);
@@ -119,9 +128,10 @@ public class KeyUtils {
         System.out.println(
                 "\n\n----------------------\n\n" +
                         " Found private key:\n" +
-                        "      " + decimalKey + "\n" +
-                        " And public address:\n" +
-                        "      " + testBtcAddress);
-    }
+                        "  dec: " + decimalKey + "\n" +
+                        "  wif: " + keyToWif(key) + "\n" +
+                        "  pub: " + testBtcAddress);
 
+        LOGGED_KEYS.add(decimalKey);
+    }
 }
