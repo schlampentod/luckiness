@@ -1,8 +1,6 @@
-package com.aillusions.luckiness.web;
+package com.aillusions.luckiness;
 
-import com.aillusions.luckiness.DormantAddressProvider;
-import com.aillusions.luckiness.DormantBloomFilter;
-import com.aillusions.luckiness.KnownKeysProvider;
+import com.aillusions.luckiness.web.CheckBatchResponse;
 import org.bitcoinj.core.*;
 import org.bitcoinj.params.MainNetParams;
 
@@ -16,7 +14,7 @@ import java.util.Set;
  */
 public class KeyUtils {
 
-    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(10L);
+    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(50L);
 
     private static final BigInteger MIN_BTC_KEY = new BigInteger("1");
     private static final BigInteger MAX_BTC_KEY = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494337");

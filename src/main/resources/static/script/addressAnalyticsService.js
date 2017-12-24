@@ -61,7 +61,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
     };
 
     $rootScope.selectedKnownKey;
-    $.get(createUrl('/rest/v1/lucky/known')).done(function (data) {
+    $.get(/*createUrl(*/'/rest/v1/lucky/known'/*)*/).done(function (data) {
         $rootScope.listOfKnownKeys = [];
         for (var i = 0; i < data.knownKeyDtos.length; i++) {
             $rootScope.listOfKnownKeys[i] = data.knownKeyDtos[i];

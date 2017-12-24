@@ -1,6 +1,7 @@
 package com.aillusions.luckiness.web;
 
 import com.aillusions.luckiness.AsyncService;
+import com.aillusions.luckiness.KeyUtils;
 import com.aillusions.luckiness.KnownKeysProvider;
 import lombok.Setter;
 import org.apache.commons.lang3.exception.ExceptionUtils;
