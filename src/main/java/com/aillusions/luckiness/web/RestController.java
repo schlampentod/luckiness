@@ -31,21 +31,22 @@ public class RestController {
         return new AboutDto();
     }
 
-    // http://localhost:8080/rest/v1/lucky/check/245364787645342312142536754
-    @RequestMapping(value = "/check/{providedKey}", method = RequestMethod.GET, produces = "application/json")
+    // http://localhost:8080/rest/v1/lucky/check/batch/245364787645342312142536754
+    @RequestMapping(value = "/check/batch/{providedKey}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public CheckKeyResultDto check(@PathVariable String providedKey) throws InterruptedException {
 
         long start = System.currentTimeMillis();
 
         try {
+
             KeyUtils.validateKeyValue(providedKey);
             CheckBatchResponse checkBatchResponse = KeyUtils.checkBatchFor(providedKey);
-            return new CheckKeyResultDto(!checkBatchResponse.getFoundKeys().isEmpty());
+            return new CheckKeyResultDto(!checkBatchResponse.getFoundKeys().isEmpty(), checkBatchResponse.getFoundKeys());
 
         } catch (Exception e) {
             System.out.println("Unable to check key: " + ExceptionUtils.getMessage(e));
-            return new CheckKeyResultDto(false);
+            return new CheckKeyResultDto(false, Collections.EMPTY_SET);
         } finally {
             System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
         }

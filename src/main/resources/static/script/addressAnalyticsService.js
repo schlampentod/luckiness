@@ -28,23 +28,27 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
             deferred.reject("Unable to check invalid key: " + keyValue);
         } else {
 
-            var promise = $http.get(createUrl('/rest/v1/lucky/check/' + keyValue));
+            var promise = $http.get(createUrl('/rest/v1/lucky/check/batch/' + keyValue));
             promise.then(function (response) {
 
                 var CheckKeyResultDto = response.data;
                 var isFound = CheckKeyResultDto['checkedKeyFound'];
+                var matchedKeys = CheckKeyResultDto['checkedKeysMatched'];
 
                 if (isFound) {
 
-                    var isThisKnownKey = null !== _.find($rootScope.listOfMagicKeys, function (obj) {
-                        return obj.knownKeyDecimal == keyValue;
-                    });
+                    _.forEach(matchedKeys, function (matchedKey) {
 
-                    if (!isThisKnownKey) {
-                        var numberOfKey = $window.localStorage.length;       //если ключ совпал - забить в локалсторадж
-                        $window.localStorage.setItem(numberOfKey, keyValue);
-                        console.info("Found: " + keyValue);
-                    }
+                        var isThisKnownKey = null !== _.find($rootScope.listOfKnownKeys, function (obj) {
+                            return obj.knownKeyDecimal == matchedKey;
+                        });
+
+                        if (!isThisKnownKey) {
+                            var numberOfKey = $window.localStorage.length;       //если ключ совпал - забить в локалсторадж
+                            $window.localStorage.setItem(numberOfKey, matchedKey);
+                            console.info("Found: " + matchedKey);
+                        }
+                    });
                 }
 
                 deferred.resolve(CheckKeyResultDto);
@@ -54,11 +58,11 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
         return deferred.promise;
     };
 
-    $rootScope.selectedMagicKeys;
+    $rootScope.selectedKnownKey;
     $.get(createUrl('/rest/v1/lucky/known')).done(function (data) {
-        $rootScope.listOfMagicKeys = [];
+        $rootScope.listOfKnownKeys = [];
         for (var i = 0; i < data.knownKeyDtos.length; i++) {
-            $rootScope.listOfMagicKeys[i] = data.knownKeyDtos[i];
+            $rootScope.listOfKnownKeys[i] = data.knownKeyDtos[i];
         }
     });
 

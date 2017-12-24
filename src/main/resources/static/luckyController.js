@@ -20,7 +20,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     vm.luckyBinchBarsOffsets = [];
     vm.luckyBarSumValue = "";
 
-    $scope.selectedMagicKeys = null;
+    $scope.selectedKnownKey = null;
 
     var allKeyIsPressed = false;
     $(document).keyup(function (evt) {
@@ -35,7 +35,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     });
 
     $scope.funcXyjank = function () {
-        vm.luckyBarSumValue = $scope.selectedMagicKeys.knownKeyDecimal;
+        vm.luckyBarSumValue = $scope.selectedKnownKey.knownKeyDecimal;
     };
 
     $scope.$watch(function () { // по изменению массива расположений баров генерить "Key" и "Address"
