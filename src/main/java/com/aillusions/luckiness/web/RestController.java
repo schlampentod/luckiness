@@ -49,7 +49,7 @@ public class RestController {
             System.out.println("Unable to check key: " + ExceptionUtils.getMessage(e));
             return new CheckKeyResultDto(false, Collections.EMPTY_SET);
         } finally {
-            //System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
+            //  System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
         }
     }
 

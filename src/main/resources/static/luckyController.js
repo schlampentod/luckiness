@@ -198,7 +198,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         } else {
             vm.luckyCtrlPma.luckyBatchGenerationInterval = $interval(function () {
                 generateRandomOffsets();
-            }, 25);
+            }, 50);
         }
     };
 
