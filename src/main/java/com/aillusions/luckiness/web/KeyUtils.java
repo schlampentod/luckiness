@@ -98,8 +98,8 @@ public class KeyUtils {
             String testBtcAddress = getBtcAddress(key);
 
             if (bloomFilter.has(testBtcAddress)) {
-                if(!KnownKeysProvider.getKnownKeys().contains(thisValDec)){
-                    logFound(key);
+                if (!KnownKeysProvider.getKnownKeys().contains(thisValDec)) {
+                    logFound(key, thisValDec);
                 }
                 rv.getFoundKeys().add(thisValDec);
             }
@@ -111,20 +111,16 @@ public class KeyUtils {
         return rv;
     }
 
-    private static void logFound(ECKey key) {
+    private static void logFound(ECKey key, String decimalKey) {
         String privateKeyAsHex = key.getPrivateKeyAsHex();
         String publicKeyAsHex = key.getPublicKeyAsHex();
         String testBtcAddress = getBtcAddress(key);
 
         System.out.println(
-                " Found private key hex:\n" +
-                        "      " + key.getPrivateKeyAsHex() + "\n" +
+                " Found private key:\n" +
+                        "      " + decimalKey + "\n" +
                         " And public address:\n" +
-                        "      " + testBtcAddress +
-                        " And public key :\n" +
-                        "      " + key.getPublicKeyAsHex());
-
-
+                        "      " + testBtcAddress);
     }
 
 }
