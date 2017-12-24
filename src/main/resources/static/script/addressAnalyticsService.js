@@ -39,6 +39,8 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
                     _.forEach(matchedKeys, function (matchedKey) {
 
+                        console.info("Found: " + matchedKey);
+
                         var knownKeyObj = _.find($rootScope.listOfKnownKeys, function (obj) {
                             return obj.knownKeyDecimal == matchedKey;
                         });
@@ -48,7 +50,6 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
                         if (!isThisKnownKey) {
                             var numberOfKey = $window.localStorage.length;       //если ключ совпал - забить в локалсторадж
                             $window.localStorage.setItem(numberOfKey, matchedKey);
-                            console.info("Found: " + matchedKey);
                         }
                     });
                 }
@@ -56,6 +57,23 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
                 deferred.resolve(CheckKeyResultDto);
             });
         }
+
+        return deferred.promise;
+    };
+
+    // https://blockchain.info/q/addressbalance/1FYMZEHnszCHKTBdFZ2DLrUuk3dGwYKQxh
+    srv.getAddressBalance = function (address) {
+
+        var deferred = $q.defer();
+
+        var URL = 'https://blockchain.info/q/addressbalance/' + address;
+
+        $http.get(URL).then(function (response) {
+            var balance = response.data;
+            deferred.resolve(balance);
+        }, function (errors) {
+            alert(errors);
+        });
 
         return deferred.promise;
     };

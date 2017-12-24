@@ -13,6 +13,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     vm.luckyCtrlDerivedKeys = {
         luckyKeyPublicAddress: null,
+        luckyKeyPublicAddressBalance: 0,
         luckyKeyPrivateKeyAsWIF: null,
         luckyKeyWasFound: false
     };
@@ -83,6 +84,13 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         addressAnalyticsService.resolveBitcoinAddressByKey(vm.luckyBarSumValue).then(function (AddressesResultDto) {
             vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress = AddressesResultDto['publicAddressAsHex'];
             vm.luckyCtrlDerivedKeys.luckyKeyPrivateKeyAsWIF = AddressesResultDto['privateKeyAsWIF'];
+
+
+            addressAnalyticsService.getAddressBalance(vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress).then(function (balance) {
+                vm.luckyCtrlDerivedKeys.luckyKeyPublicAddressBalance = balance / 100000000;
+                console.info("Balance: of " + vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress + " is " + balance);
+            });
+
         });
 
     });

@@ -141,6 +141,35 @@ public class KnownKeysProvider {
         rv.add("613");
         rv.add("1409");
 
+        rv.add("2317");
+        rv.add("2304");
+        rv.add("1817");
+        rv.add("1915");
+        rv.add("1911");
+
+        rv.add("3105");
+
+        rv.add("6446");
+        rv.add("6547");
+        rv.add("7150");
+
+        rv.add("10241");
+        rv.add("12165");
+        rv.add("12801");
+        rv.add("14257");
+
+        rv.add("19358");
+        rv.add("25473");
+        rv.add("29058");
+        rv.add("29817");
+        rv.add("38390");
+        rv.add("38522");
+        rv.add("44129");
+        rv.add("53722");
+        rv.add("63983");
+        rv.add("65536");
+        rv.add("65535");
+        rv.add("68252");
 
 
          /*
