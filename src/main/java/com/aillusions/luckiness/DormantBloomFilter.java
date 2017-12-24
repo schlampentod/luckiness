@@ -20,7 +20,7 @@ public class DormantBloomFilter {
     public DormantBloomFilter(List<String> listOfLines) {
 
         try {
-            filter = BloomFilter.readFrom(new FileInputStream("H:\\work\\luckiness\\src\\main\\resources\\static\\bloom\\addr_all.bin"),
+            filter = BloomFilter.readFrom(new FileInputStream("g:\\csv_dump\\addr_all.bin"),
                     Funnels.stringFunnel(Charset.forName("UTF-8")));
         } catch (IOException e) {
 
