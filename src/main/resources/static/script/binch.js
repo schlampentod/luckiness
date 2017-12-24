@@ -56,7 +56,7 @@
             }
         });
 
-        binch.chosenValue = calcBarsSumValue(barsOffsets);
+        binch.chosenValue = calcBarsSumValue(binch.getBinchBarOffsets());
     };
 
     binch.setProvidedChosenStringValue = function (providedValueStr) {
@@ -112,7 +112,8 @@
             if (isLastBar(i)) {
                 barOffset = bigSumValue;
             } else {
-                barOffset = bigSumValue.divmod(barScaleFactor).quotient;
+                var bar = binch.binchBars[i];
+                barOffset = bigInt.min(bigSumValue.divmod(barScaleFactor).quotient/*.minus(bigInt(1))*/, bar.binchBarMaxOffsetPx);
                 var barAmount = barOffset.multiply(barScaleFactor);
                 bigSumValue = bigSumValue.minus(barAmount);
             }
@@ -120,7 +121,7 @@
             newOffsets[i] = parseInt(barOffset.toString(10));
         }
 
-        logInfo('offsetsBySum: ' + newOffsets);
+        logInfo('new offsets: ' + newOffsets);
 
         return newOffsets;
     }
