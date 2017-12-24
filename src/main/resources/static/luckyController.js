@@ -25,8 +25,13 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     vm.checkSelectedBars = new Array(luckyService.currentChooser.binchBars.length);
     vm.checkSelectedBars.fill(true);
-
     $scope.selectedKnownKey = null;
+
+    $(document).ready(function() {
+        $("#mainCheckbox").click(function () {
+            $('.lucky_bar_static_offset input:checkbox:enabled').each(function(){this.checked = !this.checked});
+        });
+    });
 
     $scope.$watch(function () {
         return vm.luckyBarsSameOffset;
