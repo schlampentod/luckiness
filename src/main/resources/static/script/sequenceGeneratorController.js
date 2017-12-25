@@ -1,7 +1,7 @@
 /**
  *
  */
-app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService', '$window', 'keyGenerationService', '$timeout', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, $window, keyGenerationService, $timeout) {
+app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService', '$window', 'keyGenerationService', '$timeout', 'luckyConstants', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, $window, keyGenerationService, $timeout, luckyConstants) {
 
     var vm = this;
 
@@ -47,7 +47,19 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     };
 
     vm.onTryAllGeneratedSequence = function () {
+        $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: vm.generatedKeysSequence});
+    };
+    
+    vm.onTemplateFieldKeyPressed = function ($event) {
+        var keyCode = $event.which || $event.keyCode;
+        if (keyCode === 13) {
+            vm.onGenerateNewSequenceAndTry();
+        }
+    };
 
+    vm.onGenerateNewSequenceAndTry = function () {
+        vm.onGenerateNewSequence();
+        vm.onTryAllGeneratedSequence();
     };
 
     vm.onTryGeneratedSequenceElement = function (element) {

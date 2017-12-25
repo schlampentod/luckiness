@@ -5,18 +5,21 @@
 <div ng-controller="sequenceGeneratorController as seqGenCtrl">
 
     Template:
-    <input type="text"ng-model="seqGenCtrl.generationSequenceTemplate" style="width:400px">
+    <input type="text"ng-model="seqGenCtrl.generationSequenceTemplate"
+           ng-keypress="seqGenCtrl.onTemplateFieldKeyPressed($event)"
+           style="width:400px">
 
     <select ng-model="seqGenCtrl.generationSequenceStrategy"
             ng-options="strategy for strategy in seqGenCtrl.allGenerationStrategies"></select>
 
     <button ng-click="seqGenCtrl.onGenerateNewSequence()">Generate</button>
+    <button ng-click="seqGenCtrl.onGenerateNewSequenceAndTry()">Generate and try</button>
 
     <br />
 
     <select ng-if="seqGenCtrl.generatedKeysSequence.length" ng-model="seqGenCtrl.selectedGeneratedKey"
             ng-options="generated for generated in seqGenCtrl.generatedKeysSequence"
-            size="10">
+            size="4">
     </select>
 
     <button ng-click="seqGenCtrl.onTryAllGeneratedSequence()">Try sequence</button>

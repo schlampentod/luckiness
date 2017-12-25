@@ -2,7 +2,7 @@
  *
  */
 
-app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService', '$window', 'keyGenerationService', '$timeout', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, $window, keyGenerationService, $timeout) {
+app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService', '$window', 'keyGenerationService', '$timeout', 'luckyConstants', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, $window, keyGenerationService, $timeout, luckyConstants) {
 
     var vm = this;
     $scope.numberOfKeys;
@@ -37,6 +37,15 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
             vm.luckyBarSumValue = ConvertedKeyDto['decimalKeyValue'];
         });
     };
+
+    $scope.$on(luckyConstants.TRY_KEYS_SEQUENCE_EVT, function (event, args) {
+        var keyArrays = args.keysArrayToTry;
+        _.forEach(keyArrays, function (keyToTry, i) {
+            $timeout(function () {
+                vm.luckyBarSumValue = keyToTry;
+            }, 15 * i);
+        })
+    });
 
     $scope.$watch(function () {
         return vm.luckyBarsSameOffset;
