@@ -145,14 +145,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         });
     });
 
-
-    var massOfKeys = [];
-    $scope.$watch(function () { // по изменению поля "Key" записывать все его новые значения в массив
-        return vm.luckyBarSumValue;
-    }, function (newVal, oldVal) {
-        massOfKeys[massOfKeys.length] = vm.luckyBarSumValue;
-    }, true);
-
     $scope.getkeys = function (event) {
 
         if (event.keyCode == 38) {
@@ -211,14 +203,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
             vm.luckyCtrlPma.luckyBatchGenerationInterval = $interval(function () {
                 generateRandomOffsets();
             }, 50);
-        }
-    };
-
-    vm.onOpenListOfKeysClick = function () {
-        console.log("список сгенерированных ключей:" + massOfKeys);
-        alert("Вывел список в консоль");
-        if (massOfKeys.length > 80) {
-            alert("пизда как их дохуя.. может реально в файл скидывать?")
         }
     };
 
