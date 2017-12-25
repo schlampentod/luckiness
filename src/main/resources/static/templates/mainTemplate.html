@@ -4,21 +4,12 @@
 
 <div ng-controller="luckyController as luckyCtrl">
 
-    <div style="position: fixed; top: 0%; right: 0;">
-        <button ng-click="changeLanguage('en')">English</button>
-        <button ng-click="changeLanguage('ua')">Українська</button>
-        <input type="text" ng-model="luckyCtrl.luckyBarsSameOffset" ng-keydown="getkeySluckyBarsSameOffset($event)">
-    </div>
-
-    {{'totCheck' | translate}}: {{luckyCtrl.luckyCtrlPma.luckyTotalGeneratedKeys}}
-
-    <hr />
+    <ng-include src=" 'templates/topMenuTemplate.html' "></ng-include>
 
     <ng-include src=" 'templates/controlsTemplate.html' "></ng-include>
 
     <ng-include src=" 'templates/outputsTemplate.html' "></ng-include>
 
-    <br/>
     <br/>
     <br/>
     <br/>

@@ -177,10 +177,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     };
 
-    $scope.changeLanguage = function (lang) {
-        $translate.use(lang);
-    };
-
     vm.onGenerateMinClick = function () {
         keyGenerationService.generateMinValue(luckyService.currentChooser);
         readBinchStatus();

@@ -1,0 +1,15 @@
+
+<!--
+
+-->
+
+<div ng-controller="topMenuController as topMenuCtrl">
+    <div style="position: fixed; top: 0%; right: 0;">
+        <button ng-click="changeLanguage('en')">English</button>
+        <button ng-click="changeLanguage('ua')">Українська</button>
+    </div>
+
+    {{'totCheck' | translate}}: {{luckyCtrl.luckyCtrlPma.luckyTotalGeneratedKeys}}
+</div>
+
+<hr />
