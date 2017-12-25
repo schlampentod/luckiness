@@ -21,6 +21,8 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
         }
     });
 
+    vm.allCheckedSequenceNames = [];
+
     vm.generationSequenceOnKeyPress = false;
 
     vm.generationSequenceStrategy = vm.KeySequenceGenerationStrategy.CONCAT_STRATEGY;
@@ -63,6 +65,14 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     };
 
     vm.onTryAllGeneratedSequence = function () {
+        var seqName = getGeneratedSequenceName();
+        if (_.includes(vm.allCheckedSequenceNames, seqName)) {
+            console.info("Sequence: " + seqName + "already checked..");
+            return;
+        }
+
+        vm.allCheckedSequenceNames.push(seqName);
+
         $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: vm.generatedKeysSequence});
     };
 
@@ -90,6 +100,10 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     //
     //
     //
+
+    function getGeneratedSequenceName() {
+        return vm.allCheckedTemplates + "_" + vm.generationSequenceStrategy;
+    }
 
     function putNewGeneratedKey(newBigKey) {
         if (!newBigKey) {
