@@ -69,7 +69,8 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
 
             // console.info("Moved: " + index + " to " + newOffset);
 
-            sliderElem.css("margin-left", (newOffset - 0) + "px");
+            //sliderElem.css("margin-left", (newOffset - 0) + "px");
+            sliderElem.css("width", (newOffset - 0) + "px");
 
             if (newOffset !== ngModel.$viewValue) {
                 scope.$evalAsync(function () {
