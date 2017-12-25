@@ -37,19 +37,27 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         return vm.luckyBarsSameOffset;
     }, function (newVal, oldVal) {
 
-        if (newVal) {
+        if (newVal < 0) {
+            vm.luckyBarsSameOffset = 0;
+        } else if (newVal > 1000) {
+            vm.luckyBarsSameOffset = 1000;
+        } else if (newVal) {
             _.forEach(vm.luckyBinchBarsOffsets, function (barOffset, i) {
-                vm.luckyBinchBarsOffsets[i] = parseInt(newVal);
+                if (vm.checkSelectedBars[i]) {
+                    vm.luckyBinchBarsOffsets[i] = parseInt(newVal);
+                }
             })
         }
     });
 
     $scope.getkeySluckyBarsSameOffset = function (event) {
 
+        var oldValue = parseInt(vm.luckyBarsSameOffset) || 0;
+
         if (event.keyCode == 38) {
-            vm.luckyBarsSameOffset = parseInt(vm.luckyBarsSameOffset) + 1;
+            vm.luckyBarsSameOffset = oldValue + 1;
         } else if (event.keyCode == 40) {
-            vm.luckyBarsSameOffset = parseInt(vm.luckyBarsSameOffset) - 1;
+            vm.luckyBarsSameOffset = oldValue - 1;
         }
     };
 
@@ -220,7 +228,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     //
 
     function generateRandomOffsets() {
-        keyGenerationService.generateRandomBarOffsets(luckyService.currentChooser);
+        keyGenerationService.generateRandomBarOffsets(luckyService.currentChooser, vm.checkSelectedBars);
         readBinchStatus();
     }
 

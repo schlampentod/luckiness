@@ -25,11 +25,13 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
         binchInstance.setChooserBarsOffsets(offsets);
     };
 
-    srv.generateRandomBarOffsets = function (binchInstance) {
+    srv.generateRandomBarOffsets = function (binchInstance, selectedBars) {
         var offsets = binchInstance.getBinchBarOffsets();
 
         _.forEach(binchInstance.binchBars, function (bar, i) {
-            offsets[i] = Math.floor(Math.random() * bar.binchBarMaxOffsetPx);
+            if(selectedBars[i]) {
+                offsets[i] = Math.floor(Math.random() * bar.binchBarMaxOffsetPx);
+            }
         });
 
         binchInstance.setChooserBarsOffsets(offsets);
