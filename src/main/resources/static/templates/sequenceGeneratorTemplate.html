@@ -7,15 +7,19 @@
     Template:
     <input type="text"ng-model="seqGenCtrl.generationSequenceTemplate" style="width:400px">
 
-    <select ng-model="seqGenCtrl.generationSequenceStrategy" ng-options="strategy for strategy in seqGenCtrl.allGenerationStrategies"></select>
+    <select ng-model="seqGenCtrl.generationSequenceStrategy"
+            ng-options="strategy for strategy in seqGenCtrl.allGenerationStrategies"></select>
 
     <button ng-click="seqGenCtrl.onGenerateNewSequence()">Generate</button>
 
     <br />
 
-    <select ng-if="seqGenCtrl.generatedKeysSequence.length" size="5">
-
+    <select ng-if="seqGenCtrl.generatedKeysSequence.length" ng-model="seqGenCtrl.selectedGeneratedKey"
+            ng-options="generated for generated in seqGenCtrl.generatedKeysSequence"
+            size="10">
     </select>
+
+    <button ng-click="seqGenCtrl.onTryAllGeneratedSequence()">Try sequence</button>
 
 </div>
 

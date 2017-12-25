@@ -24,9 +24,26 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     vm.generationSequenceStrategy = vm.KeySequenceGenerationStrategy.CONCAT_STRATEGY;
     vm.generationSequenceTemplate = "";
     vm.generatedKeysSequence = [];
+    vm.selectedGeneratedKey = null;
 
     vm.onGenerateNewSequence = function () {
+        vm.generatedKeysSequence = [];
 
+        var sum = MIN_NUMBER;
+
+        while (sum.lesserOrEquals(MAX_NUMBER)) {
+
+            putNewGeneratedKey(sum);
+
+            if (vm.generationSequenceStrategy === vm.KeySequenceGenerationStrategy.CONCAT_STRATEGY) {
+                var newStringVal = sum.toString(10) + vm.generationSequenceTemplate;
+                sum = bigInt(newStringVal);
+            } else {
+                throw "Not implemented: " + vm.generationSequenceStrategy;
+            }
+        }
+
+        vm.selectedGeneratedKey = vm.generatedKeysSequence[0];
     };
 
     vm.onTryAllGeneratedSequence = function () {
@@ -36,6 +53,16 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     vm.onTryGeneratedSequenceElement = function (element) {
 
     };
+
+    //
+    //
+    //
+
+    function putNewGeneratedKey(newBigKey) {
+        var strValue = newBigKey.toString(10);
+        console.info("Addding: " + strValue);
+        vm.generatedKeysSequence.push(strValue);
+    }
 
 }]);
 
