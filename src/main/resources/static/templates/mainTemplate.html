@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <input id="mainCheckbox" type="checkbox" name="all" checked><span class="mainCheckbox_1" >:all</span>
+    <input ng-init="" id="mainCheckbox" type="checkbox" name="all" ng-model="isAllBarsToggled" ng-change="luckyCtrl.onAllBarsToggled(isAllBarsToggled)"><span class="mainCheckbox_1" >all</span>
 
 
 

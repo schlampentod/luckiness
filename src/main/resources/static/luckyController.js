@@ -27,11 +27,10 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     vm.checkSelectedBars.fill(true);
     $scope.selectedKnownKey = null;
 
-    $(document).ready(function() {
-        $("#mainCheckbox").click(function () {
-            $('.lucky_bar_static_offset input:checkbox:enabled').each(function(){this.checked = !this.checked});
-        });
-    });
+    $scope.isAllBarsToggled = true;
+    vm.onAllBarsToggled = function (isAllBarsToggled) {
+        vm.checkSelectedBars.fill(isAllBarsToggled);
+    };
 
     $scope.$watch(function () {
         return vm.luckyBarsSameOffset;
