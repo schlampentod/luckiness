@@ -6,7 +6,8 @@
 
     Template:
     <input type="text"ng-model="seqGenCtrl.generationSequenceTemplate"
-           ng-keypress="seqGenCtrl.onTemplateFieldKeyPressed($event)"
+           ng-keypress=""
+           ng-keyup="seqGenCtrl.onTemplateFieldKeyPressed($event)"
            only-digits-directive=""
            style="width:400px">
 

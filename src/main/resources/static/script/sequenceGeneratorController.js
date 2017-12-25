@@ -49,6 +49,9 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
             } else if (vm.generationSequenceStrategy === vm.KeySequenceGenerationStrategy.SUMMATION_STRATEGY) {
                 var prevBigVal = sum ? sum : bigInt(0);
                 sum = prevBigVal.add(bigInt(vm.generationSequenceTemplate));
+            } else if (vm.generationSequenceStrategy === vm.KeySequenceGenerationStrategy.MULTIPLICATION_STRATEGY) {
+                var prevBigVal = sum ? sum : bigInt(1);
+                sum = prevBigVal.multiply(bigInt(vm.generationSequenceTemplate));
             } else {
                 throw "Not implemented: " + vm.generationSequenceStrategy;
             }
@@ -69,7 +72,9 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
         if (vm.generationSequenceOnKeyPress || keyCode === 13) {
             vm.onGenerateNewSequenceAndTry();
             var inputElement = $event.target;
-            inputElement.setSelectionRange(0, inputElement.value.length)
+            if (!vm.generationSequenceOnKeyPress) {
+                inputElement.setSelectionRange(0, inputElement.value.length)
+            }
         }
     };
 
