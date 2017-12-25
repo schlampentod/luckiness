@@ -5,8 +5,22 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
 
     var vm = this;
 
+    var MAX_GENERATED_KEYS = 10000;
     var MIN_NUMBER = luckyService.currentChooser.MIN_BIG_NUMBER;
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
+
+    vm.KeySequenceTemplateRadix = {
+        BINARY_RAD: "BINARY_RAD",
+        DECIMAL_RAD: "DECIMAL_RAD",
+        HEXADECIMAL_RAD: "HEXADECIMAL_RAD"
+    };
+
+    vm.allGenerationRadixes = [];
+    _.forOwn(vm.KeySequenceTemplateRadix, function (value, key) {
+        if (typeof value === "string") {
+            vm.allGenerationRadixes.push(key);
+        }
+    });
 
     vm.KeySequenceGenerationStrategy = {
         CONCAT_STRATEGY: "CONCAT_STRATEGY",
@@ -25,13 +39,15 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
 
     vm.generationSequenceOnKeyPress = false;
 
+    vm.generationSequenceRadix = vm.KeySequenceTemplateRadix.DECIMAL_RAD;
     vm.generationSequenceStrategy = vm.KeySequenceGenerationStrategy.CONCAT_STRATEGY;
+
     vm.generationSequenceTemplate = "";
     vm.generatedKeysSequence = [];
     vm.selectedGeneratedKey = null;
 
     vm.onGenerateNewSequence = function () {
-        if (!vm.generationSequenceTemplate || vm.generationSequenceTemplate == "") {
+        if (!vm.generationSequenceTemplate || vm.generationSequenceTemplate === "") {
             return;
         }
 
@@ -39,7 +55,7 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
 
         var sum = null;
 
-        while (vm.generatedKeysSequence.length < 1000 && (sum == null || sum.lesserOrEquals(MAX_NUMBER))) {
+        while (vm.generatedKeysSequence.length < MAX_GENERATED_KEYS && (sum == null || sum.lesserOrEquals(MAX_NUMBER))) {
 
             putNewGeneratedKey(sum);
 
