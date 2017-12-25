@@ -9,7 +9,8 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     vm.luckyCtrlPma = {
         luckyTotalGeneratedKeys: 0,
-        luckyBatchGenerationInterval: null
+        luckyBatchGenerationInterval: null,
+        luckyKeyConversionFormToggled: false
     };
 
     vm.luckyCtrlDerivedKeys = {
@@ -25,11 +26,16 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     vm.checkSelectedBars = new Array(luckyService.currentChooser.binchBars.length);
     vm.checkSelectedBars.fill(true);
-    $scope.selectedKnownKey = null;
 
     $scope.isAllBarsToggled = true;
     vm.onAllBarsToggled = function (isAllBarsToggled) {
         vm.checkSelectedBars.fill(isAllBarsToggled);
+    };
+
+    vm.onParseProvidedWIFKey = function (luckyWIFKeyForConversion) {
+        addressAnalyticsService.convertWifKeyToDecimal(luckyWIFKeyForConversion).then(function (ConvertedKeyDto) {
+            vm.luckyBarSumValue = ConvertedKeyDto['decimalKeyValue'];
+        });
     };
 
     $scope.$watch(function () {
@@ -72,8 +78,8 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         }
     });
 
-    $scope.funcXyjank = function () {
-        vm.luckyBarSumValue = $scope.selectedKnownKey.knownKeyDecimal;
+    $scope.selectedKnownKeyChanged = function (selectedValue) {
+        vm.luckyBarSumValue = selectedValue;
     };
 
     $scope.$watch(function () { // по изменению массива расположений баров генерить "Key" и "Address"

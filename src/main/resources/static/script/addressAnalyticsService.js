@@ -93,7 +93,6 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
         return deferred.promise;
     };
 
-    $rootScope.selectedKnownKey;
     $.get(/*createUrl(*/'/rest/v1/lucky/known'/*)*/).done(function (data) {
         $rootScope.listOfKnownKeys = [];
         $rootScope.numberOfKeys = data.knownKeyDtos.length;
@@ -101,6 +100,20 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
             $rootScope.listOfKnownKeys[i] = data.knownKeyDtos[i];
         }
     });
+
+    srv.convertWifKeyToDecimal = function (wifKeyValue) {
+
+        var deferred = $q.defer();
+
+        var promise = $http.get('/rest/v1/lucky/convert/base68/' + wifKeyValue);
+        promise.then(function (response) {
+            var ConvertedKeyDto = response.data;
+            deferred.resolve(ConvertedKeyDto);
+        });
+
+        return deferred.promise;
+    };
+
 
     function createUrl(URI) {
         return REST_SERVER_ENDPOINT + URI;
