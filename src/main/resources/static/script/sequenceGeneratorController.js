@@ -31,19 +31,23 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
 
         var sum = null;
 
-        while (vm.generatedKeysSequence.length < 1000 && ( sum == null || sum.lesserOrEquals(MAX_NUMBER))) {
+        while (vm.generatedKeysSequence.length < 1000 && (sum == null || sum.lesserOrEquals(MAX_NUMBER))) {
 
             putNewGeneratedKey(sum);
 
             var prevStringVal = sum ? sum.toString(10) : "";
 
             if (vm.generationSequenceStrategy === vm.KeySequenceGenerationStrategy.CONCAT_STRATEGY) {
-
                 var newStringVal = prevStringVal + vm.generationSequenceTemplate;
                 sum = bigInt(newStringVal);
+            } else if (vm.generationSequenceStrategy === vm.KeySequenceGenerationStrategy.SUMMATION_STRATEGY) {
+                var prevBigVal = sum ? sum : bigInt(0);
+                sum = prevBigVal.add(bigInt(vm.generationSequenceTemplate));
             } else {
                 throw "Not implemented: " + vm.generationSequenceStrategy;
             }
+
+            console.info("Generated: " + sum.toString(10));
         }
 
         vm.selectedGeneratedKey = vm.generatedKeysSequence[0];
