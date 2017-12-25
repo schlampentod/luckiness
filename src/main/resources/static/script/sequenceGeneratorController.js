@@ -29,14 +29,17 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     vm.onGenerateNewSequence = function () {
         vm.generatedKeysSequence = [];
 
-        var sum = MIN_NUMBER;
+        var sum = null;
 
-        while (sum.lesserOrEquals(MAX_NUMBER)) {
+        while (vm.generatedKeysSequence.length < 1000 && ( sum == null || sum.lesserOrEquals(MAX_NUMBER))) {
 
             putNewGeneratedKey(sum);
 
+            var prevStringVal = sum ? sum.toString(10) : "";
+
             if (vm.generationSequenceStrategy === vm.KeySequenceGenerationStrategy.CONCAT_STRATEGY) {
-                var newStringVal = sum.toString(10) + vm.generationSequenceTemplate;
+
+                var newStringVal = prevStringVal + vm.generationSequenceTemplate;
                 sum = bigInt(newStringVal);
             } else {
                 throw "Not implemented: " + vm.generationSequenceStrategy;
@@ -49,11 +52,13 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     vm.onTryAllGeneratedSequence = function () {
         $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: vm.generatedKeysSequence});
     };
-    
+
     vm.onTemplateFieldKeyPressed = function ($event) {
         var keyCode = $event.which || $event.keyCode;
         if (keyCode === 13) {
             vm.onGenerateNewSequenceAndTry();
+            var inputElement = $event.target;
+            inputElement.setSelectionRange(0, inputElement.value.length)
         }
     };
 
@@ -71,6 +76,10 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     //
 
     function putNewGeneratedKey(newBigKey) {
+        if (!newBigKey) {
+            return;
+        }
+
         var strValue = newBigKey.toString(10);
         console.info("Addding: " + strValue);
         vm.generatedKeysSequence.push(strValue);
