@@ -6,7 +6,7 @@
     <button ng-click="numTrimCtrl.luckyNumberTrimmerToggled=!numTrimCtrl.luckyNumberTrimmerToggled">Trim</button>
 
     <span ng-if="numTrimCtrl.luckyNumberTrimmerToggled">
-        <input type="text">
+        <input only-digits-directive="" type="text" ng-model="numTrimCtrl.trimmingNumberValue" style="width:800px">
     </span>
 
 </div>
