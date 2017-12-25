@@ -1,7 +1,7 @@
 /**
  *
  */
-app.directive('onlyDigitsDirective', function () {
+app.directive('onlyHexaDigitsDirective', function () {
 
     return {
         restrict: 'A',
@@ -9,7 +9,7 @@ app.directive('onlyDigitsDirective', function () {
         link: function (scope, element, attrs, modelCtrl) {
             modelCtrl.$parsers.push(function (inputValue) {
                 if (inputValue == undefined) return '';
-                var transformedInput = inputValue.replace(/[^0-9]/g, '');
+                var transformedInput = inputValue.replace(/[^0-9A-Fa-f]/g, '').toUpperCase();
                 if (transformedInput !== inputValue) {
                     modelCtrl.$setViewValue(transformedInput);
                     modelCtrl.$render();

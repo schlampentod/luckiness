@@ -51,6 +51,8 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
             return;
         }
 
+        var radix = getSelectedRadixVal();
+
         vm.generatedKeysSequence = [];
 
         var sum = null;
@@ -59,17 +61,17 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
 
             putNewGeneratedKey(sum);
 
-            var prevStringVal = sum ? sum.toString(10) : "";
+            var prevStringVal = sum ? sum.toString(radix) : "";
 
             if (vm.generationSequenceStrategy === vm.KeySequenceGenerationStrategy.CONCAT_STRATEGY) {
                 var newStringVal = prevStringVal + vm.generationSequenceTemplate;
-                sum = bigInt(newStringVal);
+                sum = bigInt(newStringVal, radix);
             } else if (vm.generationSequenceStrategy === vm.KeySequenceGenerationStrategy.SUMMATION_STRATEGY) {
                 var prevBigVal = sum ? sum : bigInt(0);
                 sum = prevBigVal.add(bigInt(vm.generationSequenceTemplate));
             } else if (vm.generationSequenceStrategy === vm.KeySequenceGenerationStrategy.MULTIPLICATION_STRATEGY) {
                 var prevBigVal = sum ? sum : bigInt(1);
-                sum = prevBigVal.multiply(bigInt(vm.generationSequenceTemplate));
+                sum = prevBigVal.multiply(bigInt(vm.generationSequenceTemplate, radix));
             } else {
                 throw "Not implemented: " + vm.generationSequenceStrategy;
             }
@@ -116,6 +118,18 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     //
     //
     //
+
+    function getSelectedRadixVal() {
+        if (vm.generationSequenceRadix === vm.KeySequenceTemplateRadix.BINARY_RAD) {
+            return 2;
+        } else if (vm.generationSequenceRadix === vm.KeySequenceTemplateRadix.DECIMAL_RAD) {
+            return 10;
+        } else if (vm.generationSequenceRadix === vm.KeySequenceTemplateRadix.HEXADECIMAL_RAD) {
+            return 16;
+        } else {
+            throw "Unexpected radix: " + vm.generationSequenceRadix;
+        }
+    }
 
     function getGeneratedSequenceName() {
         return vm.generationSequenceTemplate + "_" + vm.generationSequenceStrategy;
