@@ -5,8 +5,12 @@
 <div ng-controller="sequenceGeneratorController as seqGenCtrl">
 
     Template:
-    <input type="text" style="width:400px">
-    <button>Generate</button>
+    <input type="text"ng-model="seqGenCtrl.generationSequenceTemplate" style="width:400px">
+
+    <select ng-model="seqGenCtrl.generationSequenceStrategy" ng-options="strategy for strategy in seqGenCtrl.allGenerationStrategies"></select>
+
+    <button ng-click="seqGenCtrl.onGenerateNewSequence()">Generate</button>
+
     <br />
 
     <select ng-if="seqGenCtrl.generatedKeysSequence.length" size="5">
