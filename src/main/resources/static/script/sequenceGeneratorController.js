@@ -82,6 +82,13 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
         vm.selectedGeneratedKey = vm.generatedKeysSequence[0];
     };
 
+    vm.onGenerateAndTryAllStrategies = function () {
+        _.forEach(vm.allGenerationStrategies, function (strategy, i) {
+            vm.generationSequenceStrategy = strategy;
+            vm.onGenerateNewSequenceAndTry();
+        })
+    };
+
     vm.onTryAllGeneratedSequence = function () {
         var seqName = getGeneratedSequenceName();
         if (_.includes(vm.allCheckedSequenceNames, seqName)) {
