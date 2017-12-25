@@ -2,40 +2,42 @@
 
 <hr />
 
-Generate:
-
 <div ng-controller="sequenceGeneratorController as seqGenCtrl">
 
-    Template:
-    <select ng-model="seqGenCtrl.generationSequenceRadix"
-            ng-options="radix for radix in seqGenCtrl.allGenerationRadixes"></select>
+    <button ng-click="seqGenCtrl.luckySequenceGenFormToggled=!seqGenCtrl.luckySequenceGenFormToggled">Generate</button>
 
-    <input type="text"ng-model="seqGenCtrl.generationSequenceTemplate"
-           ng-keypress=""
-           ng-keyup="seqGenCtrl.onTemplateFieldKeyPressed($event)"
-           only-digits-directive=""
-           style="width:750px">
+    <div ng-if="seqGenCtrl.luckySequenceGenFormToggled">
 
-    <br />
+        <select ng-model="seqGenCtrl.generationSequenceRadix"
+                ng-options="radix for radix in seqGenCtrl.allGenerationRadixes"></select>
 
-    <label><input type="checkbox" ng-model="seqGenCtrl.generationSequenceOnKeyPress"> Generate on type</label>
+        <input type="text"ng-model="seqGenCtrl.generationSequenceTemplate"
+               ng-keypress=""
+               ng-keyup="seqGenCtrl.onTemplateFieldKeyPressed($event)"
+               only-digits-directive=""
+               style="width:750px">
 
-    <select ng-model="seqGenCtrl.generationSequenceStrategy"
-            ng-options="strategy for strategy in seqGenCtrl.allGenerationStrategies"></select>
+        <br />
 
-    <button ng-click="seqGenCtrl.onGenerateNewSequence()">Generate</button>
-    <button ng-click="seqGenCtrl.onGenerateNewSequenceAndTry()">Generate and try</button>
-    <button ng-click="seqGenCtrl.onTryAllGeneratedSequence()" ng-if="seqGenCtrl.generatedKeysSequence.length">Try {{seqGenCtrl.generatedKeysSequence.length}} keys</button>
+        <label><input type="checkbox" ng-model="seqGenCtrl.generationSequenceOnKeyPress"> Generate on type</label>
 
-    <br />
+        <select ng-model="seqGenCtrl.generationSequenceStrategy"
+                ng-options="strategy for strategy in seqGenCtrl.allGenerationStrategies"></select>
 
-    <select ng-if="seqGenCtrl.generatedKeysSequence.length" ng-model="seqGenCtrl.selectedGeneratedKey" style="width:700px"
-            ng-options="generated for generated in seqGenCtrl.generatedKeysSequence"
-            size="4">
-    </select>
+        <button ng-click="seqGenCtrl.onGenerateNewSequence()">Generate</button>
+        <button ng-click="seqGenCtrl.onGenerateNewSequenceAndTry()">Generate and try</button>
+        <button ng-click="seqGenCtrl.onTryAllGeneratedSequence()" ng-if="seqGenCtrl.generatedKeysSequence.length">Try {{seqGenCtrl.generatedKeysSequence.length}} keys</button>
 
-    <br />
+        <br />
 
+        <select ng-if="seqGenCtrl.generatedKeysSequence.length" ng-model="seqGenCtrl.selectedGeneratedKey" style="width:700px"
+                ng-options="generated for generated in seqGenCtrl.generatedKeysSequence"
+                size="4">
+        </select>
+
+        <br />
+
+    </div>
 </div>
 
 <hr />

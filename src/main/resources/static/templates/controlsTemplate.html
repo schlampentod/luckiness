@@ -41,18 +41,9 @@
 <input type="text" readonly value="115792089237316195423570985008687907852837564279074904382605163141518161494337" style="width:800px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
 <br />
 
-<div>
-    <button ng-click="luckyCtrl.luckyCtrlPma.luckyKeyConversionFormToggled=!luckyCtrl.luckyCtrlPma.luckyKeyConversionFormToggled">Convert</button>
-
-    <div ng-if="luckyCtrl.luckyCtrlPma.luckyKeyConversionFormToggled" style="padding-left:30px">
-        <span style=" display:inline-block;">from WIF: </span>
-        <input type="text" ng-model="luckyWIFKeyForConversion" style="width:500px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
-        <button ng-click="luckyCtrl.onParseProvidedWIFKey(luckyWIFKeyForConversion)">Parse</button>
-    </div>
-    <br />
-</div>
-
 <span style="width:50px; display:inline-block;">{{'Key' | translate}}</span>
 <input type="text" only-digits-directive="" ng-keydown="getkeys($event)" ng-model="luckyCtrl.luckyBarSumValue" style="width:800px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
+
+<ng-include src=" 'templates/keyConversionTemplate.html' "></ng-include>
 
 <ng-include src=" 'templates/sequenceGeneratorTemplate.html' "></ng-include>

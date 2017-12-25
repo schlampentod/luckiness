@@ -9,8 +9,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     vm.luckyCtrlPma = {
         luckyTotalGeneratedKeys: 0,
-        luckyBatchGenerationInterval: null,
-        luckyKeyConversionFormToggled: false
+        luckyBatchGenerationInterval: null
     };
 
     vm.luckyCtrlDerivedKeys = {
@@ -30,12 +29,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     $scope.isAllBarsToggled = true;
     vm.onAllBarsToggled = function (isAllBarsToggled) {
         vm.checkSelectedBars.fill(isAllBarsToggled);
-    };
-
-    vm.onParseProvidedWIFKey = function (luckyWIFKeyForConversion) {
-        addressAnalyticsService.convertWifKeyToDecimal(luckyWIFKeyForConversion).then(function (ConvertedKeyDto) {
-            vm.luckyBarSumValue = ConvertedKeyDto['decimalKeyValue'];
-        });
     };
 
     $scope.$on(luckyConstants.TRY_KEYS_SEQUENCE_EVT, function (event, args) {
