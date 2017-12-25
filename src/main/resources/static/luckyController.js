@@ -205,7 +205,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
             vm.luckyCtrlPma.luckyBatchGenerationInterval = null;
         } else {
             vm.luckyCtrlPma.luckyBatchGenerationInterval = $interval(function () {
-                generateRandomOffsets();
+                generateRandomOffsetsRandomBar();
             }, 50);
         }
     };
@@ -216,6 +216,11 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     function generateRandomOffsets() {
         keyGenerationService.generateRandomBarOffsets(luckyService.currentChooser, vm.checkSelectedBars);
+        readBinchStatus();
+    }
+
+    function generateRandomOffsetsRandomBar() {
+        keyGenerationService.generateRandomBarOffsetsRandomBar(luckyService.currentChooser, vm.checkSelectedBars);
         readBinchStatus();
     }
 
