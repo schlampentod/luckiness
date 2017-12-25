@@ -43,7 +43,16 @@ app.controller('numberTrimmerController', ['$scope', 'luckyService', 'luckyFacto
                 newValueBigCut = bigInt(newValueCut);
             }
 
+            var newValueSubCut = newValueCut;
+
+            while (newValueSubCut.length > 75) {
+                newValueSubCut = newValueSubCut.substring(1);
+                keysToCheck.push(newValueSubCut);
+            }
+
             keysToCheck.push(newValueCut);
+
+            //console.info("Trimmed to: " + keysToCheck);
         }
 
         $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: keysToCheck});

@@ -191,6 +191,11 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
 
         var strValue = newBigKey.toString(10);
         // console.info("Adding: " + strValue);
+
+        if (_.includes(vm.generatedKeysSequence, strValue)) {
+            return;
+        }
+
         vm.generatedKeysSequence.push(strValue);
     }
 
