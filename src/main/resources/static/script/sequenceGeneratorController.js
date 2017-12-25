@@ -47,6 +47,23 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     vm.generatedKeysSequence = [];
     vm.selectedGeneratedKey = null;
 
+
+    $scope.onGenerationSequenceTemplateKeyDown = function (event) {
+
+        if (event.keyCode == 38 || event.keyCode == 40) {
+
+            var radix = getSelectedRadixVal();
+            var oldValue = parseInt(vm.generationSequenceTemplate, radix) || 0;
+
+            if (event.keyCode == 38) {
+                vm.generationSequenceTemplate = (oldValue + 1).toString(radix).toUpperCase();
+            } else if (event.keyCode == 40) {
+                vm.generationSequenceTemplate = (oldValue - 1).toString(radix).toUpperCase();
+            }
+        }
+
+    };
+
     vm.onGenerateNewSequence = function () {
         if (!vm.generationSequenceTemplate || vm.generationSequenceTemplate === "") {
             return;
