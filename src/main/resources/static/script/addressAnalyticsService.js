@@ -39,30 +39,34 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
                     _.forEach(matchedKeys, function (matchedKey) {
 
-                        console.info("Found: " + matchedKey);
+                            console.info("Found: " + matchedKey);
 
-                        var knownKeyObj = _.find($rootScope.listOfKnownKeys, function (obj) {
-                            return obj.knownKeyDecimal == matchedKey;
-                        });
+                            var knownKeyObj = _.find($rootScope.listOfKnownKeys, function (obj) {
+                                return obj.knownKeyDecimal == matchedKey;
+                            });
 
-                        var isThisKnownKey = null != knownKeyObj;
+                            var isThisKnownKey = null != knownKeyObj;
 
-                        if (!isThisKnownKey) {
-                            $rootScope.numberOfKeys = $window.localStorage.length;
-                            var bool=false;
-                            for(var i=0;i<lengthlocalStorage;i++){
-                                if(matchedKey==$window.localStorage.getItem(i)){
-                                    bool=true;
-                                    return;
+                            if (!isThisKnownKey) {
+                                var lengthlocalStorage = $window.localStorage.length;
+
+                                var keyAlreadyExistsInLS = false;
+                                for (var i = 0; i < lengthlocalStorage; i++) {
+                                    if (matchedKey === $window.localStorage.getItem(i)) {
+                                        keyAlreadyExistsInLS = true;
+                                    }
                                 }
-                            };
-                            if(bool==false){
-                                var numberOfKey = $window.localStorage.length;       //если ключ совпал - забить в локалсторадж
-                                $window.localStorage.setItem(numberOfKey, matchedKey);
-                            };
 
+                                if (keyAlreadyExistsInLS === false) {
+                                    var numberOfKey = $window.localStorage.length + "";       //если ключ совпал - забить в локалсторадж
+                                    $window.localStorage.setItem(numberOfKey, matchedKey);
+                                    console.info("Matched key missing from local storage (adding): " + matchedKey);
+                                }else{
+                                    console.info("Matched key already exist in local storage: " + matchedKey);
+                                }
+                            }
                         }
-                    });
+                    );
                 }
 
                 deferred.resolve(CheckKeyResultDto);
@@ -92,7 +96,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
     $rootScope.selectedKnownKey;
     $.get(/*createUrl(*/'/rest/v1/lucky/known'/*)*/).done(function (data) {
         $rootScope.listOfKnownKeys = [];
-        $rootScope.numberOfKeys=data.knownKeyDtos.length;
+        $rootScope.numberOfKeys = data.knownKeyDtos.length;
         for (var i = 0; i < data.knownKeyDtos.length; i++) {
             $rootScope.listOfKnownKeys[i] = data.knownKeyDtos[i];
         }

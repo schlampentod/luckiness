@@ -121,7 +121,7 @@
             newOffsets[i] = parseInt(barOffset.toString(10));
         }
 
-        logInfo('new offsets: ' + newOffsets);
+        //logInfo('new offsets: ' + newOffsets);
 
         return newOffsets;
     }
