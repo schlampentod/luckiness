@@ -58,7 +58,7 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
                 throw "Not implemented: " + vm.generationSequenceStrategy;
             }
 
-            console.info("Generated: " + sum.toString(10));
+            //console.info("Generated: " + sum.toString(10));
         }
 
         vm.selectedGeneratedKey = vm.generatedKeysSequence[0];
@@ -67,7 +67,7 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     vm.onTryAllGeneratedSequence = function () {
         var seqName = getGeneratedSequenceName();
         if (_.includes(vm.allCheckedSequenceNames, seqName)) {
-            console.info("Sequence: " + seqName + "already checked..");
+            console.info("Sequence: " + seqName + " already checked..");
             return;
         }
 
@@ -102,7 +102,7 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     //
 
     function getGeneratedSequenceName() {
-        return vm.allCheckedTemplates + "_" + vm.generationSequenceStrategy;
+        return vm.generationSequenceTemplate + "_" + vm.generationSequenceStrategy;
     }
 
     function putNewGeneratedKey(newBigKey) {
@@ -111,7 +111,7 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
         }
 
         var strValue = newBigKey.toString(10);
-        console.info("Addding: " + strValue);
+        // console.info("Adding: " + strValue);
         vm.generatedKeysSequence.push(strValue);
     }
 
