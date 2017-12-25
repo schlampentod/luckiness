@@ -6,7 +6,7 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     var vm = this;
 
     var MAX_GENERATED_KEYS = 10000;
-    var MIN_NUMBER = luckyService.currentChooser.MIN_BIG_NUMBER;
+    var ZERO_NUMBER = luckyService.currentChooser.ZERO_BIG_NUMBER;
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
 
     vm.KeySequenceTemplateRadix = {
@@ -75,7 +75,9 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
 
         var sum = null;
 
-        while (vm.generatedKeysSequence.length < MAX_GENERATED_KEYS && (sum == null || sum.lesserOrEquals(MAX_NUMBER))) {
+        var iterations = 0;
+
+        while (iterations < MAX_GENERATED_KEYS && (sum == null || sum.lesserOrEquals(MAX_NUMBER))) {
 
             putNewGeneratedKey(sum);
 
@@ -95,6 +97,7 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
             }
 
             //console.info("Generated: " + sum.toString(10));
+            iterations++;
         }
 
         vm.selectedGeneratedKey = vm.generatedKeysSequence[0];
@@ -179,6 +182,10 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
 
     function putNewGeneratedKey(newBigKey) {
         if (!newBigKey) {
+            return;
+        }
+
+        if (newBigKey.lesserOrEquals(ZERO_NUMBER)) {
             return;
         }
 
