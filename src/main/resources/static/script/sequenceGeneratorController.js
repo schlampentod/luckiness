@@ -21,12 +21,18 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
         }
     });
 
+    vm.generationSequenceOnKeyPress = false;
+
     vm.generationSequenceStrategy = vm.KeySequenceGenerationStrategy.CONCAT_STRATEGY;
     vm.generationSequenceTemplate = "";
     vm.generatedKeysSequence = [];
     vm.selectedGeneratedKey = null;
 
     vm.onGenerateNewSequence = function () {
+        if (!vm.generationSequenceTemplate || vm.generationSequenceTemplate == "") {
+            return;
+        }
+
         vm.generatedKeysSequence = [];
 
         var sum = null;
@@ -59,7 +65,8 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
 
     vm.onTemplateFieldKeyPressed = function ($event) {
         var keyCode = $event.which || $event.keyCode;
-        if (keyCode === 13) {
+
+        if (vm.generationSequenceOnKeyPress || keyCode === 13) {
             vm.onGenerateNewSequenceAndTry();
             var inputElement = $event.target;
             inputElement.setSelectionRange(0, inputElement.value.length)

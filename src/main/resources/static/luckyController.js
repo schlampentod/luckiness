@@ -43,7 +43,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         _.forEach(keyArrays, function (keyToTry, i) {
             $timeout(function () {
                 vm.luckyBarSumValue = keyToTry;
-            }, 15 * i);
+            }, 30 * i);
         })
     });
 

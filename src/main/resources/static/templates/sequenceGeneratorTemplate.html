@@ -10,6 +10,8 @@
            only-digits-directive=""
            style="width:400px">
 
+    <label><input type="checkbox" ng-model="seqGenCtrl.generationSequenceOnKeyPress"> Generate on type</label>
+
     <select ng-model="seqGenCtrl.generationSequenceStrategy"
             ng-options="strategy for strategy in seqGenCtrl.allGenerationStrategies"></select>
 
