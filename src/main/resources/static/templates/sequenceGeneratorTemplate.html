@@ -20,13 +20,13 @@
         <br />
 
         <label><input type="checkbox" ng-model="seqGenCtrl.generationSequenceOnKeyPress"> Generate on type</label>
+        <label><input type="checkbox" ng-model="seqGenCtrl.generateAndTryAllStrategies"> Try all strategies</label>
 
         <select ng-model="seqGenCtrl.generationSequenceStrategy"
                 ng-options="strategy for strategy in seqGenCtrl.allGenerationStrategies"></select>
 
         <button ng-click="seqGenCtrl.onGenerateNewSequence()">Generate</button>
         <button ng-click="seqGenCtrl.onGenerateNewSequenceAndTry()">Generate and try</button>
-        <button ng-click="seqGenCtrl.onGenerateAndTryAllStrategies()">Try All strategies</button>
         <button ng-click="seqGenCtrl.onTryAllGeneratedSequence()" ng-if="seqGenCtrl.generatedKeysSequence.length">Try {{seqGenCtrl.generatedKeysSequence.length}} keys</button>
 
         <br />

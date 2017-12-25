@@ -38,6 +38,7 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     vm.allCheckedSequenceNames = [];
 
     vm.generationSequenceOnKeyPress = false;
+    vm.generateAndTryAllStrategies = false;
 
     vm.generationSequenceRadix = vm.KeySequenceTemplateRadix.DECIMAL_RAD;
     vm.generationSequenceStrategy = vm.KeySequenceGenerationStrategy.CONCAT_STRATEGY;
@@ -82,13 +83,6 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
         vm.selectedGeneratedKey = vm.generatedKeysSequence[0];
     };
 
-    vm.onGenerateAndTryAllStrategies = function () {
-        _.forEach(vm.allGenerationStrategies, function (strategy, i) {
-            vm.generationSequenceStrategy = strategy;
-            vm.onGenerateNewSequenceAndTry();
-        })
-    };
-
     vm.onTryAllGeneratedSequence = function () {
         var seqName = getGeneratedSequenceName();
         if (_.includes(vm.allCheckedSequenceNames, seqName)) {
@@ -114,8 +108,27 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     };
 
     vm.onGenerateNewSequenceAndTry = function () {
-        vm.onGenerateNewSequence();
-        vm.onTryAllGeneratedSequence();
+
+        if (vm.generateAndTryAllStrategies) {
+
+            var origStrategy = vm.generationSequenceStrategy;
+
+            _.forEach(vm.allGenerationStrategies, function (strategy, i) {
+
+                if (vm.KeySequenceGenerationStrategy.SUMMATION_STRATEGY === strategy/*
+                && vm.generationSequenceRadix === vm.KeySequenceTemplateRadix.BINARY_RAD*/) {
+                    return;
+                }
+
+                vm.generationSequenceStrategy = strategy;
+                generateSequenceAndTryStrategy();
+            });
+
+            vm.generationSequenceStrategy = origStrategy;
+        } else {
+            generateSequenceAndTryStrategy();
+        }
+
     };
 
     vm.onTryGeneratedSequenceElement = function (element) {
@@ -125,6 +138,11 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
     //
     //
     //
+
+    function generateSequenceAndTryStrategy() {
+        vm.onGenerateNewSequence();
+        vm.onTryAllGeneratedSequence();
+    }
 
     function getSelectedRadixVal() {
         if (vm.generationSequenceRadix === vm.KeySequenceTemplateRadix.BINARY_RAD) {
