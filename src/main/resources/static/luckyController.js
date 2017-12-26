@@ -144,7 +144,16 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
                 if (vm.luckyCtrlDerivedKeys.luckyKeyWasFound) {
                     addressAnalyticsService.getAddressBalance(vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress).then(function (balance) {
-                        vm.luckyCtrlDerivedKeys.luckyKeyPublicAddressBalance = balance / 100000000;
+
+                        var balanceBtc = balance / 100000000;
+
+                        if (balance > 0) {
+                            $timeout(function () {
+                                alert("Are you kidding me (" + balanceBtc + " btc)?")
+                            }, 100);
+                        }
+
+                        vm.luckyCtrlDerivedKeys.luckyKeyPublicAddressBalance = balanceBtc;
                         console.info("Balance: of " + vm.luckyCtrlDerivedKeys.luckyKeyPublicAddress + " is " + balance);
                     });
                 }
