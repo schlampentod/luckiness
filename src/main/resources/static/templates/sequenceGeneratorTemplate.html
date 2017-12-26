@@ -1,12 +1,15 @@
 
 
-<hr />
 
-<div ng-controller="sequenceGeneratorController as seqGenCtrl">
+<span ng-controller="sequenceGeneratorController as seqGenCtrl">
 
     <button ng-click="seqGenCtrl.luckySequenceGenFormToggled=!seqGenCtrl.luckySequenceGenFormToggled">Generate</button>
 
     <span ng-if="seqGenCtrl.luckySequenceGenFormToggled">
+
+        <hr />
+        Sequence:
+        <br />
 
         <select ng-model="seqGenCtrl.generationSequenceRadix"
                 ng-options="radix for radix in seqGenCtrl.allGenerationRadixes"></select>
@@ -40,6 +43,4 @@
         <br />
 
     </span>
-</div>
-
-<hr />
+</span>

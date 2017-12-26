@@ -1,11 +1,15 @@
 
-<hr />
 
-<div ng-controller="randomGeneratorController as rndGenCtrl">
+
+<span ng-controller="randomGeneratorController as rndGenCtrl">
 
     <button ng-click="seqGenCtrl.luckyRandomFormToggled=!seqGenCtrl.luckyRandomFormToggled">Random</button>
 
     <span ng-if="seqGenCtrl.luckyRandomFormToggled">
+
+        <hr />
+        Random:
+        <br />
 
         <button ng-click="rndGenCtrl.onGenerateRandomClick()">{{'Random' | translate}}</button>
 
@@ -17,5 +21,5 @@
         <br />
 
     </span>
-</div>
+</span>
 

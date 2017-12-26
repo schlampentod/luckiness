@@ -1,14 +1,19 @@
 
 
 
-<div ng-controller="numberTrimmerController as numTrimCtrl">
+<span ng-controller="numberTrimmerController as numTrimCtrl">
 
     <button ng-click="numTrimCtrl.luckyNumberTrimmerToggled=!numTrimCtrl.luckyNumberTrimmerToggled">Trim</button>
 
     <span ng-if="numTrimCtrl.luckyNumberTrimmerToggled">
+
+        <hr />
+        Trimmer:
+        <br />
+
         <input only-digits-directive="" type="text" ng-model="numTrimCtrl.trimmingNumberValue" style="width:950px">
     </span>
 
-</div>
+</span>
 
-<hr />
+

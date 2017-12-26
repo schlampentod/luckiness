@@ -1,11 +1,15 @@
 
-<hr />
 
-<div ng-controller="knownKeyController as knownCtrl">
+
+<span ng-controller="knownKeyController as knownCtrl">
 
     <button ng-click="knownCtrl.luckyKnownFormToggled=!knownCtrl.luckyKnownFormToggled">   {{'Known' | translate}} ({{numberOfKeys}})</button>
 
     <span ng-if="knownCtrl.luckyKnownFormToggled">
+
+        <hr />
+        Known:
+        <br />
 
         <br />
         <select id="myselect" size="20" ng-model="selectedKnownKey"
@@ -16,5 +20,5 @@
         <br />
 
     </span>
-</div>
+</span>
 
