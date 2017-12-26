@@ -63,13 +63,13 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         }
     });
 
-    $scope.getkeySluckyBarsSameOffset = function (event) {
+    $scope.getkeySluckyBarsSameOffset = function (ArrowDirection) {
 
         var oldValue = parseInt(vm.luckyBarsSameOffset) || 0;
 
-        if (event.keyCode == 38) {
+        if (ArrowDirection == "UP") {
             vm.luckyBarsSameOffset = oldValue + 1;
-        } else if (event.keyCode == 40) {
+        } else if (ArrowDirection == "DOWN") {
             vm.luckyBarsSameOffset = oldValue - 1;
         }
     };
@@ -168,20 +168,20 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         alert(ArrowDirection);
     };
 
-    $scope.getkeys = function (event) {
+    $scope.getkeys = function (ArrowDirection) {
 
-        if (event.keyCode == 38) {
+        if (ArrowDirection == "UP") {
             keyGenerationService.incrementChosenValue(luckyService.currentChooser);
             readBinchStatus();
-        } else if (event.keyCode == 40) {
+        } else if (ArrowDirection == "DOWN") {
             keyGenerationService.decrementChosenValue(luckyService.currentChooser);
             readBinchStatus();
         }
     };
 
-    $scope.changeOffSets = function (event, index) {//изменять на еденицу значение офсетов и соответственно рассположения баров
+    $scope.changeOffSets = function (ArrowDirection, index) {//изменять на еденицу значение офсетов и соответственно рассположения баров
 
-        if (event.keyCode == 38) {
+        if (ArrowDirection == "UP") {
             if (vm.luckyBinchBarsOffsets[index] <= 999) {
                 vm.luckyBinchBarsOffsets[index]++;
                 luckyService.currentChooser.setChooserBarsOffsets(vm.luckyBinchBarsOffsets);
@@ -189,7 +189,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
                 readBinchStatus();
             }
 
-        } else if (event.keyCode == 40) {
+        } else if (ArrowDirection == "DOWN") {
             if (vm.luckyBinchBarsOffsets[index] >= 1) {
                 vm.luckyBinchBarsOffsets[index]--;
                 luckyService.currentChooser.setChooserBarsOffsets(vm.luckyBinchBarsOffsets);

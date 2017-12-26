@@ -4,13 +4,11 @@
 -->
 
 <div>
-    <input type="text" ng-model="luckyCtrl.luckyBarsSameOffset" ng-keydown="getkeySluckyBarsSameOffset($event)">
+    <input type="text" ng-model="luckyCtrl.luckyBarsSameOffset" arrow-pressed-directive="getkeySluckyBarsSameOffset($direction)">
 </div>
 
-<input type="text" arrow-pressed-directive="callWhenArrowPressed($direction)">
-
 <div class="lucky_bars_container">
-    <div ng-repeat="n in luckyCtrl.luckyBinchBarsOffsets track by $index" ng-keydown="changeOffSets($event,$index)"
+    <div ng-repeat="n in luckyCtrl.luckyBinchBarsOffsets track by $index" arrow-pressed-directive="changeOffSets($direction,$index)"
          lucky-directive="{{$index}}" ng-model="luckyCtrl.luckyBinchBarsOffsets[$index]"
          id="{{luckyBarId}}">
     </div>
@@ -26,7 +24,7 @@
 <br />
 
 <span style="width:50px; display:inline-block;">{{'Key' | translate}}</span>
-<input type="text" only-digits-directive="" ng-keydown="getkeys($event)" ng-model="luckyCtrl.luckyBarSumValue" style="width:650px; text-align: right; outline:none; font-size:14px; font-family:Arial, sans-serif;">
+<input type="text" only-digits-directive="" arrow-pressed-directive="getkeys($direction)" ng-model="luckyCtrl.luckyBarSumValue" style="width:650px; text-align: right; outline:none; font-size:14px; font-family:Arial, sans-serif;">
 
 <button ng-click="luckyCtrl.onGenerateMinClick()">{{'Min' | translate}} </button>
 <button ng-click="luckyCtrl.onGenerateMaxClick()">{{'Max' | translate}} </button>
