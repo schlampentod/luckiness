@@ -5,9 +5,20 @@ app.controller('dummyKeysController', ['$scope', 'luckyService', 'luckyFactory',
 
     var vm = this;
 
-    vm.luckyKnownFormToggled = false;
+    vm.dummyKeysFormToggled = false;
 
     vm.dummyKeysList = [];
+    vm.selectedDummyKey = null;
+
+    vm.onSelectDummyKey = function (keyValue) {
+        vm.selectedDummyKey = keyValue;
+        $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [keyValue]});
+    };
+
+    vm.onSelectNextDummy = function () {
+        var currentIndex = vm.dummyKeysList.indexOf(vm.selectedDummyKey);
+        vm.onSelectDummyKey(vm.dummyKeysList[currentIndex + 1]);
+    };
 
     vm.dummyKeysList.push("16093709369337703934889545578646178886504780023539123337825100659609688227856");
     vm.dummyKeysList.push("21050630124167150325668545371695007772495209055381857545492864067828067485666");

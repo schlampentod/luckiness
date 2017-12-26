@@ -1,0 +1,29 @@
+
+
+
+<span ng-controller="dummyKeysController as dummyCtrl">
+
+    <button ng-click="dummyCtrl.dummyKeysFormToggled=!dummyCtrl.dummyKeysFormToggled"> Dummy</button>
+
+    <span ng-if="dummyCtrl.dummyKeysFormToggled" class="key_controls_block">
+
+        <hr />
+        Dummy:
+        <br />
+
+        <button ng-click="dummyCtrl.onSelectNextDummy()"> Show next </button>
+        <br />
+
+        <span ng-repeat="dummy in dummyCtrl.dummyKeysList" style="font-size:10px">
+            <span ng-if="dummyCtrl.selectedDummyKey==dummy">
+                &gt;
+            </span>
+            <a href="javascript:void(0)" ng-click="dummyCtrl.onSelectDummyKey(dummy)">{{dummy}}</a>
+            <br/>
+        </span>
+
+        <hr />
+
+    </span>
+</span>
+
