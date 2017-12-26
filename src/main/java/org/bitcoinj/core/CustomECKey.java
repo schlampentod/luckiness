@@ -10,7 +10,7 @@ import java.math.BigInteger;
  */
 public class CustomECKey extends ECKey {
 
-    public CustomECKey(@Nullable BigInteger bigInt) {
+    public CustomECKey(BigInteger bigInt) {
         super(bigInt, getLazyECPoint(bigInt));
     }
 

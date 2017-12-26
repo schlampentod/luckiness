@@ -2,6 +2,7 @@ package com.aillusions.ckeckiness;
 
 import com.aillusions.luckiness.KeyUtils;
 import junit.framework.TestCase;
+import org.bitcoinj.core.CustomECKey;
 import org.bitcoinj.core.ECKey;
 
 import java.math.BigInteger;
@@ -45,6 +46,7 @@ public class TestSpeed extends TestCase {
         while ((System.currentTimeMillis() - start < ONE_SEC)) {
             iterations++;
             ECKey key = KeyUtils.getNewECKey(iterations + "");
+            //  ECKey key = new CustomECKey(new BigInteger(iterations + ""));
         }
 
         System.out.println("Iterations: " + iterations);
