@@ -31,6 +31,10 @@
 <button ng-click="luckyCtrl.onGenerateMinClick()">{{'Min' | translate}} </button>
 <button ng-click="luckyCtrl.onGenerateMaxClick()">{{'Max' | translate}} </button>
 
+<br />
+
+<ng-include src=" 'templates/outputsTemplate.html' "></ng-include>
+
 <ng-include src=" 'templates/knownTemplate.html' "></ng-include>
 
 <ng-include src=" 'templates/randomTemplate.html' "></ng-include>
