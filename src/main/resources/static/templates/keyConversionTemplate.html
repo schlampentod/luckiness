@@ -5,7 +5,7 @@
 
     <button ng-click="keyConvCtrl.luckyKeyConversionFormToggled=!keyConvCtrl.luckyKeyConversionFormToggled">Convert</button>
 
-    <span ng-if="keyConvCtrl.luckyKeyConversionFormToggled" style="padding-left:30px">
+    <span ng-if="keyConvCtrl.luckyKeyConversionFormToggled" class="key_controls_block">
 
         <hr />
 
@@ -15,5 +15,8 @@
         <span style=" display:inline-block;">from WIF: </span>
         <input type="text" ng-model="luckyWIFKeyForConversion" style="width:500px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
         <button ng-click="keyConvCtrl.onParseProvidedWIFKey(luckyWIFKeyForConversion)">Parse</button>
+
+        <hr />
+
     </span>
 </span>

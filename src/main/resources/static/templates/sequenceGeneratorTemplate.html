@@ -5,7 +5,7 @@
 
     <button ng-click="seqGenCtrl.luckySequenceGenFormToggled=!seqGenCtrl.luckySequenceGenFormToggled">Generate</button>
 
-    <span ng-if="seqGenCtrl.luckySequenceGenFormToggled">
+    <span ng-if="seqGenCtrl.luckySequenceGenFormToggled" class="key_controls_block">
 
         <hr />
         Sequence:
@@ -37,10 +37,10 @@
 
         <select ng-if="seqGenCtrl.generatedKeysSequence.length" ng-model="seqGenCtrl.selectedGeneratedKey" style="width:700px"
                 ng-options="generated for generated in seqGenCtrl.generatedKeysSequence"
-                size="4">
+                size="20">
         </select>
 
-        <br />
+        <hr />
 
     </span>
 </span>

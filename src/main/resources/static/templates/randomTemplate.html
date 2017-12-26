@@ -5,7 +5,7 @@
 
     <button ng-click="seqGenCtrl.luckyRandomFormToggled=!seqGenCtrl.luckyRandomFormToggled">Random</button>
 
-    <span ng-if="seqGenCtrl.luckyRandomFormToggled">
+    <span ng-if="seqGenCtrl.luckyRandomFormToggled" class="key_controls_block">
 
         <hr />
         Random:
@@ -18,7 +18,7 @@
             <span ng-switch-when="false">{{'Stop' | translate}}</span>
         </button>
 
-        <br />
+        <hr />
 
     </span>
 </span>

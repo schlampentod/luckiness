@@ -5,7 +5,7 @@
 
     <button ng-click="knownCtrl.luckyKnownFormToggled=!knownCtrl.luckyKnownFormToggled">   {{'Known' | translate}} ({{numberOfKeys}})</button>
 
-    <span ng-if="knownCtrl.luckyKnownFormToggled">
+    <span ng-if="knownCtrl.luckyKnownFormToggled" class="key_controls_block">
 
         <hr />
         Known:
@@ -17,7 +17,7 @@
                 ng-options="x.knownKeyDecimal for x in listOfKnownKeys"
                 style="width: 800px; font-size: 12px"></select>
 
-        <br />
+        <hr />
 
     </span>
 </span>
