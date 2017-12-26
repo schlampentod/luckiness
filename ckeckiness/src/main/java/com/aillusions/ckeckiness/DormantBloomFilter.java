@@ -3,12 +3,14 @@ package com.aillusions.ckeckiness;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 
 /**
+ * Put /addr_all.bin to /luckiness/ckeckiness/src/main/resources/addr_all.bin
+ *
  * @author aillusions
  */
 public class DormantBloomFilter {
@@ -22,8 +24,8 @@ public class DormantBloomFilter {
         long start = System.currentTimeMillis();
 
         try {
-            filter = BloomFilter.readFrom(new FileInputStream("/Users/mac/luckiness/addr_all.bin"),
-                    Funnels.stringFunnel(Charset.forName("UTF-8")));
+            InputStream blloomSerialized = DormantBloomFilter.class.getClassLoader().getResourceAsStream("addr_all.bin");
+            filter = BloomFilter.readFrom(blloomSerialized, Funnels.stringFunnel(Charset.forName("UTF-8")));
         } catch (IOException e) {
             filter = null;
             e.printStackTrace();
@@ -40,7 +42,7 @@ public class DormantBloomFilter {
             }
         }
 
-        System.out.println("DormantBloomFilter initialized in: " + (System.currentTimeMillis() - start) + " ms.");
+        System.out.println("DormantBloomFilter with " + filter.approximateElementCount() + " elements initialized in: " + (System.currentTimeMillis() - start) + " ms.");
     }
 
     public boolean has(String addr) {
