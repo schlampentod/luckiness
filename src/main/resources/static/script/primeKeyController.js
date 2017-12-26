@@ -10,25 +10,39 @@ app.controller('primeKeyController', ['$scope', 'luckyService', 'luckyFactory', 
 
     vm.primeGenerationStartFrom = null;
 
+    vm.luckyPrimeGenerationInterval = null;
+
     $scope.$watch(function () {
         return vm.primeGenerationStartFrom;
     }, function (newVal, oldVal) {
-        currentIteration = bigInt(newVal);
+        if (newVal) {
+            currentIteration = bigInt(newVal);
+        }
     });
 
     $scope.onGeneratePrimeNumber = function () {
-        var primeKey = findNextPrime().toString(10);
-        $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [primeKey]});
+        generateAndTryNextPrime();
     };
 
     $scope.onStartGeneratingPrimeNumbers = function () {
-        var primeKey = findNextPrime().toString(10);
-        $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [primeKey]});
+        if (vm.luckyPrimeGenerationInterval) {
+            $interval.cancel(vm.luckyPrimeGenerationInterval);
+            vm.luckyPrimeGenerationInterval = null;
+        } else {
+            vm.luckyPrimeGenerationInterval = $interval(function () {
+                generateAndTryNextPrime();
+            }, 50);
+        }
     };
 
     //
     //
     //
+
+    function generateAndTryNextPrime() {
+        var primeKey = findNextPrime().toString(10);
+        $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [primeKey]});
+    }
 
     function findNextPrime() {
         do {
