@@ -3,10 +3,8 @@ package com.aillusions.ckeckiness;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
 

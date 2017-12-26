@@ -6,7 +6,10 @@
 	<groupId>com.aillusions</groupId>
 	<artifactId>ckeckiness</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <modules>
+        <module>../standelone</module>
+    </modules>
+    <packaging>pom</packaging>
 
 	<name>ckeckiness</name>
 	<description>BTC Address checker project for Spring Boot</description>
