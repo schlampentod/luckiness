@@ -1,21 +1,31 @@
 /**
- * <input type="text" ng-model="luckyCtrl.luckyBarsSameOffset" arrow-pressed-directive="onArrrowPressedHandler($direction)" ng-keydown="getkeySluckyBarsSameOffset($event)">
+ * <input arrow-pressed-directive="onArrrowPressedHandler($direction)">
  */
 app.directive('arrowPressedDirective', function () {
+    return function (scope, element, attrs) {
 
-    return {
-        link: function (scope, element, attrs) {
-/*
-            scope.onArrrowPressedHandler = function (event) {
+        function onKeyDown(e) {
 
-                if (event.keyCode == 38) {
-                    vm.luckyBarsSameOffset = oldValue + 1;
-                } else if (event.keyCode == 40) {
-                    vm.luckyBarsSameOffset = oldValue - 1;
-                }
-            };
+            var arrowDir;
+            if (e.keyCode === 37) {
+                arrowDir = "LEFT";
+            } else if (e.keyCode === 39) {
+                arrowDir = "RIGHT";
+            } else if(e.keyCode === 38){
+                arrowDir = "UP";
+            } else if(e.keyCode === 40){
+                arrowDir = "DOWN";
+            }
 
-            scope.getListOfCurrencies();*/
+            scope.$apply(function () {
+                scope.$eval(attrs.arrowPressedDirective, {'$direction': arrowDir});
+            });
         }
+
+        scope.$on('$destroy', function () {
+            $(element).unbind('keydown', onKeyDown);
+        });
+
+        $(element).keydown(onKeyDown);
     }
 });

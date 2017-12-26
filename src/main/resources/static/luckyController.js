@@ -153,6 +153,10 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         });
     });
 
+    $scope.callWhenArrowPressed = function (ArrowDirection) {
+        alert(ArrowDirection);
+    };
+
     $scope.getkeys = function (event) {
 
         if (event.keyCode == 38) {

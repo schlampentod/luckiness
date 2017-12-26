@@ -7,6 +7,8 @@
     <input type="text" ng-model="luckyCtrl.luckyBarsSameOffset" ng-keydown="getkeySluckyBarsSameOffset($event)">
 </div>
 
+<input type="text" arrow-pressed-directive="callWhenArrowPressed($direction)">
+
 <div class="lucky_bars_container">
     <div ng-repeat="n in luckyCtrl.luckyBinchBarsOffsets track by $index" ng-keydown="changeOffSets($event,$index)"
          lucky-directive="{{$index}}" ng-model="luckyCtrl.luckyBinchBarsOffsets[$index]"
