@@ -28,7 +28,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
             deferred.reject("Unable to check invalid key: " + keyValue);
         } else {
 
-            var promise = $http.get(createUrl('/rest/v1/lucky/check/batch/' + keyValue));
+            var promise = $http.get(createUrl('/rest/v1/checky/check/batch/' + keyValue));
             promise.then(function (response) {
 
                 var CheckKeyResultDto = response.data;
@@ -93,7 +93,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
         return deferred.promise;
     };
 
-    $.get(/*createUrl(*/'/rest/v1/lucky/known'/*)*/).done(function (data) {
+    $.get('/rest/v1/lucky/known').done(function (data) {
         $rootScope.listOfKnownKeys = [];
         $rootScope.numberOfKeys = data.knownKeyDtos.length;
         for (var i = 0; i < data.knownKeyDtos.length; i++) {
@@ -116,7 +116,7 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
 
     function createUrl(URI) {
-        return REST_SERVER_ENDPOINT + URI;
+        return REST_CHECKY_ENDPOINT + URI;
     }
 
 }]);
