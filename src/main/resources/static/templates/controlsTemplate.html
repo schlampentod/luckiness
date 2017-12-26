@@ -18,12 +18,7 @@
 
 <input ng-init="" id="mainCheckbox" type="checkbox" name="all" ng-model="isAllBarsToggled" ng-change="luckyCtrl.onAllBarsToggled(isAllBarsToggled)"><span class="mainCheckbox_1" >all</span>
 
-<hr/>
 
-{{'Known' | translate}}({{numberOfKeys}}):
-<select id="myselect" ng-model="selectedKnownKey" ng-change="selectedKnownKeyChanged(selectedKnownKey.knownKeyDecimal)" ng-options="x.knownKeyDecimal for x in listOfKnownKeys"></select>
-
-<br/>
 <br/>
 
 <span style="width:50px; display:inline-block;">{{'Max' | translate}}: </span>
@@ -35,6 +30,8 @@
 
 <button ng-click="luckyCtrl.onGenerateMinClick()">{{'Min' | translate}} </button>
 <button ng-click="luckyCtrl.onGenerateMaxClick()">{{'Max' | translate}} </button>
+
+<ng-include src=" 'templates/knownTemplate.html' "></ng-include>
 
 <ng-include src=" 'templates/randomTemplate.html' "></ng-include>
 

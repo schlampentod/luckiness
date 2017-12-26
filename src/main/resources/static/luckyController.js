@@ -86,10 +86,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         }
     });
 
-    $scope.selectedKnownKeyChanged = function (selectedValue) {
-        vm.luckyBarSumValue = selectedValue;
-    };
-
     $scope.$watch(function () { // по изменению массива расположений баров генерить "Key" и "Address"
         return vm.luckyBinchBarsOffsets;
     }, function (newVal, oldVal) {
