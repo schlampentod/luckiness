@@ -1,32 +1,17 @@
 package com.aillusions.luckiness;
 
-import com.aillusions.luckiness.web.CheckBatchResponse;
 import org.bitcoinj.core.*;
 import org.bitcoinj.params.MainNetParams;
 
 import java.math.BigInteger;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author aillusions
  */
 public class KeyUtils {
 
-    private static final BigInteger CHECK_RANGE = BigInteger.valueOf(500L);
-
-    private static final BigInteger MIN_BTC_KEY = new BigInteger("1");
-    private static final BigInteger MAX_BTC_KEY = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494337");
-
-    private static DormantBloomFilter bloomFilter;
-
-    static {
-        bloomFilter = new DormantBloomFilter(new DormantAddressProvider().getDormantAddresses());
-    }
-
-    private static final Set<String> LOGGED_KEYS = Collections.synchronizedSet(new HashSet<>());
-
+    public static final BigInteger MIN_BTC_KEY = new BigInteger("1");
+    public static final BigInteger MAX_BTC_KEY = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494337");
 
     public static ECKey getNewECKey(String providedKeyValue) {
         return new CustomECKey(validateKeyValue(providedKeyValue));
@@ -78,61 +63,5 @@ public class KeyUtils {
 
     public static String keyToWif(ECKey key) {
         return key.getPrivateKeyAsWiF(MainNetParams.get());
-    }
-
-    public static CheckBatchResponse checkBatchFor(String providedKey) {
-
-        CheckBatchResponse rv = new CheckBatchResponse();
-
-        BigInteger origKey = new BigInteger(providedKey);
-
-        BigInteger from = origKey.subtract(CHECK_RANGE);
-        BigInteger to = origKey.add(CHECK_RANGE);
-
-        BigInteger thisVal = from;
-
-        do {
-
-            if (thisVal.compareTo(MIN_BTC_KEY) < 0 || thisVal.compareTo(MAX_BTC_KEY) > 0) {
-                thisVal = thisVal.add(BigInteger.ONE);
-                continue;
-            }
-
-            String thisValDec = thisVal.toString(10);
-            ECKey key = getNewECKey(thisVal);
-            String testBtcAddress = getBtcAddress(key);
-
-            if (bloomFilter.has(testBtcAddress)) {
-                if (!KnownKeysProvider.getKnownKeys().contains(thisValDec)) {
-                    logFound(key, thisValDec);
-                }
-                rv.getFoundKeys().add(thisValDec);
-            }
-
-            thisVal = thisVal.add(BigInteger.ONE);
-
-        } while (thisVal.compareTo(to) <= 0);
-
-        return rv;
-    }
-
-    private static void logFound(ECKey key, String decimalKey) {
-
-        if (LOGGED_KEYS.contains(decimalKey)) {
-            return;
-        }
-
-        String privateKeyAsHex = key.getPrivateKeyAsHex();
-        String publicKeyAsHex = key.getPublicKeyAsHex();
-        String testBtcAddress = getBtcAddress(key);
-
-        System.out.println(
-                "\n\n----------------------\n\n" +
-                        " Found private key:\n" +
-                        "  dec: " + decimalKey + "\n" +
-                        "  wif: " + keyToWif(key) + "\n" +
-                        "  pub: " + testBtcAddress);
-
-        LOGGED_KEYS.add(decimalKey);
     }
 }

@@ -1,4 +1,4 @@
-package com.aillusions.luckiness;
+package com.aillusions.ckeckiness;
 
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
@@ -22,7 +22,7 @@ public class DormantBloomFilter {
         long start = System.currentTimeMillis();
 
         try {
-            filter = BloomFilter.readFrom(new FileInputStream("h:\\work\\luckiness\\src\\main\\resources\\static\\bloom\\addr_all.bin"),
+            filter = BloomFilter.readFrom(new FileInputStream("/Users/mac/luckiness/addr_all.bin"),
                     Funnels.stringFunnel(Charset.forName("UTF-8")));
         } catch (IOException e) {
             filter = null;

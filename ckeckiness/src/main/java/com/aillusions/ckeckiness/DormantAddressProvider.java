@@ -1,4 +1,4 @@
-package com.aillusions.luckiness;
+package com.aillusions.ckeckiness;
 
 import org.apache.commons.lang3.StringUtils;
 

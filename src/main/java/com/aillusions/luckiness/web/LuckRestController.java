@@ -16,11 +16,11 @@ import java.util.Comparator;
 /**
  * @author aillusions
  */
-@org.springframework.web.bind.annotation.RestController()
+@RestController()
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/rest/v1/lucky")
 @Setter
-public class RestController {
+public class LuckRestController {
 
     @Autowired
     private AsyncService asyncService;
@@ -30,27 +30,6 @@ public class RestController {
     @ResponseBody
     public AboutDto about() throws InterruptedException {
         return new AboutDto();
-    }
-
-    // http://localhost:8080/rest/v1/lucky/check/batch/245364787645342312142536754
-    @RequestMapping(value = "/check/batch/{providedKey}", method = RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    public CheckKeyResultDto check(@PathVariable String providedKey) throws InterruptedException {
-
-        long start = System.currentTimeMillis();
-
-        try {
-
-            KeyUtils.validateKeyValue(providedKey);
-            CheckBatchResponse checkBatchResponse = KeyUtils.checkBatchFor(providedKey);
-            return new CheckKeyResultDto(!checkBatchResponse.getFoundKeys().isEmpty(), checkBatchResponse.getFoundKeys());
-
-        } catch (Exception e) {
-            System.out.println("Unable to check key: " + ExceptionUtils.getMessage(e));
-            return new CheckKeyResultDto(false, Collections.EMPTY_SET);
-        } finally {
-            //  System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
-        }
     }
 
     // http://localhost:8080/rest/v1/lucky/resolve/85373582762808404920801888792437094602169475096082456154754419692323304989563
