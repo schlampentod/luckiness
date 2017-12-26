@@ -56,6 +56,20 @@ public class TestSpeed extends TestCase {
         System.out.println("Iterations: " + iterations);
     }
 
+    // Around  on PC
+    // Around 8,991 on mac
+    public void testRandomECKeysPerSec() {
+        long start = System.currentTimeMillis();
+
+        int iterations = 0;
+        while ((System.currentTimeMillis() - start) < ONE_SEC) {
+            iterations++;
+            new ECKey();
+        }
+
+        System.out.println("Iterations: " + iterations);
+    }
+
     // Around 2,034,260 on PC
     // Around 1,054,226 on mac
     public void testBloomChecksPerSec() throws IOException {
