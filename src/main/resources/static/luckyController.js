@@ -8,8 +8,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     $scope.numberOfKeys;
 
     vm.luckyCtrlPma = {
-        luckyTotalGeneratedKeys: 0,
-        luckyBatchGenerationInterval: null
+        luckyTotalGeneratedKeys: 0
     };
 
     vm.luckyCtrlDerivedKeys = {
@@ -32,12 +31,19 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     };
 
     $scope.$on(luckyConstants.TRY_KEYS_SEQUENCE_EVT, function (event, args) {
-        var keyArrays = args.keysArrayToTry;
-        _.forEach(keyArrays, function (keyToTry, i) {
+        var keysArray = args.keysArrayToTry;
+        _.forEach(keysArray, function (keyToTry, i) {
             $timeout(function () {
                 vm.luckyBarSumValue = keyToTry;
             }, 50 * i);
         })
+    });
+
+    $scope.$on(luckyConstants.TRY_BAR_OFFSETS_EVT, function (event, args) {
+        var offsetsArray = args.offsetsArrayToTry;
+        _.forEach(vm.luckyBinchBarsOffsets, function (offSet, i) {
+            vm.luckyBinchBarsOffsets[i] = offsetsArray[i];
+        });
     });
 
     $scope.$watch(function () {
@@ -199,35 +205,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         readBinchStatus();
     };
 
-    vm.onGenerateRandomClick = function () {
-        generateRandomOffsets();
-    };
-
-    vm.onStartRandomBatchClick = function () {
-        if (vm.luckyCtrlPma.luckyBatchGenerationInterval) {
-            $interval.cancel(vm.luckyCtrlPma.luckyBatchGenerationInterval);
-            vm.luckyCtrlPma.luckyBatchGenerationInterval = null;
-        } else {
-            vm.luckyCtrlPma.luckyBatchGenerationInterval = $interval(function () {
-                generateRandomOffsetsRandomBar();
-            }, 50);
-        }
-    };
-
-    //
-    //
-    //
-
-    function generateRandomOffsets() {
-        keyGenerationService.generateRandomBarOffsets(luckyService.currentChooser, vm.checkSelectedBars);
-        readBinchStatus();
-    }
-
-    function generateRandomOffsetsRandomBar() {
-        keyGenerationService.generateRandomBarOffsetsRandomBar(luckyService.currentChooser, vm.checkSelectedBars);
-        readBinchStatus();
-    }
-
     function readBinchStatus() {
         vm.luckyBinchBarsOffsets = luckyService.currentChooser.getBinchBarOffsets();
         vm.luckyBarSumValue = luckyService.currentChooser.chosenValue.toString(10);
@@ -246,7 +223,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     }
 
     readBinchStatus();
-
 
 }]);
 

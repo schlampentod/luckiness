@@ -25,14 +25,6 @@
 
 |
 
-<button ng-click="luckyCtrl.onGenerateRandomClick()">{{'Random' | translate}}</button>
-<button ng-click="luckyCtrl.onStartRandomBatchClick()" ng-switch="luckyCtrl.luckyCtrlPma.luckyBatchGenerationInterval==null">
-    <span ng-switch-when="true">{{'Start' | translate}}</span>
-    <span ng-switch-when="false">{{'Stop' | translate}}</span>
-</button>
-
-|
-
 {{'Known' | translate}}({{numberOfKeys}}):
 <select id="myselect" ng-model="selectedKnownKey" ng-change="selectedKnownKeyChanged(selectedKnownKey.knownKeyDecimal)" ng-options="x.knownKeyDecimal for x in listOfKnownKeys"></select>
 
