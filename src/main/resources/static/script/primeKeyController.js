@@ -24,7 +24,7 @@ app.controller('primeKeyController', ['$scope', 'luckyService', 'luckyFactory', 
         generateAndTryNextPrime();
     };
 
-    $scope.onStartGeneratingPrimeNumbers = function () {
+    $scope.onToggleGeneratingPrimeNumbers = function () {
         if (vm.luckyPrimeGenerationInterval) {
             $interval.cancel(vm.luckyPrimeGenerationInterval);
             vm.luckyPrimeGenerationInterval = null;
@@ -40,14 +40,19 @@ app.controller('primeKeyController', ['$scope', 'luckyService', 'luckyFactory', 
     //
 
     function generateAndTryNextPrime() {
-        var primeKey = findNextPrime().toString(10);
-        $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [primeKey]});
+        var nexPrime = findNextPrime();
+        if (nexPrime.lesserOrEquals(luckyService.currentChooser.MAX_BIG_NUMBER)) {
+            $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [nexPrime.toString(10)]});
+        } else {
+            $scope.onToggleGeneratingPrimeNumbers();
+            console.info("Terminated prime generating: max overflowed to: " + nexPrime.toString(10));
+        }
     }
 
     function findNextPrime() {
         do {
             currentIteration = currentIteration.plus(1);
-        } while (!currentIteration.isPrime())
+        } while (!currentIteration.isPrime());
 
         return currentIteration;
     }

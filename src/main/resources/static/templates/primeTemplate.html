@@ -14,7 +14,7 @@
         <input type="text" only-digits-directive="" ng-model="primeCtrl.primeGenerationStartFrom">
         <button ng-click="onGeneratePrimeNumber()"> Prime</button>
 
-        <button ng-click="onStartGeneratingPrimeNumbers()" ng-switch="primeCtrl.luckyPrimeGenerationInterval==null">
+        <button ng-click="onToggleGeneratingPrimeNumbers()" ng-switch="primeCtrl.luckyPrimeGenerationInterval==null">
             <span ng-switch-when="true">{{'Start' | translate}}</span>
             <span ng-switch-when="false">{{'Stop' | translate}}</span>
         </button>
