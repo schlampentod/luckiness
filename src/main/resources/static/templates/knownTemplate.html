@@ -3,12 +3,15 @@
 
 <div ng-controller="knownKeyController as knownCtrl">
 
-    <button ng-click="knownCtrl.luckyKnownFormToggled=!knownCtrl.luckyKnownFormToggled">Known</button>
+    <button ng-click="knownCtrl.luckyKnownFormToggled=!knownCtrl.luckyKnownFormToggled">   {{'Known' | translate}} ({{numberOfKeys}})</button>
 
     <span ng-if="knownCtrl.luckyKnownFormToggled">
 
-        {{'Known' | translate}}({{numberOfKeys}}):
-        <select id="myselect" ng-model="selectedKnownKey" ng-change="selectedKnownKeyChanged(selectedKnownKey.knownKeyDecimal)" ng-options="x.knownKeyDecimal for x in listOfKnownKeys"></select>
+        <br />
+        <select id="myselect" size="20" ng-model="selectedKnownKey"
+                ng-change="selectedKnownKeyChanged(selectedKnownKey.knownKeyDecimal)"
+                ng-options="x.knownKeyDecimal for x in listOfKnownKeys"
+                style="width: 800px; font-size: 12px"></select>
 
         <br />
 
