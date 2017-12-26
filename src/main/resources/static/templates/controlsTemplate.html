@@ -46,6 +46,8 @@
 <span style="width:50px; display:inline-block;">{{'Key' | translate}}</span>
 <input type="text" only-digits-directive="" ng-keydown="getkeys($event)" ng-model="luckyCtrl.luckyBarSumValue" style="width:650px; text-align: right; outline:none; font-size:14px; font-family:Arial, sans-serif;">
 
+<ng-include src=" 'templates/randomTemplate.html' "></ng-include>
+
 <ng-include src=" 'templates/keyConversionTemplate.html' "></ng-include>
 
 <ng-include src=" 'templates/sequenceGeneratorTemplate.html' "></ng-include>
