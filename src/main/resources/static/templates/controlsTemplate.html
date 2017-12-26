@@ -20,11 +20,6 @@
 
 <hr/>
 
-<button ng-click="luckyCtrl.onGenerateMinClick()">{{'Min' | translate}} </button>
-<button ng-click="luckyCtrl.onGenerateMaxClick()">{{'Max' | translate}} </button>
-
-|
-
 {{'Known' | translate}}({{numberOfKeys}}):
 <select id="myselect" ng-model="selectedKnownKey" ng-change="selectedKnownKeyChanged(selectedKnownKey.knownKeyDecimal)" ng-options="x.knownKeyDecimal for x in listOfKnownKeys"></select>
 
@@ -37,6 +32,9 @@
 
 <span style="width:50px; display:inline-block;">{{'Key' | translate}}</span>
 <input type="text" only-digits-directive="" ng-keydown="getkeys($event)" ng-model="luckyCtrl.luckyBarSumValue" style="width:650px; text-align: right; outline:none; font-size:14px; font-family:Arial, sans-serif;">
+
+<button ng-click="luckyCtrl.onGenerateMinClick()">{{'Min' | translate}} </button>
+<button ng-click="luckyCtrl.onGenerateMaxClick()">{{'Max' | translate}} </button>
 
 <ng-include src=" 'templates/randomTemplate.html' "></ng-include>
 

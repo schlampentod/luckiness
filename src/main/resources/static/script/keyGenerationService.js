@@ -12,6 +12,8 @@ app.service('keyGenerationService', ['$timeout', 'luckyConstants', 'luckyFactory
             offsets[i] = bar.binchBarMinOffsetPx;
         });
 
+        offsets[offsets.length - 1] = 1;
+
         binchInstance.setChooserBarsOffsets(offsets);
     };
 
