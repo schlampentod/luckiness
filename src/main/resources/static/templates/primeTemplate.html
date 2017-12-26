@@ -1,0 +1,22 @@
+
+
+
+<span ng-controller="primeKeyController as primeCtrl">
+
+    <button ng-click="primeCtrl.luckyPrimeFormToggled=!primeCtrl.luckyPrimeFormToggled"> Prime </button>
+
+    <span ng-if="primeCtrl.luckyPrimeFormToggled" class="key_controls_block">
+
+        <hr />
+        Prime:
+        <br />
+
+        <input type="text" only-digits-directive="" ng-model="primeCtrl.primeGenerationStartFrom">
+        <button ng-click="onGeneratePrimeNumber()"> Prime</button>
+        <button ng-click="onStartGeneratingPrimeNumbers()"> Start</button>
+
+        <hr />
+
+    </span>
+</span>
+
