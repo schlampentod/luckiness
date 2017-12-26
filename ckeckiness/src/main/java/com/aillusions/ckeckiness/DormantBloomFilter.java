@@ -21,20 +21,23 @@ public class DormantBloomFilter {
 
     private BloomFilter filter;
 
+    public static BloomFilter getBigBloomFilter() throws IOException {
+        //URL boomSerUrl = DormantBloomFilter.class.getClassLoader().getResource("addr_all.bin");
+        //filter = BloomFilter.readFrom(boomSerUrl.openStream(), Funnels.stringFunnel(Charset.forName("UTF-8")));
+
+        InputStream blloomSerialized = DormantBloomFilter.class.getClassLoader().getResourceAsStream("addr_all.bin");
+        return BloomFilter.readFrom(blloomSerialized, Funnels.stringFunnel(Charset.forName("UTF-8")));
+
+            /*filter = BloomFilter.readFrom(new FileInputStream("h:\\work\\luckiness\\ckeckiness\\src\\main\\resources\\addr_all.bin"),
+                    Funnels.stringFunnel(Charset.forName("UTF-8")));*/
+    }
+
     public DormantBloomFilter(List<String> listOfLines) {
 
         long start = System.currentTimeMillis();
 
         try {
-
-            //URL boomSerUrl = DormantBloomFilter.class.getClassLoader().getResource("addr_all.bin");
-            //filter = BloomFilter.readFrom(boomSerUrl.openStream(), Funnels.stringFunnel(Charset.forName("UTF-8")));
-
-            InputStream blloomSerialized = DormantBloomFilter.class.getClassLoader().getResourceAsStream("addr_all.bin");
-            filter = BloomFilter.readFrom(blloomSerialized, Funnels.stringFunnel(Charset.forName("UTF-8")));
-
-            /*filter = BloomFilter.readFrom(new FileInputStream("h:\\work\\luckiness\\ckeckiness\\src\\main\\resources\\addr_all.bin"),
-                    Funnels.stringFunnel(Charset.forName("UTF-8")));*/
+            filter = getBigBloomFilter();
 
         } catch (IOException e) {
             filter = null;

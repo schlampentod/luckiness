@@ -1,10 +1,12 @@
 package com.aillusions.ckeckiness;
 
 import com.aillusions.luckiness.KeyUtils;
+import com.google.common.hash.BloomFilter;
 import junit.framework.TestCase;
 import org.bitcoinj.core.CustomECKey;
 import org.bitcoinj.core.ECKey;
 
+import java.io.IOException;
 import java.math.BigInteger;
 
 public class TestSpeed extends TestCase {
@@ -50,5 +52,21 @@ public class TestSpeed extends TestCase {
         }
 
         System.out.println("Iterations: " + iterations);
+    }
+
+    // Around 2,034,260
+    public void testBloomChecksPerSec() throws IOException {
+
+        BloomFilter filter = DormantBloomFilter.getBigBloomFilter();
+
+        long start = System.currentTimeMillis();
+
+        int iterations = 0;
+        while ((System.currentTimeMillis() - start < ONE_SEC)) {
+            iterations++;
+            filter.mightContain(iterations + "");
+        }
+
+        System.out.println("Iterations: " + iterations + " for filter with: " + filter.approximateElementCount() + " elements.");
     }
 }
