@@ -46,6 +46,14 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
             }
 
             if (evt.ctrlKey || evt.type == "click" || detectLeftButton(evt)) {
+
+                /*if (isOdd(index)) {
+                    scope.luckySliderOffset = 1000 - evt.offsetX;
+                } else {
+                    scope.luckySliderOffset = evt.offsetX - 1;
+                }
+                */
+
                 scope.luckySliderOffset = evt.offsetX - 1;
                 onLuckySliderMoved(scope.luckySliderOffset);
             }
@@ -108,6 +116,10 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
             onLuckySliderMoved(newValue);
 
         }, true);
+
+        function isOdd(num) {
+            return num % 2;
+        }
     }
 
     return {
