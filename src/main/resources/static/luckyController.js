@@ -40,9 +40,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         vm.checkSelectedBars.fill(isAllBarsToggled);
     };
 
-    $scope.$on('transactionBigIntFrom16To10', function (event, data) {
-        vm.luckyBarSumValue = data.toString(10);
-    });
 
     $scope.$on(luckyConstants.TRY_KEYS_SEQUENCE_EVT, function (event, args) {
         var keysArray = args.keysArrayToTry;
@@ -51,6 +48,8 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
                 vm.luckyBarSumValue = keyToTry;
             }, 50 * i);
         })
+        debugger;
+        vm.luckyBarSumValue = args.keysArrayToTry;
     });
 
     $scope.$on(luckyConstants.TRY_BAR_OFFSETS_EVT, function (event, args) {
