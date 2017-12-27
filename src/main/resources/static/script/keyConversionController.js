@@ -15,5 +15,10 @@ app.controller('keyConversionController', ['$scope', 'luckyService', 'luckyFacto
         });
     };
 
+    vm.onParseProvidedHEXKey = function(luckyHEXKeyForConversion){
+        var luckyHEXKey_10 = bigInt(luckyHEXKeyForConversion.toString(), 16);
+        $scope.$emit('transactionBigIntFrom16To10', luckyHEXKey_10);
+    };
+
 }]);
 
