@@ -6,6 +6,13 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
     function link(scope, element, attrs, ngModel) {
 
         var index = parseInt(attrs["luckyDirective"]);
+        var inverses = JSON.parse(attrs["luckyDirectiveInverse"]);
+
+        scope.$watch(function () {
+            return attrs["luckyDirectiveInverse"];
+        }, function (newVal, oldVal) {
+            inverses = JSON.parse(newVal);
+        });
 
         // console.info("Created: " + index);
 
@@ -47,14 +54,14 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
 
             if (evt.ctrlKey || evt.type == "click" || detectLeftButton(evt)) {
 
-                /*if (isOdd(index)) {
+                if (isOdd(index) && inverses.inverseOddCfg) {
+                    scope.luckySliderOffset = 1000 - evt.offsetX;
+                } else if (isEven(index) && inverses.inverseEvenCfg) {
                     scope.luckySliderOffset = 1000 - evt.offsetX;
                 } else {
                     scope.luckySliderOffset = evt.offsetX - 1;
                 }
-                */
 
-                scope.luckySliderOffset = evt.offsetX - 1;
                 onLuckySliderMoved(scope.luckySliderOffset);
             }
 
@@ -119,6 +126,11 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
 
         function isOdd(num) {
             return num % 2;
+        }
+
+        function isEven(n) {
+            n = Number(n);
+            return n === 0 || !!(n && !(n%2));
         }
     }
 

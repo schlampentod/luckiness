@@ -19,6 +19,14 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     };
 
     vm.luckyBarsSameOffset = 0;
+    vm.luckyBarsInverseOdd = false;
+    vm.luckyBarsInverseEven = false;
+
+    vm.getInverseBarsConfig = function () {
+        return {inverseOddCfg: vm.luckyBarsInverseOdd, inverseEvenCfg: vm.luckyBarsInverseEven};
+    };
+
+
     vm.luckyBinchBarsOffsets = [];
     vm.luckyBarSumValue = "";
 

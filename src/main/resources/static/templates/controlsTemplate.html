@@ -5,11 +5,16 @@
 
 <div>
     <input type="text" ng-model="luckyCtrl.luckyBarsSameOffset" arrow-pressed-directive="getkeySluckyBarsSameOffset($direction)">
+
+    |
+
+    <label><input type="checkbox" ng-model="luckyCtrl.luckyBarsInverseOdd"> Inverse odd</label>
+    <label><input type="checkbox" ng-model="luckyCtrl.luckyBarsInverseEven">Inverse even</label>
 </div>
 
 <div class="lucky_bars_container">
     <div ng-repeat="n in luckyCtrl.luckyBinchBarsOffsets track by $index" arrow-pressed-directive="changeOffSets($direction,$index)"
-         lucky-directive="{{$index}}" ng-model="luckyCtrl.luckyBinchBarsOffsets[$index]"
+         lucky-directive="{{$index}}" lucky-directive-inverse="{{luckyCtrl.getInverseBarsConfig()}}" ng-model="luckyCtrl.luckyBinchBarsOffsets[$index]"
          id="{{luckyBarId}}">
     </div>
 </div>
