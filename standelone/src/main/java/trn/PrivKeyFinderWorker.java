@@ -1,12 +1,10 @@
 package trn;
 
+import com.aillusions.ckeckiness.CheckRestController;
 import com.aillusions.ckeckiness.DormantBloomFilter;
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.MainNetParams;
 
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -20,6 +18,7 @@ public class PrivKeyFinderWorker implements Runnable {
         this.bloomFilter = bloomFilter;
     }
 
+    private static final String start_key = "26620332071894918181543005365761258030749426457641997779997397538985897748055";
     private final PrintWriter writer;
     private final AtomicLong counter;
     private final DormantBloomFilter bloomFilter;
@@ -27,52 +26,22 @@ public class PrivKeyFinderWorker implements Runnable {
     @Override
     public void run() {
 
-        ECKey key;
-        String testBtcAddr;
+        BigInteger bigKey = new BigInteger(start_key);
 
-        logInfo("Started..");
+        while (true) {
 
-        do {
-            key = getNewECKey();
-            testBtcAddr = getBtcAddress(key);
-            counter.incrementAndGet();
-        } while (!bloomFilter.has(testBtcAddr));
+            long i = counter.incrementAndGet();
 
-        logInfo("" +
-                " Address found:  \n" +
-                "      " + testBtcAddr);
-
-        System.out.print("\007");
-        System.out.flush();
-
-        logInfo("" +
-                " For private key:\n" +
-                "      " + key.getPrivateKeyAsHex() + "\n" +
-                " And public key:\n" +
-                "      " + key.getPublicKeyAsHex());
-    }
-
-    private void logInfo(String info) {
-
-        synchronized (PrivKeyFinderWorker.class) {
-            writer.append(info + "\n");
-            System.out.println(info);
-            //writer.close();
-            writer.flush();
+            BigInteger keyToCheck = bigKey.add(BigInteger.valueOf(i));
+            boolean found = CheckRestController.checkKeyFor(keyToCheck, bloomFilter);
+            if (found) {
+                writer.append("found: " + keyToCheck.toString(10));
+                writer.flush();
+                System.out.println("found: " + keyToCheck.toString(10));
+            }
         }
 
-    }
-
-    public static ECKey getNewECKey() {
-        return new ECKey();
-    }
-
-    public static String getBtcAddress(ECKey key) {
-
-        final NetworkParameters netParams = MainNetParams.get();
-        Address addressFromKey = key.toAddress(netParams);
-
-        return addressFromKey.toBase58();
+        //System.out.println("Worker done.");
     }
 
 }

@@ -27,9 +27,9 @@ public class CheckRestController {
 
     private static final BigInteger CHECK_RANGE = BigInteger.valueOf(500L);
 
-    private static DormantBloomFilter bloomFilter;
+    private final DormantBloomFilter bloomFilter;
 
-    static {
+    public CheckRestController() {
         bloomFilter = new DormantBloomFilter(new DormantAddressProvider().getDormantAddresses());
     }
 
@@ -54,7 +54,7 @@ public class CheckRestController {
         }
     }
 
-    public static CheckBatchResponse checkBatchFor(String providedKey) {
+    public CheckBatchResponse checkBatchFor(String providedKey) {
 
         CheckBatchResponse rv = new CheckBatchResponse();
 
@@ -72,14 +72,8 @@ public class CheckRestController {
                 continue;
             }
 
-            String thisValDec = thisVal.toString(10);
-            ECKey key = KeyUtils.getNewECKey(thisVal);
-            String testBtcAddress = KeyUtils.getBtcAddress(key);
-
-            if (bloomFilter.has(testBtcAddress)) {
-                if (!KnownKeysProvider.getKnownKeys().contains(thisValDec)) {
-                    logFound(key, thisValDec);
-                }
+            if (checkKeyFor(thisVal, bloomFilter)) {
+                String thisValDec = thisVal.toString(10);
                 rv.getFoundKeys().add(thisValDec);
             }
 
@@ -88,6 +82,21 @@ public class CheckRestController {
         } while (thisVal.compareTo(to) <= 0);
 
         return rv;
+    }
+
+    public static boolean checkKeyFor(BigInteger thisVal, DormantBloomFilter bloomFilter) {
+
+        ECKey key = KeyUtils.getNewECKey(thisVal);
+        String testBtcAddress = KeyUtils.getBtcAddress(key);
+
+        if (bloomFilter.has(testBtcAddress)) {
+            String thisValDec = thisVal.toString(10);
+            if (!KnownKeysProvider.getKnownKeys().contains(thisValDec)) {
+                logFound(key, thisValDec);
+            }
+            return true;
+        }
+        return false;
     }
 
     private static void logFound(ECKey key, String decimalKey) {
