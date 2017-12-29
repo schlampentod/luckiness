@@ -2,10 +2,12 @@
  *
  */
 
-app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService', '$window', 'keyGenerationService', '$timeout', 'luckyConstants', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, $window, keyGenerationService, $timeout, luckyConstants) {
+app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$interval', '$http', '$translate', 'addressAnalyticsService', 'localStorageAccess', 'keyGenerationService', '$timeout', 'luckyConstants', function ($scope, luckyService, luckyFactory, $interval, $http, $translate, addressAnalyticsService, localStorageAccess, keyGenerationService, $timeout, luckyConstants) {
 
     var vm = this;
     $scope.numberOfKeys;
+
+    localStorageAccess.setStringToLocalStorage("About Grisha", "Grisha good boy");
 
     vm.luckyCtrlPma = {
         luckyTotalGeneratedKeys: 0
