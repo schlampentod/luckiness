@@ -1,47 +1,67 @@
 package trn;
 
-import com.aillusions.ckeckiness.CheckRestController;
-import com.aillusions.ckeckiness.DormantBloomFilter;
+import com.aillusions.luckiness.DormantBloomFilter;
+import com.aillusions.luckiness.KeyUtils;
 
 import java.io.PrintWriter;
 import java.math.BigInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author aillusions
  */
 public class PrivKeyFinderWorker implements Runnable {
 
-    PrivKeyFinderWorker(PrintWriter writer, AtomicLong counter, DormantBloomFilter bloomFilter) {
+    BigInteger startingFrom = new BigInteger("11011301348490244036190665606861610068404650509358250335960553511767605706649");
+    long range = 1000;
+
+    private final PrintWriter writer;
+    private final DormantBloomFilter bloomFilter;
+    private long localCounter = 0L;
+
+    PrivKeyFinderWorker(PrintWriter writer, DormantBloomFilter bloomFilter) {
         this.writer = writer;
-        this.counter = counter;
         this.bloomFilter = bloomFilter;
     }
-
-    private static final String start_key = "26620332071894918181543005365761258030749426457641997779997397538985897748055";
-    private final PrintWriter writer;
-    private final AtomicLong counter;
-    private final DormantBloomFilter bloomFilter;
 
     @Override
     public void run() {
 
-        BigInteger bigKey = new BigInteger(start_key);
+
+        BigInteger bigKey = getRandomInRange();
 
         while (true) {
 
-            long i = counter.incrementAndGet();
+            long globalCntr = Main.GLOBAL_COUNTER.incrementAndGet();
+            if ((globalCntr % 10_000_000) == 0) {
+                System.out.println("Handled: " + globalCntr / 1_000_000L + " M keys");
+            }
 
-            BigInteger keyToCheck = bigKey.add(BigInteger.valueOf(i));
-            boolean found = CheckRestController.checkKeyFor(keyToCheck, bloomFilter);
+            localCounter++;
+
+            if (localCounter > 10_000) {
+                bigKey = getRandomInRange();
+                localCounter = 0;
+                //System.out.println("Searching around: " + bigKey.toString(10));
+            }
+
+            bigKey = bigKey.add(BigInteger.valueOf(localCounter));
+
+            boolean found = KeyUtils.checkKeyFor(bigKey, bloomFilter);
+
             if (found) {
-                writer.append("found: " + keyToCheck.toString(10));
+                writer.append("found: " + bigKey.toString(10));
                 writer.flush();
-                System.out.println("found: " + keyToCheck.toString(10));
+                //System.out.println("found: " + bigKey.toString(10));
             }
         }
 
-        //System.out.println("Worker done.");
+        // System.out.println("Worker done.");
+    }
+
+    private BigInteger getRandomInRange() {
+        BigInteger rv = KeyUtils.getRandom(startingFrom);
+        rv = rv.subtract(BigInteger.valueOf(range / 5));
+        return rv;
     }
 
 }

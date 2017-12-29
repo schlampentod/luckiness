@@ -1,7 +1,7 @@
 package trn;
 
-import com.aillusions.ckeckiness.DormantAddressProvider;
-import com.aillusions.ckeckiness.DormantBloomFilter;
+import com.aillusions.luckiness.DormantAddressProvider;
+import com.aillusions.luckiness.DormantBloomFilter;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,15 +17,17 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class Main {
 
-    private static final AtomicLong counter = new AtomicLong();
+    public static final AtomicLong GLOBAL_COUNTER = new AtomicLong();
 
     public static void main(String[] args) throws IOException {
+
+        long start = System.currentTimeMillis();
 
         PrintWriter writer = new PrintWriter(new FileWriter("theirner.log", true));
         DormantBloomFilter bloomFilter = new DormantBloomFilter(new DormantAddressProvider().getDormantAddresses());
 
         for (int i = 0; i < 8; i++) {
-            Thread thread = new Thread(new PrivKeyFinderWorker(writer, counter, bloomFilter));
+            Thread thread = new Thread(new PrivKeyFinderWorker(writer, bloomFilter));
             thread.start();
         }
 
@@ -33,12 +35,12 @@ public class Main {
         TimerTask minutelyTask = new TimerTask() {
             @Override
             public void run() {
-                writer.append("Processed: " + counter.get() + "\n");
-                System.out.println("Processed: " + counter.get() + "\n");
+                //writer.append("Processed: " + GLOBAL_COUNTER.get() + "\n");
+                System.out.println("Processed: " + GLOBAL_COUNTER.get() + " in " + (System.currentTimeMillis() - start) / (1000 * 60) + " min");
                 writer.flush();
             }
         };
 
-        timer.schedule(minutelyTask, 0l, 1000 * 10);
+        timer.schedule(minutelyTask, 0l, 1000 * 60);
     }
 }

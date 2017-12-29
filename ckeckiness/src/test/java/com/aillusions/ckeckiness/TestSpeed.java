@@ -1,5 +1,6 @@
 package com.aillusions.ckeckiness;
 
+import com.aillusions.luckiness.DormantBloomFilter;
 import com.aillusions.luckiness.KeyUtils;
 import com.google.common.hash.BloomFilter;
 import junit.framework.TestCase;
@@ -7,6 +8,7 @@ import org.bitcoinj.core.ECKey;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.SecureRandom;
 
 public class TestSpeed extends TestCase {
 
@@ -85,5 +87,22 @@ public class TestSpeed extends TestCase {
         }
 
         System.out.println("Iterations: " + iterations + " for filter with: " + filter.approximateElementCount() + " elements.");
+    }
+
+    // Around  on PC
+    // Around 190,470 on mac
+    public void testSecureNumbersPerSec() throws IOException {
+
+        BigInteger min = new BigInteger("11005517075559335069406389140513609413038037807197106256466320646282661486675");
+
+        long start = System.currentTimeMillis();
+
+        int iterations = 0;
+        while ((System.currentTimeMillis()) - start < ONE_SEC) {
+            iterations++;
+            KeyUtils.getRandom(min);
+        }
+
+        System.out.println("Iterations: " + iterations);
     }
 }

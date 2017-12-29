@@ -1,4 +1,4 @@
-package com.aillusions.luckiness.web;
+package com.aillusions.luckiness;
 
 import lombok.Data;
 import lombok.ToString;

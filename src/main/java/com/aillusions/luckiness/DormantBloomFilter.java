@@ -1,4 +1,4 @@
-package com.aillusions.ckeckiness;
+package com.aillusions.luckiness;
 
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
