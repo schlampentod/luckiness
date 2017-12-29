@@ -47,8 +47,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
             $timeout(function () {
                 vm.luckyBarSumValue = keyToTry;
             }, 50 * i);
-        })
-        debugger;
+        });
         vm.luckyBarSumValue = args.keysArrayToTry;
     });
 
