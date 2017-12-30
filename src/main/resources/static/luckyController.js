@@ -7,7 +7,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     var vm = this;
     $scope.numberOfKeys;
 
-    localStorageAccess.setStringToLocalStorage("About Grisha", "Grisha good boy");
+
 
     vm.luckyCtrlPma = {
         luckyTotalGeneratedKeys: 0
