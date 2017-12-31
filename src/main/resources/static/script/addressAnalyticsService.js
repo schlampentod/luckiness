@@ -1,7 +1,7 @@
 /**
  *
  */
-app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', '$q', '$window', '$rootScope','localStorageAccess', function ($timeout, luckyConstants, luckyFactory, $http, $q, $window, $rootScope, localStorageAccess) {
+app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFactory', '$http', '$q', '$window', '$rootScope', 'localStorageAccess', function ($timeout, luckyConstants, luckyFactory, $http, $q, $window, $rootScope, localStorageAccess) {
 
     var srv = this;
 
@@ -58,11 +58,14 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
                                 }
 
                                 if (keyAlreadyExistsInLS === false) {
-                                    var numberOfKey = $window.localStorage.length + "";       //если ключ совпал - забить в локалсторадж
-                                    localStorageAccess.setStringToLocalStorage(numberOfKey, matchedKey);
+
+                                    var arrayOfKeys = localStorageAccess.getArrayFromLocalStorage("matched_keys");
+                                    arrayOfKeys.push(matchedKey);
+                                    localStorageAccess.setObjectToLocalStorage("matched_keys", arrayOfKeys);
+
                                     //$window.localStorage.setItem(numberOfKey, matchedKey);
                                     console.info("Matched key missing from local storage (adding): " + matchedKey);
-                                }else{
+                                } else {
                                     console.info("Matched key already exist in local storage: " + matchedKey);
                                 }
                             }
