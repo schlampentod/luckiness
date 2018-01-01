@@ -50,7 +50,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
                 vm.luckyBarSumValue = keyToTry;
             }, 50 * i);
         });
-        vm.luckyBarSumValue = args.keysArrayToTry;
     });
 
     $scope.$on(luckyConstants.TRY_BAR_OFFSETS_EVT, function (event, args) {
