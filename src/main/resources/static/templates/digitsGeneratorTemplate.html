@@ -1,28 +1,8 @@
 <style>
-    .key_gen .digits_gen .digit_gen_entry {
-    }
-
-    .key_gen .digits_gen .digit_gen_entry input {
-        width: 13px;
-        padding: 0px;
-        margin: -2px;
-        border: 0px solid black;
-        text-align: center;
-    }
-
-    .key_gen .digits_gen .digit_gen_entry .up_me {
-        background-color: #94e65a;
-        font-size: 11px;
-        height: 50px;
-        text-align: center;
-    }
-
-    .key_gen .digits_gen .digit_gen_entry .down_me {
-        background-color: #e6c95a;
-        font-size: 11px;
-        height: 50px;
-        text-align: center;
-    }
+    .key_gen .digits_gen .digit_gen_table {  }
+    .key_gen .digits_gen .digit_gen_table input {width: 12px; padding: 0px; margin: -2px; border: 0px solid black; text-align: center; }
+    .key_gen .digits_gen .digit_gen_table .up_me {background-color: #94e65a;font-size: 11px;height: 50px; text-align: center; }
+    .key_gen .digits_gen .digit_gen_table .down_me { background-color: #e6c95a; font-size: 11px;height: 50px;text-align: center;}
 </style>
 
 
@@ -36,19 +16,21 @@
         Digits:
         <br/>
 
-        <table class="digit_gen_entry">
+        <table class="digit_gen_table">
              <tr class="up_me">
-                  <td ng-repeat="digit in dgGenCtrl.luckyDigitsArray track by $index" ng-mouseover="dgGenCtrl.onDigitUpIncrement($index)">
+                  <td ng-repeat="digit in dgGenCtrl.luckyDigitsArray track by $index"
+                      ng-mouseover="dgGenCtrl.onDigitUpIncrement($index, $event)">
                        ↑
                   </td>
              </tr>
              <tr>
                 <td ng-repeat="digit in dgGenCtrl.luckyDigitsArray track by $index">
-                    <input type="text" maxlength="1" ng-model="dgGenCtrl.luckyDigitsArray[$index]">
+                    <input type="text" only-digits-directive="" maxlength="1" ng-model="dgGenCtrl.luckyDigitsArray[$index]">
                 </td>
             </tr>
             <tr class="down_me">
-                <td ng-repeat="digit in dgGenCtrl.luckyDigitsArray track by $index" ng-mouseover="dgGenCtrl.onDigitDownDecrement($index)">
+                <td ng-repeat="digit in dgGenCtrl.luckyDigitsArray track by $index"
+                    ng-mouseover="dgGenCtrl.onDigitDownDecrement($index, $event)">
                      ↓
                 </td>
             </tr>
