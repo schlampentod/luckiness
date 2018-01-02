@@ -45,7 +45,7 @@ app.controller('trimmerController', ['$scope', 'luckyService', 'luckyFactory', '
 
             var newValueSubCut = newValueCut;
 
-            while (newValueSubCut.length > 75) {
+            while (newValueSubCut.length > 76) {
                 newValueSubCut = newValueSubCut.substring(1);
                 keysToCheck.push(newValueSubCut);
             }

@@ -11,7 +11,7 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
 
     vm.luckyDigitsFormToggled = false;
-    vm.luckyDigitsFormCtrlOnly = false;
+    vm.luckyDigitsFormCtrlOnly = true;
 
     vm.digitGeneratorPiles;
 
