@@ -12,8 +12,14 @@
         <hr/>
         Histogramm:
         <br/>
+        <br/>
 
-
+        <div>
+            digit - number
+        </div>
+        <div ng-repeat="digitValue in histoCtrl.histogrammValues track by $index">
+           {{$index}} - {{digitValue}}
+        </div>
 
         <hr/>
 
