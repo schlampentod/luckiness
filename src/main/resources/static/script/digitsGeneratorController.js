@@ -11,11 +11,12 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
 
     vm.luckyDigitsFormToggled = false;
+    vm.luckyDigitsFormCtrlOnly = false;
 
     vm.luckyDigitsArray;
 
     vm.onDigitUpIncrement = function (idx, evt) {
-        if (!evt.ctrlKey) {
+        if (vm.luckyDigitsFormCtrlOnly && !evt.ctrlKey) {
             return;
         }
         var newVal = vm.luckyDigitsArray[idx] + 1;
@@ -25,7 +26,7 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
     };
 
     vm.onDigitDownDecrement = function (idx, evt) {
-        if (!evt.ctrlKey) {
+        if (vm.luckyDigitsFormCtrlOnly && !evt.ctrlKey) {
             return;
         }
         var newVal = vm.luckyDigitsArray[idx] - 1;

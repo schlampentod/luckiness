@@ -13,15 +13,17 @@
         <br />
 
         <span style=" display:inline-block;">from WIF: </span>
-        <input type="text" ng-model="luckyWIFKeyForConversion" style="width:500px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
-        <button ng-click="keyConvCtrl.onParseProvidedWIFKey(luckyWIFKeyForConversion)">Parse</button>
+        <input type="text" ng-model="keyConvCtrl.luckyWIFKeyForConversion"
+               style="width:800px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
+        <button ng-click="keyConvCtrl.onParseProvidedWIFKey(keyConvCtrl.luckyWIFKeyForConversion)">Parse</button>
 
         <hr />
 
         <br />
 
         <span style=" display:inline-block;">from HEX: </span>
-        <input type="text" ng-model="luckyHEXKeyForConversion" only-hexa-digits-directive="" ng-keyup="keyConvCtrl.onParseProvidedHEXKey(luckyHEXKeyForConversion)" style="width:500px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
+        <input type="text" ng-model="keyConvCtrl.luckyHEXKeyForConversion" style="width: 800px"
+               only-hexa-digits-directive="" ng-keyup="keyConvCtrl.onParseProvidedHEXKey(keyConvCtrl.luckyHEXKeyForConversion)" style="width:500px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
         <button ng-click="keyConvCtrl.onParseProvidedHEXKey(luckyHEXKeyForConversion)">Parse</button>
 
         <hr />

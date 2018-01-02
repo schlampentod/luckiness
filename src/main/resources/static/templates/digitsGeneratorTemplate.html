@@ -1,7 +1,8 @@
 <style>
     .key_gen .digits_gen .digit_gen_table {  }
     .key_gen .digits_gen .digit_gen_table input {width: 12px; padding: 0px; margin: -2px; border: 0px solid black; text-align: center; }
-    .key_gen .digits_gen .digit_gen_table .up_me {background-color: #94e65a;font-size: 11px;height: 50px; text-align: center; }
+    .key_gen .digits_gen .digit_gen_table .up_me {background-color: #94e65a; font-size: 11px;height: 50px; text-align: center; }
+    .key_gen .digits_gen .digit_gen_table .up_me .indicator { background-color:#60bb1f; display: block; width:10px;}
     .key_gen .digits_gen .digit_gen_table .down_me { background-color: #e6c95a; font-size: 11px;height: 50px;text-align: center;}
 </style>
 
@@ -13,7 +14,7 @@
     <span ng-if="dgGenCtrl.luckyDigitsFormToggled" class="key_controls_block">
 
         <hr/>
-        Digits:
+        Digits: (<label><input type="checkbox" ng-model="dgGenCtrl.luckyDigitsFormCtrlOnly"> With CTRL only</label>)
         <br/>
 
         <table class="digit_gen_table">
@@ -21,6 +22,8 @@
                   <td ng-repeat="digit in dgGenCtrl.luckyDigitsArray track by $index"
                       ng-mouseover="dgGenCtrl.onDigitUpIncrement($index, $event)">
                        ↑
+                     <span class="indicator" ng-style="{'height': (dgGenCtrl.luckyDigitsArray[$index]*5)+'px'}">
+                     </span>
                   </td>
              </tr>
              <tr>
