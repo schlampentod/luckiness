@@ -15,7 +15,14 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
 
     vm.digitGeneratorPiles;
 
+    vm.digitGeneratorEnableReversing = 0;
+
     $scope.$on(luckyConstants.KEY_VALUE_CHANGED_EVT, function (event, args) {
+
+        if (isValueChangedInternally()) {
+            return;
+        }
+
         var newKeyVal = args.newChosenKey;
         var newArray = convertKeyValueToPiles(newKeyVal);
 
@@ -35,7 +42,7 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
                 pileNewVal = newArray[newArrIdx];
             }
 
-            //vm.digitGeneratorPiles[mainArrIdx] = pileNewVal;
+            vm.digitGeneratorPiles[mainArrIdx] = pileNewVal;
         });
 
     });
@@ -48,6 +55,8 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
         if (newVal <= MAX_DIGIT) {
             vm.digitGeneratorPiles[idx] = newVal;
         }
+
+        setValueChangedInternally();
     };
 
     vm.onDigitDownDecrement = function (idx, evt) {
@@ -58,6 +67,8 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
         if (newVal >= MIN_DIGIT) {
             vm.digitGeneratorPiles[idx] = newVal;
         }
+
+        setValueChangedInternally();
     };
 
     initArray();
@@ -103,7 +114,7 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
     }
 
     function onDigitsChangedInternally(newVal, oldVal) {
-        if (!vm.luckyDigitsFormToggled) {
+        if (!vm.luckyDigitsFormToggled || !isValueChangedInternally()) {
             return;
         }
 
@@ -114,6 +125,14 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
         } else {
             vm.digitGeneratorPiles = oldVal
         }
+    }
+
+    function setValueChangedInternally() {
+        vm.digitGeneratorEnableReversing = new Date().getTime();
+    }
+
+    function isValueChangedInternally() {
+        return (new Date().getTime() - vm.digitGeneratorEnableReversing) < 1000;
     }
 
 }]);
