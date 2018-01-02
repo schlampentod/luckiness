@@ -2,7 +2,7 @@
     .key_gen .digits_gen .digit_gen_table {  }
     .key_gen .digits_gen .digit_gen_table input {width: 12px; padding: 0px; margin: -2px; border: 0px solid black; text-align: center; }
     .key_gen .digits_gen .digit_gen_table .up_me {background-color: #94e65a; font-size: 11px;height: 50px; text-align: center; }
-    .key_gen .digits_gen .digit_gen_table .up_me .indicator { background-color:#60bb1f; display: block; width:10px;}
+    .key_gen .digits_gen .digit_gen_table .up_me .indicator { background-color:#60bb1f; display: block; width:8px;}
     .key_gen .digits_gen .digit_gen_table .down_me { background-color: #e6c95a; font-size: 11px;height: 50px;text-align: center;}
 </style>
 
@@ -19,20 +19,20 @@
 
         <table class="digit_gen_table">
              <tr class="up_me">
-                  <td ng-repeat="digit in dgGenCtrl.luckyDigitsArray track by $index"
+                  <td ng-repeat="digit in dgGenCtrl.digitGeneratorPiles track by $index"
                       ng-mouseover="dgGenCtrl.onDigitUpIncrement($index, $event)">
                        ↑
-                     <span class="indicator" ng-style="{'height': (dgGenCtrl.luckyDigitsArray[$index]*5)+'px'}">
+                     <span class="indicator" ng-style="{'height': (dgGenCtrl.digitGeneratorPiles[$index]*5)+'px'}">
                      </span>
                   </td>
              </tr>
              <tr>
-                <td ng-repeat="digit in dgGenCtrl.luckyDigitsArray track by $index">
-                    <input type="text" only-digits-directive="" maxlength="1" ng-model="dgGenCtrl.luckyDigitsArray[$index]">
+                <td ng-repeat="digit in dgGenCtrl.digitGeneratorPiles track by $index">
+                    <input type="text" only-digits-directive="" maxlength="1" ng-model="dgGenCtrl.digitGeneratorPiles[$index]">
                 </td>
             </tr>
             <tr class="down_me">
-                <td ng-repeat="digit in dgGenCtrl.luckyDigitsArray track by $index"
+                <td ng-repeat="digit in dgGenCtrl.digitGeneratorPiles track by $index"
                     ng-mouseover="dgGenCtrl.onDigitDownDecrement($index, $event)">
                      ↓
                 </td>

@@ -7,8 +7,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     var vm = this;
     $scope.numberOfKeys;
 
-
-
     vm.luckyCtrlPma = {
         luckyTotalGeneratedKeys: 0
     };
@@ -126,6 +124,8 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     $scope.$watch(function () { // наблюдаем и отправляем запросики, и забиваем Address-суличку..
         return vm.luckyBarSumValue;
     }, function (newVal, oldVal) {
+
+        $scope.$broadcast(luckyConstants.KEY_VALUE_CHANGED_EVT, {newChosenKey: newVal});
 
         /*if ("115792089237316195423570985008687907852837564279074904382605163141518161494337" === newVal) {
             //$timeout(function () {
