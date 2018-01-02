@@ -18,11 +18,26 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
     $scope.$on(luckyConstants.KEY_VALUE_CHANGED_EVT, function (event, args) {
         var newKeyVal = args.newChosenKey;
         var newArray = convertKeyValueToPiles(newKeyVal);
-        var maxNewArrIdx = newArray.length - 1;
-        //debugger;
-        /*_.forEach(vm.digitGeneratorPiles, function (pileVal, i) {
-            if(i > maxNewArrIdx)
-        })*/
+
+        var mainArrMaxIdx = vm.digitGeneratorPiles.length - 1;
+        var newArrMaxIdx = newArray.length - 1;
+
+        var arrLenDiff = (mainArrMaxIdx - newArrMaxIdx);
+
+        _.forEach(vm.digitGeneratorPiles, function (pileVal, i) {
+            var mainArrIdx = i;
+            var newArrIdx = (i - arrLenDiff);
+
+            var pileNewVal;
+            if (newArrIdx < 0) {
+                pileNewVal = "0";
+            } else {
+                pileNewVal = newArray[newArrIdx];
+            }
+
+            //vm.digitGeneratorPiles[mainArrIdx] = pileNewVal;
+        });
+
     });
 
     vm.onDigitUpIncrement = function (idx, evt) {
@@ -66,6 +81,9 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
             rv = rv + digVal;
         });
 
+        while (rv.charAt(0) == '0') {
+            rv = rv.substring(1);
+        }
         return rv;
     }
 
@@ -80,19 +98,22 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
         $scope.$watch(function () {
             return vm.digitGeneratorPiles;
         }, function (newVal, oldVal) {
-
-            if (!vm.luckyDigitsFormToggled) {
-                return;
-            }
-
-            var currentKeyValue = getCompleteValue();
-            if (bigInt(currentKeyValue).lesserOrEquals(MAX_NUMBER)) {
-                // console.info("New digits value: " + currentKeyValue);
-                $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [currentKeyValue]});
-            } else {
-                vm.digitGeneratorPiles = oldVal;
-            }
+            onDigitsChangedInternally(newVal, oldVal);
         }, true);
+    }
+
+    function onDigitsChangedInternally(newVal, oldVal) {
+        if (!vm.luckyDigitsFormToggled) {
+            return;
+        }
+
+        var currentKeyValue = getCompleteValue();
+        if (bigInt(currentKeyValue).lesserOrEquals(MAX_NUMBER)) {
+            console.info("New digits value: " + currentKeyValue);
+            $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [currentKeyValue]});
+        } else {
+            vm.digitGeneratorPiles = oldVal
+        }
     }
 
 }]);
