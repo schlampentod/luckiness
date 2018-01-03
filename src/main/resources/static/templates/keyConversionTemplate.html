@@ -13,7 +13,7 @@
         <br />
 
         <span style=" display:inline-block;">from WIF: </span>
-        <input type="text" ng-model="keyConvCtrl.luckyWIFKeyForConversion"
+        <input type="text" ng-keydown="keyConvCtrl.onParseProvidedWIFKeyByEnter($event, keyConvCtrl.luckyWIFKeyForConversion)" ng-model="keyConvCtrl.luckyWIFKeyForConversion"
                style="width:800px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
         <button ng-click="keyConvCtrl.onParseProvidedWIFKey(keyConvCtrl.luckyWIFKeyForConversion)">Parse</button>
 

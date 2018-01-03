@@ -34,6 +34,16 @@ app.controller('keyConversionController', ['$scope', 'luckyService', 'luckyFacto
         });
     };
 
+    vm.onParseProvidedWIFKeyByEnter = function (e,luckyWIFKey) {
+        if(e.keyCode==13){
+            addressAnalyticsService.convertWifKeyToDecimal(luckyWIFKey).then(function (ConvertedKeyDto) {
+                var convertedValue = ConvertedKeyDto['decimalKeyValue'];
+                $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [convertedValue]});
+            });
+        }
+
+    };
+
     vm.onParseProvidedHEXKey = function (luckyHEXKey) {
 
     };
