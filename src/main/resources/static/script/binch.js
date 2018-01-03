@@ -47,9 +47,9 @@
         _.forEach(binch.binchBars, function (bar, i) {
             if (barsOffsets[i] < bar.binchBarMinOffsetPx) {
                 bar.binchBarOffsetPx = bar.binchBarMinOffsetPx;
-                console.info("Truncated bar [" + i + "] offset: from " + barsOffsets[i] + " to " + bar.binchBarOffsetPx);
+                // console.info("Truncated bar [" + i + "] offset: from " + barsOffsets[i] + " to " + bar.binchBarOffsetPx);
             } else if (barsOffsets[i] > bar.binchBarMaxOffsetPx) {
-                console.info("Truncated bar [" + i + "] offset: from " + barsOffsets[i] + " to " + bar.binchBarOffsetPx);
+                // console.info("Truncated bar [" + i + "] offset: from " + barsOffsets[i] + " to " + bar.binchBarOffsetPx);
                 bar.binchBarOffsetPx = bar.binchBarMaxOffsetPx;
             } else {
                 bar.binchBarOffsetPx = barsOffsets[i];
