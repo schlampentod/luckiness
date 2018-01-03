@@ -12,6 +12,7 @@ app.controller('controlLodashKeysController', ['$scope', 'addressAnalyticsServic
     }
 
 
+
     $scope.$watch(function () {
         return $window.localStorage["matched_keys"];
     }, function (newValue, oldValue) {
