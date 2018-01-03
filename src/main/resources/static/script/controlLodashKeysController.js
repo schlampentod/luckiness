@@ -11,12 +11,15 @@ app.controller('controlLodashKeysController', ['$scope', 'addressAnalyticsServic
         })
     }
 
-
-
     $scope.$watch(function () {
         return $window.localStorage["matched_keys"];
     }, function (newValue, oldValue) {
-        vm.mussOfKiss = uniq(localStorageAccess.getArrayFromLocalStorage("matched_keys"));
+        $scope.$broadcast(luckyConstants.MATCHED_KEYS_LS, {newChosenKey: newValue});
+        //vm.mussOfKiss = uniq(localStorageAccess.getArrayFromLocalStorage("MATCHED_KEYS_LS"));
+    });
+
+    $scope.$on(luckyConstants.MATCHED_KEYS_LS, function (event, args) {
+        vm.mussOfKiss=uniq(args.newChosenKey);
     });
 
     vm.onSelectkLKCtrl = function (keyValue) {
