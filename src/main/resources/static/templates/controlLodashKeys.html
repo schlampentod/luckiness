@@ -1,8 +1,11 @@
 
 <span ng-controller="controlLodashKeysController as keyLodKeysCtrl">
 
-<button type="button" ng-click="keyLodKeysCtrl.goFromLodashToView()">kiss me</button>
-<div ng-repeat="kLKCtrl in keyLodKeysCtrl.mussOfKiss">
-         {{kLKCtrl}}
-    </div>
+    <span ng-repeat="kLKCtrl in keyLodKeysCtrl.mussOfKiss">
+        <br/>
+
+        <a href="javascript:void(0)" ng-click="keyLodKeysCtrl.onSelectkLKCtrl(kLKCtrl)">{{kLKCtrl}}</a>
+
+    </span>
+
 </span>

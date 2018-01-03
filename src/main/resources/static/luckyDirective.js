@@ -112,7 +112,7 @@ app.directive('luckyDirective', ['$interval', 'luckyService', '$timeout', '$comp
             return ngModel.$modelValue;
         }, function (newValue, oldValue) {
             if (scope.luckySliderOffset !== newValue) {
-                debugger;
+
             }
         }, true);
 
