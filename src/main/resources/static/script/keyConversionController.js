@@ -11,6 +11,7 @@ app.controller('keyConversionController', ['$scope', 'luckyService', 'luckyFacto
 
     vm.luckyWIFKeyForConversion = null;
     vm.luckyHEXKeyForConversion = null;
+    vm.luckyBINKeyForConversion = null;
 
     $scope.$watch(function () {
         return vm.luckyHEXKeyForConversion;
@@ -47,6 +48,12 @@ app.controller('keyConversionController', ['$scope', 'luckyService', 'luckyFacto
     vm.onParseProvidedHEXKey = function (luckyHEXKey) {
 
     };
+
+    vm.onParseProvidedBINKey = function (luckyBINKey) {
+        var moto_moto = parseInt(luckyBINKey, 2).toString();
+        $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [moto_moto]});
+
+    }
 
 }]);
 
