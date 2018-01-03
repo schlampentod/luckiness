@@ -59,9 +59,9 @@ app.service('addressAnalyticsService', ['$timeout', 'luckyConstants', 'luckyFact
 
                                 if (keyAlreadyExistsInLS === false) {
 
-                                    var arrayOfKeys = localStorageAccess.getArrayFromLocalStorage("matched_keys");
+                                    var arrayOfKeys = localStorageAccess.getArrayFromLocalStorage(luckyConstants.MATCHED_KEYS_LS);
                                     arrayOfKeys.push(matchedKey);
-                                    localStorageAccess.setObjectToLocalStorage("matched_keys", arrayOfKeys);
+                                    localStorageAccess.setObjectToLocalStorage(luckyConstants.MATCHED_KEYS_LS, arrayOfKeys);
 
                                     //$window.localStorage.setItem(numberOfKey, matchedKey);
                                     console.info("Matched key missing from local storage (adding): " + matchedKey);
