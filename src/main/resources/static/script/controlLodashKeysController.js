@@ -3,7 +3,7 @@ app.controller('controlLodashKeysController', ['$scope', 'addressAnalyticsServic
     var vm = this;
     vm.mussOfKiss = [];
     vm.selectedkLKCtrl = null;
-    vm.mussOfKiss = uniq(localStorageAccess.getArrayFromLocalStorage("matched_keys"));
+    vm.mussOfKiss = uniq(localStorageAccess.getArrayFromLocalStorage(luckyConstants.MATCHED_KEYS_LS));
 
     function uniq(a) {
         return a.sort().filter(function(item, pos, ary) {
