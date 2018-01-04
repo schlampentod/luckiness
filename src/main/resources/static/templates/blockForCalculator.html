@@ -1,0 +1,24 @@
+
+
+<span ng-controller="blockForCalculatorController as blockForCalcContr">
+    <button type="button" ng-click="blockForCalcContr.showFun()">Калькуляшечка</button>
+
+    <div id="myShowBlock">
+     </br>
+        <input type="text" style=" width:500px; text-align: left; outline:none; font-size:14px; font-family:monospace; " only-number-directive-for-calculator="" ng-model="blockForCalcContr.input_1">
+        <button type="button" id="11" ng-click="blockForCalcContr.add('+')">+</button>
+        <button type="button" id="13" ng-click="blockForCalcContr.subtraction('-')">-</button>
+        <button type="button" id="15" ng-click="blockForCalcContr.multiplication('*')">*</button>
+        <button type="button" id="14" ng-click="blockForCalcContr.division('/')">/</button>
+        <button type="button" id="17" ng-click="blockForCalcContr.zeroing()">C</button>
+        <button type="button" id="16" ng-click="blockForCalcContr.equals('=')">=</button>
+        </br>
+        <input type="text" style=" width:500px; text-align: left; outline:none; font-size:14px; font-family:monospace; " only-number-directive-for-calculator="" ng-model="blockForCalcContr.input_2">
+    </div>
+
+
+
+
+
+</span>
+
