@@ -5,6 +5,8 @@ app.controller('histogrammController', ['$scope', 'luckyService', 'luckyFactory'
 
     var vm = this;
 
+    vm.histogrammLabels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
     vm.histogrammValues = new Array(10);
     vm.histogrammValues.fill(0);
 
