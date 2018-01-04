@@ -78,7 +78,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
 
 
     vm.GoStack = function (arg) {
-        debugger;
+        //debugger;
         if(arg=="<-"){
             if(vm.Pozition <=vm.Stack.length){
                 var fuckinSheetVariable=vm.Pozition-1;
@@ -89,7 +89,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
                 vm.input_1 = vm.Stack[fuckinSheetVariable].valInput_1;
                 vm.input_2 = vm.Stack[fuckinSheetVariable].valInput_2;
                 vm.Znak_memory = vm.Stack[fuckinSheetVariable].valZnak_memory;
-                debugger;
+                //debugger;
             }
 
         }
@@ -105,7 +105,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         };
     };
     vm.DelStackAfter = function () {
-        debugger;
+        //debugger;
         vm.Stack.splice(vm.Pozition, vm.Stack.length-vm.Pozition);
     };
 
