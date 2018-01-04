@@ -14,6 +14,9 @@ app.controller('histogrammController', ['$scope', 'luckyService', 'luckyFactory'
         legend: {
             display: false
         },
+        animation: {
+            duration: 1
+        },
         tooltips: {
             enabled: true,
             mode: 'single',

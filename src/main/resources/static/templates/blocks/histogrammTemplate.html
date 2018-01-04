@@ -1,32 +1,22 @@
-<style>
 
-</style>
+<div ng-controller="histogrammController as histoCtrl"  style="width:800px">
 
+    <span>
 
-<span ng-controller="histogrammController as histoCtrl" class="digits_gen">
-
-    <span class="key_controls_block">
-
-        <hr/>
-        Histogramm:
-        <br/>
-        <br/>
-
-        <div>
-            digit - number
-        </div>
-        <div ng-repeat="digitValue in histoCtrl.histogrammValues track by $index">
-           {{$index}} - {{digitValue}}
-        </div>
+        Histogram:
+        <span ng-repeat="digitValue in histoCtrl.histogrammValues track by $index">
+           [{{$index}}: {{digitValue}}]
+        </span>
 
         <canvas id="pie33"
             chart-options="histoCtrl.histoChartOptions"
             class="chart chart-pie chart-xs ng-isolate-scope"
-            height="150"
+            height="70" width="70"
             chart-data="histoCtrl.histogrammValues"
             chart-labels="histoCtrl.histogrammLabels">
         </canvas>
 
     </span>
-</span>
+
+</div>
 
