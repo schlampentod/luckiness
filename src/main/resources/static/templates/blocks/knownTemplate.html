@@ -3,12 +3,10 @@
 
 <span ng-controller="knownKeyController as knownCtrl">
 
-    <button ng-click="knownCtrl.luckyKnownFormToggled=!knownCtrl.luckyKnownFormToggled">   {{'Known' | translate}} ({{numberOfKeys}})</button>
-
-    <span ng-if="knownCtrl.luckyKnownFormToggled" class="key_controls_block">
+    <span class="key_controls_block">
 
         <hr />
-        Known:
+        Known ({{numberOfKeys}})
         <br />
 
         <br />

@@ -7,9 +7,6 @@ app.controller('trimmerController', ['$scope', 'luckyService', 'luckyFactory', '
 
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
 
-
-    vm.luckyNumberTrimmerToggled = false;
-
     vm.trimmingNumberValue = null;
 
     $scope.$watch(function () {

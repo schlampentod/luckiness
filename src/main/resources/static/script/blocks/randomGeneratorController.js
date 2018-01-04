@@ -7,8 +7,6 @@ app.controller('randomGeneratorController', ['$scope', 'luckyService', 'luckyFac
 
     vm.luckyBatchGenerationInterval = null;
 
-    vm.luckyRandomFormToggled = false;
-
     vm.onGenerateRandomClick = function () {
         generateRandomOffsets();
     };

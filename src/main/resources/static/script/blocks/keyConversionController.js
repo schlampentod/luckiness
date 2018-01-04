@@ -7,8 +7,6 @@ app.controller('keyConversionController', ['$scope', 'luckyService', 'luckyFacto
 
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
 
-    vm.luckyKeyConversionFormToggled = false;
-
     vm.luckyWIFKeyForConversion = null;
     vm.luckyHEXKeyForConversion = null;
     vm.luckyBINKeyForConversion = null;

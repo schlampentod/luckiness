@@ -5,7 +5,6 @@ app.controller('primeKeyController', ['$scope', 'luckyService', 'luckyFactory', 
 
     var vm = this;
 
-    vm.luckyPrimeFormToggled = false;
     var currentIteration = bigInt(1);
 
     vm.primeGenerationStartFrom = null;

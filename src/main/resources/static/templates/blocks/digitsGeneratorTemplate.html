@@ -9,9 +9,7 @@
 
 <span ng-controller="digitsGeneratorController as dgGenCtrl" class="digits_gen">
 
-    <button ng-click="dgGenCtrl.luckyDigitsFormToggled=!dgGenCtrl.luckyDigitsFormToggled">Digits</button>
-
-    <span ng-if="dgGenCtrl.luckyDigitsFormToggled" class="key_controls_block">
+    <span class="key_controls_block">
 
         <hr/>
         Digits: (<label><input type="checkbox" ng-model="dgGenCtrl.luckyDigitsFormCtrlOnly"> With CTRL only</label>)

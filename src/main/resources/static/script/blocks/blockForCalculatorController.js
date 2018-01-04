@@ -84,18 +84,5 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         vm.Znak_memory = null;
     };
 
-    var visible = false;
-    document.getElementById('myShowBlock').style.display = 'none';
-    vm.showFun = function () {
-        if (visible) {
-            document.getElementById('myShowBlock').style.display = 'none';
-            visible = false;
-        } else {
-            document.getElementById('myShowBlock').style.display = 'block';
-            visible = true;
-        }
-    }
-
-
 }]);
 

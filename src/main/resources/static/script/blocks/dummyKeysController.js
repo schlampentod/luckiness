@@ -5,8 +5,6 @@ app.controller('dummyKeysController', ['$scope', 'luckyService', 'luckyFactory',
 
     var vm = this;
 
-    vm.dummyKeysFormToggled = false;
-
     vm.dummyKeysList = [];
     vm.selectedDummyKey = null;
 

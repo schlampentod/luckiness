@@ -10,7 +10,6 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
 
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
 
-    vm.luckyDigitsFormToggled = false;
     vm.luckyDigitsFormCtrlOnly = true;
 
     vm.digitGeneratorPiles;
@@ -114,7 +113,7 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
     }
 
     function onDigitsChangedInternally(newVal, oldVal) {
-        if (!vm.luckyDigitsFormToggled || !isValueChangedInternally()) {
+        if (!isValueChangedInternally()) {
             return;
         }
 

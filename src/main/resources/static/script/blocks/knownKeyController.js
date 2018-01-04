@@ -5,8 +5,6 @@ app.controller('knownKeyController', ['$scope', 'luckyService', 'luckyFactory', 
 
     var vm = this;
 
-    vm.luckyKnownFormToggled = false;
-
     $scope.selectedKnownKeyChanged = function (selectedValue) {
         $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [selectedValue]});
     };
