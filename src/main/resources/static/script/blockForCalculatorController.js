@@ -30,10 +30,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         }
         else
         if(this.Znak_memory=='-'){
-            if (parseInt(vm.Calk_memory_1)<parseInt(vm.Calk_memory_2)){
-                alert("go fuck!!!");
-            }
-            else{
+            if (parseInt(vm.Calk_memory_1)>parseInt(vm.Calk_memory_2)){
                 this.pastElement(bigInt(parseInt(vm.Calk_memory_1)).compare(bigInt(parseInt(vm.Calk_memory_2))));
                 this.Calk_memory_1=bigInt(parseInt(vm.Calk_memory_1)).compare(bigInt(parseInt(vm.Calk_memory_2)));
             }
@@ -42,10 +39,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         else
         if(this.Znak_memory=='/'){
             var a = (parseFloat(vm.Calk_memory_1)/parseFloat(vm.Calk_memory_2));
-            if (a<1){
-                alert("go fuck!!! блядь!");
-            }
-            else{
+            if (a>=1){
                 this.pastElement(bigInt(parseInt(vm.Calk_memory_1)).divide(bigInt(parseInt(vm.Calk_memory_2))));
                 this.Calk_memory_1=bigInt(parseInt(vm.Calk_memory_1)).divide(bigInt(parseInt(vm.Calk_memory_2)));
             }
