@@ -25,6 +25,8 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
     vm.pastElement = function (pastElem) {//вставить значение в поле
         vm.Push({valInput_1: vm.input_1, valInput_2: vm.input_2, valZnak_memory: vm.Znak_memory});
         vm.input_1 = pastElem;
+        vm.currentHistoryIndex = -1;
+
         $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [pastElem]});
 
     };
@@ -75,57 +77,43 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         vm.Znak_memory = null;
     };
 
-
-
-    vm.GoStack = function (arg) {
-        //debugger;
-        if(arg=="<-"){
-            if(vm.Pozition <=vm.Stack.length){
-                var fuckinSheetVariable=vm.Pozition-1;
-                vm.Pozition=vm.Pozition-1;
-
-                //fuckinSheetVariable=fuckinSheetVariable-2;
-
-                vm.input_1 = vm.Stack[fuckinSheetVariable].valInput_1;
-                vm.input_2 = vm.Stack[fuckinSheetVariable].valInput_2;
-                vm.Znak_memory = vm.Stack[fuckinSheetVariable].valZnak_memory;
-                //debugger;
-            }
-
-        }
-        else if(arg=="->"){
-            if(vm.Pozition < vm.Stack.length){
-                vm.Pozition++;
-                //alert(Stack[Pozition]);
-                vm.input_1 = vm.Stack[vm.Pozition].valInput_1;
-                vm.input_2 = vm.Stack[vm.Pozition].valInput_2;
-                vm.Znak_memory = vm.Stack[vm.Pozition].valZnak_memory;
-            }
-
-        };
-    };
-    vm.DelStackAfter = function () {
-        //debugger;
-        vm.Stack.splice(vm.Pozition, vm.Stack.length-vm.Pozition);
-    };
-
-    vm.Stack =[];
-    vm.Pozition = vm.Stack.length;
-
+    vm.currentHistoryIndex = -1;
 
     $scope.$watch(function () {
-        return vm.Stack.length;
+        return vm.currentHistoryIndex;
     }, function (newVal, oldVal) {
-        vm.Pozition = vm.Stack.length;
+
+        if (newVal === -1) {
+            return;
+        }
+
+        vm.input_1 = vm.Stack[newVal].valInput_1;
+        vm.input_2 = vm.Stack[newVal].valInput_2;
+        vm.Znak_memory = vm.Stack[newVal].valZnak_memory;
     });
 
-    vm.Push = function(data) {
-        //debugger;
-        vm.Stack[vm.Stack.length]=data;
-        // увеличение размера хранилища
+    // Undo
+    vm.navigateHistoryForward = function () {
+        if (vm.Stack.length - 1 > vm.currentHistoryIndex) {
+            vm.currentHistoryIndex++;
+        }
     };
 
+    // Redo
+    vm.navigateHistoryBack = function () {
+        if (vm.currentHistoryIndex === -1) {
+            vm.currentHistoryIndex = vm.Stack.length - 1;
+        }
+        if (0 < vm.currentHistoryIndex) {
+            vm.currentHistoryIndex--;
+        }
+    };
 
+    vm.DelStackAfter = function () {
+        vm.Stack.splice(vm.currentHistoryIndex, vm.Stack.length - vm.currentHistoryIndex);
+    };
+
+    vm.Stack = [];
 
 }]);
 
