@@ -7,7 +7,7 @@ app.controller('trimmerController', ['$scope', 'luckyService', 'luckyFactory', '
 
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
 
-    vm.trimmingNumberValue = null;
+    vm.trimmingNumberValue = "57953998617275373084870362867211165091510292431969421612915497067826907655000";
 
     $scope.$watch(function () {
         return vm.trimmingNumberValue
@@ -31,23 +31,28 @@ app.controller('trimmerController', ['$scope', 'luckyService', 'luckyFactory', '
 
         if (newValueBig.lesserOrEquals(MAX_NUMBER)) {
             keysToCheck.push(newValue);
+
+            //var newValueSubCut = "1" + newValue;
+            /*while (bigInt(newValueSubCut).lesserOrEquals(MAX_NUMBER)) {
+                keysToCheck.push(newValueSubCut);
+                newValueSubCut = "1" + newValueSubCut;
+            }*/
+
         } else {
 
             var newValueCut = newValue;
-            var newValueBigCut = bigInt(newValueCut);
-            while (MAX_NUMBER.lesserOrEquals(newValueBigCut)) {
+            while (MAX_NUMBER.lesserOrEquals(bigInt(newValueCut))) {
                 newValueCut = newValueCut.substring(1);
-                newValueBigCut = bigInt(newValueCut);
-            }
-
-            var newValueSubCut = newValueCut;
-
-            while (newValueSubCut.length > 76) {
-                newValueSubCut = newValueSubCut.substring(1);
-                keysToCheck.push(newValueSubCut);
             }
 
             keysToCheck.push(newValueCut);
+
+            var newValueSubCut = "1" + newValueCut;
+
+            while (bigInt(newValueSubCut).lesserOrEquals(MAX_NUMBER)) {
+                keysToCheck.push(newValueSubCut);
+                newValueSubCut = "1" + newValueSubCut;
+            }
 
             //console.info("Trimmed to: " + keysToCheck);
         }
