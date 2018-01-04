@@ -8,7 +8,23 @@ app.controller('histogrammController', ['$scope', 'luckyService', 'luckyFactory'
     vm.histogrammLabels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
     vm.histogrammValues = new Array(10);
-    vm.histogrammValues.fill(0);
+    vm.histogrammValues.fill(10);
+
+    vm.histoChartOptions = {
+        legend: {
+            display: false
+        },
+        tooltips: {
+            enabled: true,
+            mode: 'single',
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var label = vm.histogrammLabels[tooltipItem.index];
+                    return label;
+                }
+            }
+        }
+    };
 
     $scope.$on(luckyConstants.KEY_VALUE_CHANGED_EVT, function (event, args) {
 

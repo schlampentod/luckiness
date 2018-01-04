@@ -19,10 +19,13 @@
            {{$index}} - {{digitValue}}
         </div>
 
-
-        <canvas class="chart chart-doughnut"
+        <canvas id="pie33"
+            chart-options="histoCtrl.histoChartOptions"
+            class="chart chart-pie chart-xs ng-isolate-scope"
+            height="150"
             chart-data="histoCtrl.histogrammValues"
-            chart-labels="histoCtrl.histogrammLabels"></canvas>
+            chart-labels="histoCtrl.histogrammLabels">
+        </canvas>
 
     </span>
 </span>
