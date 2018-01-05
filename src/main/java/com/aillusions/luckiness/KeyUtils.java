@@ -18,7 +18,7 @@ public class KeyUtils {
     public static final BigInteger MIN_BTC_KEY = new BigInteger("1");
     public static final BigInteger MAX_BTC_KEY = new BigInteger("115792089237316195423570985008687907852837564279074904382605163141518161494337");
     public static final Set<String> LOGGED_KEYS = Collections.synchronizedSet(new HashSet<>());
-    public static final BigInteger CHECK_RANGE = BigInteger.valueOf(500L);
+    public static final BigInteger CHECK_RANGE = BigInteger.valueOf(400L);
 
     public static ECKey getNewECKey(String providedKeyValue) {
         return new CustomECKey(validateKeyValue(providedKeyValue));
