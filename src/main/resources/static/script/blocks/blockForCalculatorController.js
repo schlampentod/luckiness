@@ -23,7 +23,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         return vm.input_1;
     };
     vm.pastElement = function (pastElem) {//вставить значение в поле
-        vm.Push({valInput_1: vm.input_1, valInput_2: vm.input_2, valZnak_memory: vm.Znak_memory});
+        //vm.Push({valInput_1: vm.input_1, valInput_2: vm.input_2, valZnak_memory: vm.Znak_memory});
         vm.input_1 = pastElem;
         vm.currentHistoryIndex = -1;
 
@@ -52,10 +52,10 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         }
     };
     vm.division = function () {
+        vm.Calk_memory_1 = bigInt(vm.getElement());
         var a = (parseFloat(vm.Calk_memory_1) / parseFloat(vm.Calk_memory_2));
         if (a >= 1) {
             vm.DelStackAfter();
-            vm.Calk_memory_1 = bigInt(vm.getElement());
             vm.Znak_memory = '/';
             this.pastElement((vm.Calk_memory_1).divide(vm.Calk_memory_2));
             this.Calk_memory_1 = (vm.Calk_memory_1).divide(vm.Calk_memory_2);
