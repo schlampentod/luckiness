@@ -76,6 +76,7 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
 
     $scope.robi;
 
+
     $scope.getkeySluckyBarsSameOffset = function (ArrowDirection) {
     //debugger;
         if($scope.robi==1){
