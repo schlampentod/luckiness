@@ -7,7 +7,7 @@ import java.math.BigInteger;
  */
 public class BatchKeyChecker {
 
-    private final BigInteger MIN_FOR_BATCH = new BigInteger("1213128791129614446453130083644468313573376457679529860692137325810570686867");
+
     private final DormantBloomFilter bloomFilter;
 
     public BatchKeyChecker() {
@@ -20,16 +20,10 @@ public class BatchKeyChecker {
 
         BigInteger origKey = new BigInteger(providedKey);
 
-        BigInteger from;
-        BigInteger to;
+        BigInteger range = BatchKeyCheckRanger.getRange(origKey);
 
-        if (MIN_FOR_BATCH.compareTo(origKey) > 0) {
-            from = origKey.subtract(BigInteger.valueOf(2));
-            to = origKey.add(BigInteger.valueOf(2));
-        } else {
-            from = origKey.subtract(KeyUtils.CHECK_RANGE);
-            to = origKey.add(KeyUtils.CHECK_RANGE);
-        }
+        BigInteger from = origKey.subtract(range);
+        BigInteger to = origKey.add(range);
 
         BigInteger thisVal = from;
 
