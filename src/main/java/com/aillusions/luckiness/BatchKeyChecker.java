@@ -22,6 +22,8 @@ public class BatchKeyChecker {
 
         BigInteger range = BatchKeyCheckRanger.getRange(origKey);
 
+        rv.setCheckRange(range);
+
         BigInteger from = origKey.subtract(range);
         BigInteger to = origKey.add(range);
 

@@ -1,5 +1,6 @@
 package com.aillusions.ckeckiness;
 
+import com.aillusions.luckiness.BatchKeyCheckRanger;
 import com.aillusions.luckiness.BatchKeyChecker;
 import com.aillusions.luckiness.CheckBatchResponse;
 import com.aillusions.luckiness.KeyUtils;
@@ -27,18 +28,21 @@ public class CheckRestController {
     public CheckKeyResultDto check(@PathVariable String providedKey) throws InterruptedException {
 
         long start = System.currentTimeMillis();
-
+        CheckBatchResponse checkBatchResponse = null;
         try {
 
             KeyUtils.validateKeyValue(providedKey);
-            CheckBatchResponse checkBatchResponse = batchKeyChecker.checkBatchFor(providedKey);
+            checkBatchResponse = batchKeyChecker.checkBatchFor(providedKey);
             return new CheckKeyResultDto(!checkBatchResponse.getFoundKeys().isEmpty(), checkBatchResponse.getFoundKeys());
 
         } catch (Exception e) {
             System.out.println("Unable to check key: " + ExceptionUtils.getMessage(e));
             return new CheckKeyResultDto(false, Collections.EMPTY_SET);
         } finally {
-            //  System.out.println("checked in " + (System.currentTimeMillis() - start) + " ms: " + providedKey);
+            if (checkBatchResponse != null) {
+                long responseTime = System.currentTimeMillis() - start;
+                BatchKeyCheckRanger.adjustRangeByResponseTime(responseTime, checkBatchResponse.getCheckRange());
+            }
         }
     }
 }
