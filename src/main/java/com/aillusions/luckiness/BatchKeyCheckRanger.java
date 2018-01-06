@@ -10,7 +10,7 @@ import static org.apache.commons.lang3.ObjectUtils.median;
  */
 public class BatchKeyCheckRanger {
 
-    private static final BigInteger MIN_FOR_BATCH = new BigInteger("1213128791129614446453130083644468313573376457679529860692137325810570686867");
+    private static final BigInteger MIN_FOR_BATCH = new BigInteger("1000000000000000000000000000000000000000000000000000000000000000000000000000");
 
     private static final BigInteger MIN_RANGE_VAL = BigInteger.valueOf(2);
 
