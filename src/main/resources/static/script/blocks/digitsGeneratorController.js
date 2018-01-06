@@ -5,16 +5,33 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
 
     var vm = this;
 
-    var MIN_DIGIT = 0;
+    vm.var
+    MIN_DIGIT = 0;
     var MAX_DIGIT = 9;
 
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
 
     vm.luckyDigitsFormCtrlOnly = true;
+    vm.luckyDigitsByKeyboard = false;
 
     vm.digitGeneratorPiles;
 
     vm.digitGeneratorEnableReversing = 0;
+
+    vm.digitGeneratorPressedKeyDigit = null;
+
+    $(document).keypress(function (evt) {
+        var charCode = evt.which || evt.keyCode;
+        var char = String.fromCharCode(charCode);
+
+        if (/[0-9]/g.test(char)) {
+            vm.digitGeneratorPressedKeyDigit = parseInt(char);
+        } else {
+            vm.digitGeneratorPressedKeyDigit = null;
+        }
+
+        console.info("onDigitUpIncrement: " + vm.digitGeneratorPressedKeyDigit);
+    });
 
     $scope.$on(luckyConstants.KEY_VALUE_CHANGED_EVT, function (event, args) {
 
@@ -50,9 +67,18 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
         if (vm.luckyDigitsFormCtrlOnly && !evt.ctrlKey) {
             return;
         }
-        var newVal = vm.digitGeneratorPiles[idx] + 1;
-        if (newVal <= MAX_DIGIT) {
-            vm.digitGeneratorPiles[idx] = newVal;
+
+        if (vm.luckyDigitsByKeyboard && vm.digitGeneratorPressedKeyDigit === null) {
+            return
+        }
+
+        if (vm.luckyDigitsByKeyboard) {
+            vm.digitGeneratorPiles[idx] = vm.digitGeneratorPressedKeyDigit;
+        } else {
+            var newVal = vm.digitGeneratorPiles[idx] + 1;
+            if (newVal <= MAX_DIGIT) {
+                vm.digitGeneratorPiles[idx] = newVal;
+            }
         }
 
         setValueChangedInternally();
