@@ -10,6 +10,7 @@ app.controller('keyConversionController', ['$scope', 'luckyService', 'luckyFacto
     vm.luckyWIFKeyForConversion = null;
     vm.luckyHEXKeyForConversion = null;
     vm.luckyBINKeyForConversion = null;
+    vm.lucky8KeyForConversion = null;
 
     $scope.$watch(function () {
         return vm.luckyHEXKeyForConversion;
@@ -50,6 +51,13 @@ app.controller('keyConversionController', ['$scope', 'luckyService', 'luckyFacto
     vm.onParseProvidedBINKey = function (luckyBINKey) {
         if(luckyBINKey != ""){
             var moto_moto = parseInt(luckyBINKey, 2).toString();
+            $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [moto_moto]});
+        };
+    }
+
+    vm.onParseProvided8Key = function (lucky8Key) {
+        if(lucky8Key != ""){
+            var moto_moto = parseInt(lucky8Key, 8).toString();
             $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [moto_moto]});
         };
     }

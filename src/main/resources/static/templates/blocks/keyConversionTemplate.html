@@ -31,8 +31,14 @@
         <span style=" display:inline-block;">from BIN: </span>
         <input type="text" ng-model="keyConvCtrl.luckyBINKeyForConversion" style="width: 800px"
                only-bin-directive="" ng-keyup="keyConvCtrl.onParseProvidedBINKey(keyConvCtrl.luckyBINKeyForConversion)" style="width:500px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
-        <button ng-click="keyConvCtrl.onParseProvidedBINKey(luckyBINKeyForConversion)">Parse</button>
 
+        <hr />
+
+        <br />
+
+        <span style=" display:inline-block;">from 8: </span>
+        <input type="text" ng-model="keyConvCtrl.lucky8KeyForConversion" style="width: 800px"
+               only8-directive="" ng-keyup="keyConvCtrl.onParseProvided8Key(keyConvCtrl.lucky8KeyForConversion)" style="width:500px; outline:none; font-size:14px; font-family:Arial, sans-serif;">
         <hr />
 
     </span>
