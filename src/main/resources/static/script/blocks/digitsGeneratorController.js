@@ -31,6 +31,12 @@ app.controller('digitsGeneratorController', ['$scope', 'luckyService', 'luckyFac
         }
 
         console.info("onDigitUpIncrement: " + vm.digitGeneratorPressedKeyDigit);
+        $timeout($scope.$apply());
+    });
+
+    $(document).keyup(function (evt) {
+        vm.digitGeneratorPressedKeyDigit = null;
+        $timeout($scope.$apply());
     });
 
     $scope.$on(luckyConstants.KEY_VALUE_CHANGED_EVT, function (event, args) {
