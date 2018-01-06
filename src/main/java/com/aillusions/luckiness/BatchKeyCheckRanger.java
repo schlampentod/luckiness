@@ -14,7 +14,7 @@ public class BatchKeyCheckRanger {
 
     private static final BigInteger MIN_RANGE_VAL = BigInteger.valueOf(2);
 
-    private static BigInteger CHECK_RANGE = BigInteger.valueOf(10L);
+    private static BigInteger CHECK_RANGE = BigInteger.valueOf(100L);
     private static BigInteger CHECK_INCR = BigInteger.valueOf(10L);
 
     private static final int CAP = 10;
@@ -43,7 +43,7 @@ public class BatchKeyCheckRanger {
         double myMedian = median(responseTimesArr);
         // System.out.println("myMedian: " + myMedian);
 
-        if (myMedian > 20) {
+        if (myMedian > 30) {
             BigInteger newVal = CHECK_RANGE.subtract(CHECK_INCR);
 
             if (newVal.compareTo(MIN_RANGE_VAL) > 0) {
@@ -53,10 +53,10 @@ public class BatchKeyCheckRanger {
             }
 
             responseTimes.clear();
-            System.out.println("adjustRange ↓ " + CHECK_RANGE + " ↓");
-        } else if (myMedian < 10) {
+            System.out.println("adjustRange ↓ " + CHECK_RANGE + " ");
+        } else if (myMedian < 20) {
             CHECK_RANGE = CHECK_RANGE.add(CHECK_INCR);
-            System.out.println("adjustRange ↑ " + CHECK_RANGE + " ↑");
+            System.out.println("adjustRange   " + CHECK_RANGE + " ↑");
             responseTimes.clear();
         }
     }

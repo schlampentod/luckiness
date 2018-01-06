@@ -21,7 +21,7 @@ app.controller('randomGeneratorController', ['$scope', 'luckyService', 'luckyFac
         } else {
             vm.luckyBatchGenerationInterval = $interval(function () {
                 generateRandomOffsetsRandomBar();
-            }, 50);
+            }, 10);
         }
     };
 
