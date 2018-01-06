@@ -1,20 +1,28 @@
-
+<style>
+    #myShowBlock button{background-color:aliceblue; height:20px; width:40px; font-size:14px; margin:5px}
+    #myShowBlock input{border-radius: 5px; width:900px; text-align: left; outline:none; font-size:15px; font-family:monospace;}
+</style>
 
 <span ng-controller="blockForCalculatorController as calcCtrl">
 
-    <div id="myShowBlock">
-     </br>
-        <input type="text" style=" width:500px; text-align: left; outline:none; font-size:14px; font-family:monospace; " only-digits-directive="" ng-model="calcCtrl.input_1">
-        <button type="button" id="11" ng-click="calcCtrl.add('+')">+</button>
-        <button type="button" id="13" ng-click="calcCtrl.subtraction('-')">-</button>
-        <button type="button" id="15" ng-click="calcCtrl.multiplication('*')">*</button>
-        <button type="button" id="14" ng-click="calcCtrl.division('/')">/</button>
-        <button type="button" id="17" ng-click="calcCtrl.zeroing()">C</button>
-        
-        <button type="button" id="16" ng-click="calcCtrl.navigateHistoryBack()"><-</button>
-        <button type="button" id="18" ng-click="calcCtrl.navigateHistoryForward()">-></button>
+    <div id="myShowBlock" style="text-align: center">
+
         </br>
-        <input type="text" style=" width:500px; text-align: left; outline:none; font-size:14px; font-family:monospace; " only-digits-directive="" ng-model="calcCtrl.input_2">
+
+        <input type="text" only-digits-directive="" ng-model="calcCtrl.input_1">
+        <br/>
+        <button ng-click="calcCtrl.add('+')">+</button>
+        <button ng-click="calcCtrl.subtraction('-')">-</button>
+        <button ng-click="calcCtrl.multiplication('*')">*</button>
+        <button ng-click="calcCtrl.division('/')">/</button>
+        <button ng-click="calcCtrl.zeroing()">C</button>
+        
+        <button ng-click="calcCtrl.navigateHistoryBack()"><-</button>
+        <button ng-click="calcCtrl.navigateHistoryForward()">-></button>
+
+        </br>
+
+        <input type="text" only-digits-directive="" ng-model="calcCtrl.input_2">
     </div>
 
 </span>
