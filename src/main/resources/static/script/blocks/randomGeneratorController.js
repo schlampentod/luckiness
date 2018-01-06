@@ -7,6 +7,9 @@ app.controller('randomGeneratorController', ['$scope', 'luckyService', 'luckyFac
 
     vm.luckyBatchGenerationInterval = null;
 
+    vm.luckyBatchGenerationFrom = null;
+    vm.luckyBatchGenerationTill = null;
+
     vm.onGenerateRandomClick = function () {
         generateRandomOffsets();
     };
@@ -50,7 +53,7 @@ app.controller('randomGeneratorController', ['$scope', 'luckyService', 'luckyFac
 
         _.forEach(binchInstance.binchBars, function (bar, i) {
             if (selectedBars[i]) {
-                offsets[i] = Math.floor(Math.random() * bar.binchBarMaxOffsetPx);
+                offsets[i] = getRandomOffset(bar);
             }
         });
         return offsets;
@@ -82,9 +85,29 @@ app.controller('randomGeneratorController', ['$scope', 'luckyService', 'luckyFac
         }
 
         var bar = binchInstance.binchBars[randomBarIdx];
-        offsets[randomBarIdx] = Math.floor(Math.random() * bar.binchBarMaxOffsetPx);
+        offsets[randomBarIdx] = getRandomOffset(bar);
 
         return offsets;
+    }
+
+    //
+    //
+    //
+
+    function getRandomOffset(bar) {
+        var min = Math.ceil(vm.luckyBatchGenerationFrom === null || vm.luckyBatchGenerationFrom === "" ? 0 : vm.luckyBatchGenerationFrom);
+        var max = Math.floor(vm.luckyBatchGenerationTill === null || vm.luckyBatchGenerationTill === "" ? bar.binchBarMaxOffsetPx : vm.luckyBatchGenerationTill);
+
+        if (max <= min) {
+            min = 0;
+            max = bar.binchBarMaxOffsetPx;
+        }
+
+        var rv = Math.floor(Math.random() * (max - min + 1)) + min;
+
+        //console.info(rv + " from " + min + " to " + max);
+
+        return rv;
     }
 
 }]);

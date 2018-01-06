@@ -76,7 +76,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     vm.robi = 1;
 
     $scope.getkeySluckyBarsSameOffset = function (ArrowDirection) {
-        debugger;
         if (vm.robi == 1) {
             var oldValue = parseInt(vm.luckyBarsSameOffset) || 0;
 
@@ -88,7 +87,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         }
         else if (vm.robi == 2) {
             if (ArrowDirection == "UP") {
-                //debugger;
                 _.forEach(vm.luckyBinchBarsOffsets, function (offSet, i) {
                     if (vm.luckyBinchBarsOffsets[i] < 1000) {
                         vm.luckyBinchBarsOffsets[i]++;
