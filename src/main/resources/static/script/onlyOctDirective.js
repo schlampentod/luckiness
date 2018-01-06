@@ -1,7 +1,7 @@
 /**
  *
  */
-app.directive('only8Directive', function () {
+app.directive('onlyOctDirective', function () {
 
     return {
         restrict: 'A',
