@@ -23,7 +23,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         return vm.input_1;
     };
     vm.pastElement = function (pastElem) {//вставить значение в поле
-        //vm.Push({valInput_1: vm.input_1, valInput_2: vm.input_2, valZnak_memory: vm.Znak_memory});
+        vm.Push({valInput_1: vm.input_1, valInput_2: vm.input_2, valZnak_memory: vm.Znak_memory});
         vm.input_1 = pastElem;
         vm.currentHistoryIndex = -1;
 
@@ -33,7 +33,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
 
     vm.add = function () {
 
-        vm.DelStackAfter();
+        //vm.DelStackAfter();
         vm.Calk_memory_1 = bigInt(vm.getElement());
         vm.Znak_memory = '+';
         vm.pastElement((vm.Calk_memory_1).add(vm.Calk_memory_2));  //вводим в экран значение вычислений
@@ -45,7 +45,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
     vm.subtraction = function () {
         vm.Calk_memory_1 = bigInt(vm.getElement());
         if (parseInt(vm.Calk_memory_1) > parseInt(vm.Calk_memory_2)) {
-            vm.DelStackAfter();
+            //vm.DelStackAfter();
             vm.Znak_memory = '-';
             this.pastElement((vm.Calk_memory_1).minus(vm.Calk_memory_2));
             this.Calk_memory_1 = (vm.Calk_memory_1).minus(vm.Calk_memory_2);
@@ -55,7 +55,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         vm.Calk_memory_1 = bigInt(vm.getElement());
         var a = (parseFloat(vm.Calk_memory_1) / parseFloat(vm.Calk_memory_2));
         if (a >= 1) {
-            vm.DelStackAfter();
+            //vm.DelStackAfter();
             vm.Znak_memory = '/';
             this.pastElement((vm.Calk_memory_1).divide(vm.Calk_memory_2));
             this.Calk_memory_1 = (vm.Calk_memory_1).divide(vm.Calk_memory_2);
@@ -63,19 +63,20 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
 
     };
     vm.multiplication = function () {
-        vm.DelStackAfter();
+        //vm.DelStackAfter();
         vm.Calk_memory_1 = bigInt(vm.getElement());
         vm.Znak_memory = '*';
         this.pastElement((vm.Calk_memory_1).multiply(vm.Calk_memory_2));
         this.Calk_memory_1 = (vm.Calk_memory_1).multiply(vm.Calk_memory_2);
     };
     vm.zeroing = function () {
-        vm.DelStackAfter();
+        //vm.DelStackAfter();
         vm.input_1 = null;
         vm.input_2 = null;
         vm.Calk_memory_1 = '';
         vm.Znak_memory = null;
     };
+
 
     vm.currentHistoryIndex = -1;
 
@@ -102,6 +103,7 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
     // Redo
     vm.navigateHistoryBack = function () {
         if (vm.currentHistoryIndex === -1) {
+            vm.Push({valInput_1: vm.input_1, valInput_2: vm.input_2, valZnak_memory: vm.Znak_memory});
             vm.currentHistoryIndex = vm.Stack.length - 1;
         }
         if (0 < vm.currentHistoryIndex) {
@@ -109,11 +111,15 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         }
     };
 
+
     vm.DelStackAfter = function () {
         vm.Stack.splice(vm.currentHistoryIndex, vm.Stack.length - vm.currentHistoryIndex);
     };
 
     vm.Stack = [];
 
+    vm.Push = function(data){
+        vm.Stack[vm.Stack.length]=data;
+    };
 }]);
 
