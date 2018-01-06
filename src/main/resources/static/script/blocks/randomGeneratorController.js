@@ -74,11 +74,12 @@ app.controller('randomGeneratorController', ['$scope', 'luckyService', 'luckyFac
             return;
         }
 
+        var minBarIdx = 0;
         var maxBarIdx = binchInstance.binchBars.length - 1;
         var randomBarIdx = -1;
 
         while (randomBarIdx < 0) {
-            var rnd = Math.floor(Math.random() * maxBarIdx);
+            var rnd = getRandomBetween(minBarIdx, maxBarIdx);
             if (_.includes(selectedBarsIndexes, rnd)) {
                 randomBarIdx = rnd;
             }
@@ -103,9 +104,13 @@ app.controller('randomGeneratorController', ['$scope', 'luckyService', 'luckyFac
             max = bar.binchBarMaxOffsetPx;
         }
 
+        return getRandomBetween(min, max);
+    }
+
+    function getRandomBetween(min, max) {
         var rv = Math.floor(Math.random() * (max - min + 1)) + min;
 
-        //console.info(rv + " from " + min + " to " + max);
+        // console.info("Random: " + rv + " between " + min + " and " + max);
 
         return rv;
     }
