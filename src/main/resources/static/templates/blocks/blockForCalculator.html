@@ -1,15 +1,15 @@
 <style>
-    #myShowBlock button{background-color:aliceblue; height:20px; width:40px; font-size:14px; margin:5px}
+    #myShowBlock button{border-radius: 7px; color: gray; background-color:aliceblue; height:20px; width:40px; font-size:14px; margin:5px}
     #myShowBlock input{border-radius: 5px; width:900px; text-align: left; outline:none; font-size:15px; font-family:monospace;}
 </style>
 
 <span ng-controller="blockForCalculatorController as calcCtrl">
 
-    <div id="myShowBlock" style="text-align: center">
+    <div id="myShowBlock" class="key_controls_block">
 
         </br>
 
-        <input type="text" only-digits-directive="" ng-model="calcCtrl.input_1">
+        <input type="text" only-digits-directive="" ng-model="calcCtrl.input_1" placeholder="number a">
         <br/>
         <button ng-click="calcCtrl.add('+')">+</button>
         <button ng-click="calcCtrl.subtraction('-')">-</button>
@@ -22,7 +22,9 @@
 
         </br>
 
-        <input type="text" only-digits-directive="" ng-model="calcCtrl.input_2">
+        <input type="text" only-digits-directive="" ng-model="calcCtrl.input_2" placeholder="number b">
+        </br>
+        </br>
     </div>
 
 </span>
