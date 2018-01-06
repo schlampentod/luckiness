@@ -100,7 +100,7 @@ app.controller('sequenceGeneratorController', ['$scope', 'luckyService', 'luckyF
             iterations++;
         }
 
-        var lastAddedKeyInc = "1" + prevStringVal;
+        var lastAddedKeyInc = "1" + bigInt(prevStringVal, radix).toString(10);
         while (bigInt(lastAddedKeyInc).lesserOrEquals(MAX_NUMBER)) {
             putNewGeneratedKey(bigInt(lastAddedKeyInc));
             lastAddedKeyInc = "1" + lastAddedKeyInc;
