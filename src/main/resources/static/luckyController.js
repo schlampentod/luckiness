@@ -34,7 +34,6 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
     vm.checkSelectedBars.fill(true);
 
 
-
     $scope.isAllBarsToggled = true;
     vm.onAllBarsToggled = function (isAllBarsToggled) {
         vm.checkSelectedBars.fill(isAllBarsToggled);
@@ -74,12 +73,11 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
         }
     });
 
-    $scope.robi;
-
+    vm.robi = 1;
 
     $scope.getkeySluckyBarsSameOffset = function (ArrowDirection) {
-    //debugger;
-        if($scope.robi==1){
+        debugger;
+        if (vm.robi == 1) {
             var oldValue = parseInt(vm.luckyBarsSameOffset) || 0;
 
             if (ArrowDirection == "UP") {
@@ -88,28 +86,23 @@ app.controller('luckyController', ['$scope', 'luckyService', 'luckyFactory', '$i
                 vm.luckyBarsSameOffset = oldValue - 1;
             }
         }
-        else
-            if($scope.robi==2){
-            //alert("go, go, go!!");
+        else if (vm.robi == 2) {
             if (ArrowDirection == "UP") {
                 //debugger;
                 _.forEach(vm.luckyBinchBarsOffsets, function (offSet, i) {
-                    if(vm.luckyBinchBarsOffsets[i]<1000){
+                    if (vm.luckyBinchBarsOffsets[i] < 1000) {
                         vm.luckyBinchBarsOffsets[i]++;
                     }
-
                 });
             } else if (ArrowDirection == "DOWN") {
                 _.forEach(vm.luckyBinchBarsOffsets, function (offSet, i) {
-                    if(vm.luckyBinchBarsOffsets[i]>0){
+                    if (vm.luckyBinchBarsOffsets[i] > 0) {
                         vm.luckyBinchBarsOffsets[i]--;
                     }
 
                 });
             }
-
         }
-
 
     };
 
