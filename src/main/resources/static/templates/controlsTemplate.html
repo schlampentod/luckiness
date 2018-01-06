@@ -61,7 +61,6 @@
     <button ng-click="tabsCtrl.selectedGenerationTemplate='DUMMY_KEYS_TEMPLATE'">Dummy</button>
     <button ng-click="tabsCtrl.selectedGenerationTemplate='CONTROL_LODASH_KEYS'">Found</button>
     <button ng-click="tabsCtrl.selectedGenerationTemplate='DIGITS_GENERATOR_TEMPLATE'">Digit by Digit</button>
-    <button ng-click="tabsCtrl.selectedGenerationTemplate='HISTOGRAMM_TEMPLATE'">Histogram</button>
     <button ng-click="tabsCtrl.selectedGenerationTemplate='BLOCK_FOR_CALCULATOR'">Calc</button>
 
     <div ng-switch="tabsCtrl.selectedGenerationTemplate">
@@ -100,10 +99,6 @@
 
         <div ng-switch-when="DIGITS_GENERATOR_TEMPLATE">
             <ng-include src=" 'templates/blocks/digitsGeneratorTemplate.html' "></ng-include>
-        </div>
-
-        <div ng-switch-when="HISTOGRAMM_TEMPLATE">
-            nothing..
         </div>
 
         <div ng-switch-when="BLOCK_FOR_CALCULATOR">

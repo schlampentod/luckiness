@@ -1,10 +1,10 @@
-<div ng-controller="histogrammController as histoCtrl" style="width:900px">
+<div ng-controller="histogramController as histoCtrl" style="width:900px">
 
 
     <table>
         <tr>
             <td style="width:700px">
-                <span ng-repeat="digitValue in histoCtrl.histogrammValues track by $index">
+                <span ng-repeat="digitValue in histoCtrl.histogramValues track by $index">
                    [{{$index}}: {{digitValue}}]
                 </span>
 
@@ -12,20 +12,20 @@
                         chart-options="histoCtrl.histoChartOptions"
                         class="chart chart-pie chart-xs ng-isolate-scope"
                         height="70" width="70"
-                        chart-data="histoCtrl.histogrammValues"
-                        chart-labels="histoCtrl.histogrammLabels">
+                        chart-data="histoCtrl.histogramValues"
+                        chart-labels="histoCtrl.histogramLabels">
                 </canvas>
             </td>
             <td>
-                <span ng-repeat="digitValue in histoCtrl.histogrammValuesBin track by $index">
+                <span ng-repeat="digitValue in histoCtrl.histogramValuesBin track by $index">
                    [{{$index}}: {{digitValue}}]
                 </span>
                 <canvas
                         chart-options="histoCtrl.histoChartOptionsBin"
                         class="chart chart-pie chart-xs ng-isolate-scope"
                         height="70" width="70"
-                        chart-data="histoCtrl.histogrammValuesBin"
-                        chart-labels="histoCtrl.histogrammLabelsBin">
+                        chart-data="histoCtrl.histogramValuesBin"
+                        chart-labels="histoCtrl.histogramLabelsBin">
                 </canvas>
             </td>
         </tr>
