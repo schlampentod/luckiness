@@ -59,7 +59,6 @@
     <button ng-click="tabsCtrl.selectedGenerationTemplate='NUMBER_TRIMMER_TEMPLATE'">Trimmer</button>
     <!--<button ng-click="tabsCtrl.selectedGenerationTemplate='PRIME_TEMPLATE'">Prime</button>-->
     <button ng-click="tabsCtrl.selectedGenerationTemplate='DUMMY_KEYS_TEMPLATE'">Dummy</button>
-    <button ng-click="tabsCtrl.selectedGenerationTemplate='CONTROL_LODASH_KEYS'">Found</button>
     <button ng-click="tabsCtrl.selectedGenerationTemplate='DIGITS_GENERATOR_TEMPLATE'">Digit by Digit</button>
     <button ng-click="tabsCtrl.selectedGenerationTemplate='BLOCK_FOR_CALCULATOR'">Calc</button>
 
@@ -93,10 +92,6 @@
             <ng-include src=" 'templates/blocks/dummyKeysTemplate.html' "></ng-include>
         </div>
 
-        <div ng-switch-when="CONTROL_LODASH_KEYS">
-            <ng-include src=" 'templates/blocks/controlLodashKeys.html' "></ng-include>
-        </div>
-
         <div ng-switch-when="DIGITS_GENERATOR_TEMPLATE">
             <ng-include src=" 'templates/blocks/digitsGeneratorTemplate.html' "></ng-include>
         </div>
@@ -105,6 +100,8 @@
             <ng-include src=" 'templates/blocks/blockForCalculator.html' "></ng-include>
         </div>
     </div>
+
+    <ng-include src=" 'templates/myFoundKeysList.html' "></ng-include>
 
 </div>
 

@@ -7,7 +7,6 @@ app.controller('generationTabsController', ['$scope', 'luckyService', 'luckyFact
 
     vm.KeyGenerationTabName = {
         BLOCK_FOR_CALCULATOR: "BLOCK_FOR_CALCULATOR",
-        CONTROL_LODASH_KEYS: "CONTROL_LODASH_KEYS",
         DIGITS_GENERATOR_TEMPLATE: "DIGITS_GENERATOR_TEMPLATE",
         DUMMY_KEYS_TEMPLATE: "DUMMY_KEYS_TEMPLATE",
         KEY_CONVERSION_TEMPLATE: "KEY_CONVERSION_TEMPLATE",

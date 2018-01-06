@@ -1,0 +1,18 @@
+
+<span ng-controller="myFoundKeysListController as foundCtrl">
+
+    <span ng-if="foundCtrl.foundkeysListFromLs.length">
+
+        <br />
+        <br />
+
+        Found keys:
+
+        <span ng-repeat="foundKey in foundCtrl.foundkeysListFromLs">
+            <br/>
+
+            <a href="javascript:void(0)" ng-click="foundCtrl.onFoundKeyPickedUp(foundKey)">{{foundKey}}</a>
+        </span>
+    </span>
+
+</span>
