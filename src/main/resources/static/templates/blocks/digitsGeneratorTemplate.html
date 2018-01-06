@@ -16,7 +16,7 @@
         <br />
         <label><input type="checkbox" ng-model="dgGenCtrl.luckyDigitsFormCtrlOnly"> With CTRL only</label>
         <br />
-        <label><input type="checkbox" ng-model="dgGenCtrl.luckyDigitsByKeyboard"> With KB only: {{dgGenCtrl.digitGeneratorPressedKeyDigit}}</label>
+        <label><input type="checkbox" ng-model="dgGenCtrl.luckyDigitsByKeyboard" ng-change="dgGenCtrl.luckyDigitsByKeyboard?dgGenCtrl.luckyDigitsFormCtrlOnly=false:null"> With KB only: {{dgGenCtrl.digitGeneratorPressedKeyDigit}}</label>
         <br/>
 
         <table class="digit_gen_table">
