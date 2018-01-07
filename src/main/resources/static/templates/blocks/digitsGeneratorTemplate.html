@@ -33,7 +33,7 @@
                     <input type="text" only-digits-directive="" maxlength="1" ng-model="dgGenCtrl.digitGeneratorPiles[$index]">
                 </td>
             </tr>
-            <tr class="down_me">
+            <tr class="down_me" ng-hide="dgGenCtrl.luckyDigitsByKeyboard">
                 <td ng-repeat="digit in dgGenCtrl.digitGeneratorPiles track by $index"
                     ng-mouseover="dgGenCtrl.onDigitDownDecrement($index, $event)">
                      ↓
