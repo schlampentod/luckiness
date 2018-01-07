@@ -1,4 +1,4 @@
 /**
  *
  */
-var app = angular.module('luckynes', ['pascalprecht.translate', 'chart.js']);
+var app = angular.module('luckynes', ['pascalprecht.translate', 'chart.js', 'ngStorage']);

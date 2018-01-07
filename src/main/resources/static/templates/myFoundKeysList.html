@@ -8,10 +8,10 @@
 
         Found keys:
 
-        <span ng-repeat="foundKey in foundCtrl.foundkeysListFromLs">
+        <span ng-repeat="foundKey in foundCtrl.foundkeysListFromLs track by $index">
             <br/>
 
-            <a href="javascript:void(0)" ng-click="foundCtrl.onFoundKeyPickedUp(foundKey)">{{foundKey}}</a>
+            <a href="javascript:void(0)" ng-click="foundCtrl.onFoundKeyPickedUp(foundKey)">{{foundKey}}</a> <a href="javascript:void(0)" ng-click="foundCtrl.onDelKeyPickedUp($index)"> del</a>
         </span>
     </span>
 

@@ -33,19 +33,25 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
 
     vm.add = function () {
 
-        //vm.DelStackAfter();
+        if(vm.input_2 == null){
+            vm.input_2=vm.input_1;
+            vm.Calk_memory_2 = bigInt(vm.input_2);
+        }
+
         vm.Calk_memory_1 = bigInt(vm.getElement());
         vm.Znak_memory = '+';
         vm.pastElement((vm.Calk_memory_1).add(vm.Calk_memory_2));  //вводим в экран значение вычислений
         this.Calk_memory_1 = (vm.Calk_memory_1).add(vm.Calk_memory_2); //сохраняем результат вычислений..
-        //debugger;
-
-
     };
     vm.subtraction = function () {
         vm.Calk_memory_1 = bigInt(vm.getElement());
         if (parseInt(vm.Calk_memory_1) > parseInt(vm.Calk_memory_2)) {
-            //vm.DelStackAfter();
+
+            if(vm.input_2 == null){
+                vm.input_2=vm.input_1;
+                vm.Calk_memory_2 = bigInt(vm.input_2);
+            }
+
             vm.Znak_memory = '-';
             this.pastElement((vm.Calk_memory_1).minus(vm.Calk_memory_2));
             this.Calk_memory_1 = (vm.Calk_memory_1).minus(vm.Calk_memory_2);
@@ -55,7 +61,12 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
         vm.Calk_memory_1 = bigInt(vm.getElement());
         var a = (parseFloat(vm.Calk_memory_1) / parseFloat(vm.Calk_memory_2));
         if (a >= 1) {
-            //vm.DelStackAfter();
+
+            if(vm.input_2 == null){
+                vm.input_2=vm.input_1;
+                vm.Calk_memory_2 = bigInt(vm.input_2);
+            }
+
             vm.Znak_memory = '/';
             this.pastElement((vm.Calk_memory_1).divide(vm.Calk_memory_2));
             this.Calk_memory_1 = (vm.Calk_memory_1).divide(vm.Calk_memory_2);
@@ -63,14 +74,18 @@ app.controller('blockForCalculatorController', ['$scope', '$window', '$timeout',
 
     };
     vm.multiplication = function () {
-        //vm.DelStackAfter();
+
+        if(vm.input_2 == null){
+            vm.input_2=vm.input_1;
+            vm.Calk_memory_2 = bigInt(vm.input_2);
+        }
+
         vm.Calk_memory_1 = bigInt(vm.getElement());
         vm.Znak_memory = '*';
         this.pastElement((vm.Calk_memory_1).multiply(vm.Calk_memory_2));
         this.Calk_memory_1 = (vm.Calk_memory_1).multiply(vm.Calk_memory_2);
     };
     vm.zeroing = function () {
-        //vm.DelStackAfter();
         vm.input_1 = null;
         vm.input_2 = null;
         vm.Calk_memory_1 = '';
