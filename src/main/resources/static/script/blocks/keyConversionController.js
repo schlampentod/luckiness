@@ -50,14 +50,14 @@ app.controller('keyConversionController', ['$scope', 'luckyService', 'luckyFacto
 
     vm.onParseProvidedBINKey = function (luckyBINKey) {
         if(luckyBINKey != ""){
-            var moto_moto = parseInt(luckyBINKey, 2).toString();
+            var moto_moto = bigInt(luckyBINKey, 2).toString();
             $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [moto_moto]});
         };
     }
 
     vm.onParseProvided8Key = function (lucky8Key) {
         if(lucky8Key != ""){
-            var moto_moto = parseInt(lucky8Key, 8).toString();
+            var moto_moto = bigInt(lucky8Key, 8).toString();
             $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [moto_moto]});
         };
     }
