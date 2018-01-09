@@ -1,8 +1,9 @@
 
 
 <style>
-    .key_controls_block .carv_board_line {padding: 3px;}
-    .key_controls_block .carv_board_line .carv_board_pixel {text-align: center; text-decoration:solid; font-size: 14px;  font-family: sans-serif; background-color:white; padding: 1px; margin: 1px}
+    .key_controls_block .carv_board_line {padding:0px; display: flex}
+    .key_controls_block .carv_board_line .carv_board_pixel {color: brown; width: 24px; text-align: center; text-decoration:solid; font-size: 24px;  font-family: sans-serif; background-color:white; padding: 1px; margin: 1px;     border-radius: 5px;}
+    .key_controls_block .carv_board_line .px_off{color: burlywood}
 </style>
 
 <span ng-controller="carvingController as carveCtrl">
@@ -17,10 +18,11 @@
         <!--<span style="font-size: 5px">{{carveCtrl.maxNumStrBin}}</span>-->
 
         <div ng-repeat="line in carveCtrl.maxNumStrBinLines track by $index" class="carv_board_line">
-            <span ng-repeat="elem in line track by $index" class="carv_board_pixel"
-                  ng-mouseover="carveCtrl.onResetCarveBoardElement($parent.$index, $index)">
+            <div ng-repeat="elem in line track by $index" class="carv_board_pixel"
+                 ng-mouseover="carveCtrl.onResetCarveBoardElement($parent.$index, $index)"
+                 ng-class="{'px_off':elem=='0'}">
                 {{elem}}
-            </span>
+            </div>
         </div>
 
         <br />
