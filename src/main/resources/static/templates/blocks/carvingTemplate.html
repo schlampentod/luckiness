@@ -5,6 +5,19 @@
 
     <span class="key_controls_block">
 
+        <!-- -= {{carveCtrl.maxNumStrBin.length}}=- -->
+
+        {{carveCtrl.digitGeneratorPressedKeyDigit}}
+        <br />
+
+        <!--<span style="font-size: 5px">{{carveCtrl.maxNumStrBin}}</span>-->
+
+        <div ng-repeat="line in carveCtrl.maxNumStrBinLines track by $index">
+            <span ng-repeat="elem in line track by $index">
+                {{elem}}
+            </span>
+        </div>
+
 
     </span>
 </span>
