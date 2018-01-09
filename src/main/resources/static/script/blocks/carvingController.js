@@ -5,6 +5,8 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     var vm = this;
 
+    var minFeasibleNum = bigInt("1000000000000000000000000000000000000000000000000000000000000000000000000000");
+
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
     var BOARD_INITIAL_NUMBER = MAX_NUMBER.minus(bigInt("1"));
 
@@ -13,7 +15,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     var valueLength = vm.maxNumStrBin.length; // 256 bits
 
-    vm.carvingLinesNumber = 8; // 8, 16, 32
+    vm.carvingLinesNumber = 16; // 8, 16, 32
 
     vm.maxNumStrBinLines = new Array(vm.carvingLinesNumber);
 
@@ -68,9 +70,9 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         }, function (newVal, oldVal) {
             var finalNumBin = getFinalNumberBin();
             var bn = bigInt(finalNumBin, 2);
-            if (bn.lesserOrEquals(MAX_NUMBER)) {
+            if (bn.lesserOrEquals(MAX_NUMBER) && minFeasibleNum.lesserOrEquals(bn)) {
                 var bnDecStr = bn.toString(10);
-                console.info("carved to: " + bnDecStr);
+                /// console.info("carved to: " + bnDecStr);
                 $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [bnDecStr]});
             } else {
                 initCarvingBoard(BOARD_INITIAL_NUMBER.toString(2));
@@ -83,6 +85,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         }, function (newVal, oldVal) {
             if (newVal && oldVal) {
                 reSizeCarvingBoard();
+                $("select").blur();
             }
         });
 
@@ -111,7 +114,9 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     function reSizeCarvingBoard() {
 
-        initCarvingBoard(BOARD_INITIAL_NUMBER.toString(2));
+        var currentVal = getFinalNumberBin();
+        // BOARD_INITIAL_NUMBER.toString(2)
+        initCarvingBoard(currentVal);
     }
 
     function initCarvingBoard(initialStrBin) {
