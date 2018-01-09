@@ -13,9 +13,14 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     var lineLength = 32; // 32 == 256 / 8;
 
     vm.maxNumStrBinLines = new Array(8);
-    vm.digitGeneratorPressedKeyDigit = null;
 
-    vm.onResetCarvingBoard = function(){
+    vm.carvingToolUsingDigit = 0;
+
+    vm.onResetCarveBoardElement = function (rowIdx, elemIdx) {
+        vm.maxNumStrBinLines[rowIdx][elemIdx] = "" + vm.carvingToolUsingDigit;
+    };
+
+    vm.onResetCarvingBoard = function () {
         initCarvingBoard();
     };
 
@@ -26,26 +31,37 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     //
     //
 
+    function getFinalNumber() {
+
+    }
+
     function init() {
 
         initCarvingBoard();
+
+        $scope.$watch(function () {
+            return vm.maxNumStrBinLines;
+        }, function (newVal, oldVal) {
+            getFinalNumber();
+        }, true);
 
         $(document).keypress(function (evt) {
             var charCode = evt.which || evt.keyCode;
             var char = String.fromCharCode(charCode);
 
-            if (/[0-1]/g.test(char)) {
-                vm.digitGeneratorPressedKeyDigit = parseInt(char);
+            if (/[1]/g.test(char)) {
+                vm.carvingToolUsingDigit = parseInt(char);
             } else {
-                vm.digitGeneratorPressedKeyDigit = null;
+                vm.carvingToolUsingDigit = 0;
             }
 
-            console.info("onDigitUpIncrement: " + vm.digitGeneratorPressedKeyDigit);
+            // console.info("onDigitUpIncrement: " + vm.carvingToolUsingDigit);
+
             $timeout($scope.$apply());
         });
 
         $(document).keyup(function (evt) {
-            vm.digitGeneratorPressedKeyDigit = null;
+            vm.carvingToolUsingDigit = 0;
             $timeout($scope.$apply());
         });
     }
@@ -54,7 +70,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         _.forEach(vm.maxNumStrBinLines, function (line, lineIdx) {
             vm.maxNumStrBinLines[lineIdx] = new Array(lineLength);
-            var lineArray = vm.maxNumStrBinLines[lineIdx]
+            var lineArray = vm.maxNumStrBinLines[lineIdx];
 
             _.forEach(lineArray, function (elem, elemIdx) {
                 var charIdx = (lineIdx * lineLength) + elemIdx;

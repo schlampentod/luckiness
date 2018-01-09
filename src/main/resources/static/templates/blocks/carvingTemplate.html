@@ -7,13 +7,14 @@
 
         <!-- -= {{carveCtrl.maxNumStrBin.length}}=- -->
 
-        {{carveCtrl.digitGeneratorPressedKeyDigit}}
+        {{carveCtrl.carvingToolUsingDigit}}
         <br />
 
         <!--<span style="font-size: 5px">{{carveCtrl.maxNumStrBin}}</span>-->
 
         <div ng-repeat="line in carveCtrl.maxNumStrBinLines track by $index">
-            <span ng-repeat="elem in line track by $index">
+            <span ng-repeat="elem in line track by $index"
+                  ng-mouseover="carveCtrl.onResetCarveBoardElement($parent.$index, $index)">
                 {{elem}}
             </span>
         </div>
