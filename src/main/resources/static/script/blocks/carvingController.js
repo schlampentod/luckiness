@@ -15,6 +15,10 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     vm.maxNumStrBinLines = new Array(8);
     vm.digitGeneratorPressedKeyDigit = null;
 
+    vm.onResetCarvingBoard = function(){
+        initCarvingBoard();
+    };
+
     init();
 
 
@@ -24,16 +28,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     function init() {
 
-        _.forEach(vm.maxNumStrBinLines, function (line, lineIdx) {
-            vm.maxNumStrBinLines[lineIdx] = new Array(lineLength);
-            var lineArray = vm.maxNumStrBinLines[lineIdx]
-
-            _.forEach(lineArray, function (elem, elemIdx) {
-                var charIdx = (lineIdx * lineLength) + elemIdx;
-                var char = vm.maxNumStrBin.charAt(charIdx);
-                lineArray[elemIdx] = char;
-            });
-        });
+        initCarvingBoard();
 
         $(document).keypress(function (evt) {
             var charCode = evt.which || evt.keyCode;
@@ -52,6 +47,20 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         $(document).keyup(function (evt) {
             vm.digitGeneratorPressedKeyDigit = null;
             $timeout($scope.$apply());
+        });
+    }
+
+    function initCarvingBoard() {
+
+        _.forEach(vm.maxNumStrBinLines, function (line, lineIdx) {
+            vm.maxNumStrBinLines[lineIdx] = new Array(lineLength);
+            var lineArray = vm.maxNumStrBinLines[lineIdx]
+
+            _.forEach(lineArray, function (elem, elemIdx) {
+                var charIdx = (lineIdx * lineLength) + elemIdx;
+                var char = vm.maxNumStrBin.charAt(charIdx);
+                lineArray[elemIdx] = char;
+            });
         });
     }
 
