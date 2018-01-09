@@ -16,10 +16,16 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     vm.maxNumStrBinLines = new Array(8);
 
-    vm.carvingToolUsingDigit = 0;
+    vm.carvingToolUsingDigit = null;
 
     vm.onResetCarveBoardElement = function (rowIdx, elemIdx) {
-        vm.maxNumStrBinLines[rowIdx][elemIdx] = "" + vm.carvingToolUsingDigit;
+        setElementValue(rowIdx, elemIdx);
+    };
+
+    vm.onResetCarveBoardLine = function (rowIdx) {
+        _.forEach(vm.maxNumStrBinLines[rowIdx], function (lineArray, elemIdx) {
+            setElementValue(rowIdx, elemIdx);
+        });
     };
 
     vm.onResetCarvingBoard = function () {
@@ -32,6 +38,13 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     //
     //
     //
+
+    function setElementValue(rowIdx, elemIdx) {
+        if(vm.carvingToolUsingDigit == null){
+            return;
+        }
+        vm.maxNumStrBinLines[rowIdx][elemIdx] = "" + vm.carvingToolUsingDigit;
+    }
 
     function getFinalNumberBin() {
         var rv = "";
@@ -52,15 +65,15 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         $scope.$watch(function () {
             return vm.maxNumStrBinLines;
         }, function (newVal, oldVal) {
-           var finalNumBin =  getFinalNumberBin();
-           var bn = bigInt(finalNumBin, 2);
-           if(bn.lesserOrEquals(MAX_NUMBER)) {
-               var bnDecStr = bn.toString(10);
-               console.info("carved to: " + bnDecStr);
-               $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [bnDecStr]});
-           }else{
-               initCarvingBoard();
-           }
+            var finalNumBin = getFinalNumberBin();
+            var bn = bigInt(finalNumBin, 2);
+            if (bn.lesserOrEquals(MAX_NUMBER)) {
+                var bnDecStr = bn.toString(10);
+                console.info("carved to: " + bnDecStr);
+                $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [bnDecStr]});
+            } else {
+                initCarvingBoard();
+            }
 
         }, true);
 
@@ -69,9 +82,11 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
             var char = String.fromCharCode(charCode);
 
             if (/[1]/g.test(char)) {
-                vm.carvingToolUsingDigit = parseInt(char);
+                vm.carvingToolUsingDigit = "1";
+            } else if (/[2]/g.test(char) || /[0]/g.test(char)) {
+                vm.carvingToolUsingDigit = "0";
             } else {
-                vm.carvingToolUsingDigit = 0;
+                vm.carvingToolUsingDigit = null;
             }
 
             // console.info("onDigitUpIncrement: " + vm.carvingToolUsingDigit);
@@ -80,7 +95,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         });
 
         $(document).keyup(function (evt) {
-            vm.carvingToolUsingDigit = 0;
+            vm.carvingToolUsingDigit = null;
             $timeout($scope.$apply());
         });
     }
