@@ -5,13 +5,15 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     var vm = this;
 
+    vm.watchForBinchChanges = false;
+    vm.keepingInProbableRange = true;
+
     var minFeasibleNum = bigInt("1000000000000000000000000000000000000000000000000000000000000000000000000000");
 
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
     var BOARD_INITIAL_NUMBER = MAX_NUMBER.minus(bigInt("1"));
 
     vm.maxNumStrBin = MAX_NUMBER.toString(2);
-
 
     var valueLength = vm.maxNumStrBin.length; // 256 bits
 
@@ -22,16 +24,19 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     vm.carvingToolUsingDigit = null;
 
     vm.onResetCarveBoardElement = function (rowIdx, elemIdx) {
+        vm.watchForBinchChanges = false;
         setElementValue(rowIdx, elemIdx);
     };
 
     vm.onResetCarveBoardLine = function (rowIdx) {
+        vm.watchForBinchChanges = false;
         _.forEach(vm.maxNumStrBinLines[rowIdx], function (lineArray, elemIdx) {
             setElementValue(rowIdx, elemIdx);
         });
     };
 
     vm.onResetCarvingBoard = function () {
+        vm.watchForBinchChanges = false;
         initCarvingBoard(BOARD_INITIAL_NUMBER.toString(2));
     };
 
@@ -68,9 +73,17 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         $scope.$watch(function () {
             return vm.maxNumStrBinLines;
         }, function (newVal, oldVal) {
+
+            if (vm.watchForBinchChanges) {
+                return;
+            }
+
             var finalNumBin = getFinalNumberBin();
             var bn = bigInt(finalNumBin, 2);
-            if (bn.lesserOrEquals(MAX_NUMBER) && minFeasibleNum.lesserOrEquals(bn)) {
+
+            if (!vm.keepingInProbableRange
+                || (bn.lesserOrEquals(MAX_NUMBER) && minFeasibleNum.lesserOrEquals(bn))) {
+
                 var bnDecStr = bn.toString(10);
                 /// console.info("carved to: " + bnDecStr);
                 $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [bnDecStr]});
@@ -110,6 +123,26 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
             vm.carvingToolUsingDigit = null;
             $timeout($scope.$apply());
         });
+
+        $scope.$on(luckyConstants.KEY_VALUE_CHANGED_EVT, function (event, args) {
+
+            if (!vm.watchForBinchChanges) {
+                return;
+            }
+
+            var newKeyVal = args.newChosenKey;
+            var newKeyValBin = bigInt(newKeyVal).toString(2);
+            initCarvingBoard(newKeyValBin);
+        });
+
+
+        $scope.$watch(function () {
+            return vm.watchForBinchChanges;
+        }, function (newVal, oldVal) {
+            if (vm.watchForBinchChanges) {
+                vm.keepingInProbableRange = false;
+            }
+        });
     }
 
     function reSizeCarvingBoard() {
@@ -120,6 +153,10 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     }
 
     function initCarvingBoard(initialStrBin) {
+
+        while (initialStrBin.length < valueLength) {
+            initialStrBin = "0" + initialStrBin;
+        }
 
         console.info("Resetting carving board.");
 
