@@ -13,6 +13,11 @@
         <!-- -= {{carveCtrl.maxNumStrBin.length}}=- -->
 
         {{carveCtrl.carvingToolUsingDigit}}
+        <select ng-model="carveCtrl.carvingLinesNumber">
+            <option ng-value="{{8}}">8</option>
+            <option ng-value="{{16}}">16</option>
+            <option ng-value="{{32}}">32</option>
+        </select>
         <br />
 
         <!--<span style="font-size: 5px">{{carveCtrl.maxNumStrBin}}</span>-->

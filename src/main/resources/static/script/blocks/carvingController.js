@@ -6,15 +6,16 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     var vm = this;
 
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
-    var BOARD_INITIAL_NUMBER = bigInt("57953998617275373084870362867211165091510292431969421612915497067826907655000");
+    var BOARD_INITIAL_NUMBER = MAX_NUMBER.minus(bigInt("1"));
 
     vm.maxNumStrBin = MAX_NUMBER.toString(2);
     vm.initialStrBin = BOARD_INITIAL_NUMBER.toString(2);
 
     var valueLength = vm.maxNumStrBin.length; // 256 bits
-    var lineLength = 32; // 32 == 256 / 8;
 
-    vm.maxNumStrBinLines = new Array(8);
+    vm.carvingLinesNumber = 8; // 8, 16, 32
+
+    vm.maxNumStrBinLines = new Array(vm.carvingLinesNumber);
 
     vm.carvingToolUsingDigit = null;
 
@@ -40,7 +41,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     //
 
     function setElementValue(rowIdx, elemIdx) {
-        if(vm.carvingToolUsingDigit == null){
+        if (vm.carvingToolUsingDigit == null) {
             return;
         }
         vm.maxNumStrBinLines[rowIdx][elemIdx] = "" + vm.carvingToolUsingDigit;
@@ -77,6 +78,12 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         }, true);
 
+        $scope.$watch(function () {
+            return vm.carvingLinesNumber;
+        }, function (newVal, oldVal) {
+            initCarvingBoard();
+        });
+
         $(document).keypress(function (evt) {
             var charCode = evt.which || evt.keyCode;
             var char = String.fromCharCode(charCode);
@@ -103,6 +110,10 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     function initCarvingBoard() {
 
         console.info("Resetting carving board.");
+
+        var lineLength = valueLength / vm.carvingLinesNumber;
+
+        vm.maxNumStrBinLines = new Array(vm.carvingLinesNumber);
 
         _.forEach(vm.maxNumStrBinLines, function (line, lineIdx) {
             vm.maxNumStrBinLines[lineIdx] = new Array(lineLength);

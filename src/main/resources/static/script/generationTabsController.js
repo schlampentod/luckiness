@@ -18,7 +18,7 @@ app.controller('generationTabsController', ['$scope', 'luckyService', 'luckyFact
         BLOCK_FOR_CARVER: "BLOCK_FOR_CARVER"
     };
 
-    vm.selectedGenerationTemplate = vm.KeyGenerationTabName.BLOCK_FOR_CARVER;
+    vm.selectedGenerationTemplate = null;
 
 }]);
 
