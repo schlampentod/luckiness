@@ -9,7 +9,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     var BOARD_INITIAL_NUMBER = MAX_NUMBER.minus(bigInt("1"));
 
     vm.maxNumStrBin = MAX_NUMBER.toString(2);
-    vm.initialStrBin = BOARD_INITIAL_NUMBER.toString(2);
+
 
     var valueLength = vm.maxNumStrBin.length; // 256 bits
 
@@ -30,7 +30,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     };
 
     vm.onResetCarvingBoard = function () {
-        initCarvingBoard();
+        initCarvingBoard(BOARD_INITIAL_NUMBER.toString(2));
     };
 
     init();
@@ -61,7 +61,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     function init() {
 
-        initCarvingBoard();
+        initCarvingBoard(BOARD_INITIAL_NUMBER.toString(2));
 
         $scope.$watch(function () {
             return vm.maxNumStrBinLines;
@@ -73,7 +73,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
                 console.info("carved to: " + bnDecStr);
                 $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [bnDecStr]});
             } else {
-                initCarvingBoard();
+                initCarvingBoard(BOARD_INITIAL_NUMBER.toString(2));
             }
 
         }, true);
@@ -81,7 +81,9 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         $scope.$watch(function () {
             return vm.carvingLinesNumber;
         }, function (newVal, oldVal) {
-            initCarvingBoard();
+            if (newVal && oldVal) {
+                reSizeCarvingBoard();
+            }
         });
 
         $(document).keypress(function (evt) {
@@ -107,7 +109,12 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         });
     }
 
-    function initCarvingBoard() {
+    function reSizeCarvingBoard() {
+
+        initCarvingBoard(BOARD_INITIAL_NUMBER.toString(2));
+    }
+
+    function initCarvingBoard(initialStrBin) {
 
         console.info("Resetting carving board.");
 
@@ -120,9 +127,10 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
             var lineArray = vm.maxNumStrBinLines[lineIdx];
 
             _.forEach(lineArray, function (elem, elemIdx) {
+
                 var charIdx = (lineIdx * lineLength) + elemIdx;
-                //var char = vm.maxNumStrBin.charAt(charIdx);
-                var char = vm.initialStrBin.charAt(charIdx);
+
+                var char = initialStrBin.charAt(charIdx);
                 lineArray[elemIdx] = char;
             });
         });
