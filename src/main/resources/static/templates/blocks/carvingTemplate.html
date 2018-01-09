@@ -32,6 +32,7 @@
 
                 <div ng-repeat="elem in line track by $index" class="carv_board_pixel"
                      ng-mouseover="carveCtrl.onResetCarveBoardElement($parent.$index, $index)"
+                     ng-mousemove="carveCtrl.onResetCarveBoardElement($parent.$index, $index)"
                      ng-class="{'px_off':elem=='0'}">
                     {{elem}}
                 </div>
