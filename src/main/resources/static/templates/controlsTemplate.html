@@ -61,6 +61,7 @@
     <button ng-click="tabsCtrl.selectedGenerationTemplate='DUMMY_KEYS_TEMPLATE'">Dummy</button>
     <button ng-click="tabsCtrl.selectedGenerationTemplate='DIGITS_GENERATOR_TEMPLATE'">Digit by Digit</button>
     <button ng-click="tabsCtrl.selectedGenerationTemplate='BLOCK_FOR_CALCULATOR'">Calc</button>
+    <button ng-click="tabsCtrl.selectedGenerationTemplate='BLOCK_FOR_CARVER'">Carving</button>
 
     <div ng-switch="tabsCtrl.selectedGenerationTemplate">
 
@@ -99,6 +100,11 @@
         <div ng-switch-when="BLOCK_FOR_CALCULATOR">
             <ng-include src=" 'templates/blocks/blockForCalculator.html' "></ng-include>
         </div>
+
+        <div ng-switch-when="BLOCK_FOR_CARVER">
+            <ng-include src=" 'templates/blocks/carvingTemplate.html' "></ng-include>
+        </div>
+
     </div>
 
     <ng-include src=" 'templates/myFoundKeysList.html' "></ng-include>

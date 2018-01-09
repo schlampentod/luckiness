@@ -14,7 +14,8 @@ app.controller('generationTabsController', ['$scope', 'luckyService', 'luckyFact
         NUMBER_TRIMMER_TEMPLATE: "NUMBER_TRIMMER_TEMPLATE",
         PRIME_TEMPLATE: "PRIME_TEMPLATE",
         RANDOM_TEMPLATE: "RANDOM_TEMPLATE",
-        SEQUENCE_GENERATOR_TEMPLATE: "SEQUENCE_GENERATOR_TEMPLATE"
+        SEQUENCE_GENERATOR_TEMPLATE: "SEQUENCE_GENERATOR_TEMPLATE",
+        BLOCK_FOR_CARVER: "BLOCK_FOR_CARVER"
     };
 
     vm.selectedGenerationTemplate = null;
