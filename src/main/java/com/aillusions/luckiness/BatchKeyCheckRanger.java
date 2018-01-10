@@ -53,10 +53,10 @@ public class BatchKeyCheckRanger {
             }
 
             responseTimes.clear();
-            System.out.println("adjustRange ↓ " + CHECK_RANGE + " ");
+            // System.out.println("adjustRange ↓ " + CHECK_RANGE + " ");
         } else if (myMedian < 20) {
             CHECK_RANGE = CHECK_RANGE.add(CHECK_INCR);
-            System.out.println("adjustRange   " + CHECK_RANGE + " ↑");
+            // System.out.println("adjustRange   " + CHECK_RANGE + " ↑");
             responseTimes.clear();
         }
     }

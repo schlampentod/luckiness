@@ -5,6 +5,12 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     var vm = this;
 
+    var CarverFlipMode = {
+        NO_FLIP: "NO_FLIP",
+        FLIP_GOR: "FLIP_GOR",
+        FLIP_VER: "FLIP_VER"
+    };
+
     var CarverToolMode = {
         TOGGLE_SELECTED: "TOGGLE_SELECTED",
         INVERSE_SELECTED: "INVERSE_SELECTED"
@@ -24,6 +30,8 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     vm.carvingLinesNumber = 8; // 8, 16, 32
     vm.carvingToolMode = CarverToolMode.TOGGLE_SELECTED;
     vm.carvingToolSize = 1;
+
+    vm.carvingFlip = CarverFlipMode.NO_FLIP;
 
     vm.maxNumStrBinLines = new Array(vm.carvingLinesNumber);
 
@@ -61,13 +69,18 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         _.forEach(getElementCubicsIndices(rowIdx, elemIdx), function (idxs, i) {
             if (vm.carvingToolMode === CarverToolMode.TOGGLE_SELECTED) {
-                vm.maxNumStrBinLines[idxs.rowCubIdx][idxs.colCubIdx] = "" + vm.carvingToolUsingDigit;
+                setValueUltimate(idxs.rowCubIdx, idxs.colCubIdx, vm.carvingToolUsingDigit);
             } else if (vm.carvingToolMode === CarverToolMode.INVERSE_SELECTED) {
-                vm.maxNumStrBinLines[idxs.rowCubIdx][idxs.colCubIdx] = inverseBit(vm.maxNumStrBinLines[idxs.rowCubIdx][idxs.colCubIdx]);
+                setValueUltimate(idxs.rowCubIdx, idxs.colCubIdx, inverseBit(vm.maxNumStrBinLines[idxs.rowCubIdx][idxs.colCubIdx]));
             } else {
                 throw "Unexpected carvingToolMode: " + vm.carvingToolMode;
             }
         });
+    }
+
+    function setValueUltimate(rowIdx, elemIdx, val) {
+        // TODO m.carvingFlip
+        vm.maxNumStrBinLines[rowIdx][elemIdx] = "" + val;
     }
 
     function getElementCubicsIndices(rowIdx, elemIdx) {
