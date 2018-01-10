@@ -23,6 +23,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     vm.carvingLinesNumber = 8; // 8, 16, 32
     vm.carvingToolMode = CarverToolMode.TOGGLE_SELECTED;
+    vm.carvingToolSize = 1;
 
     vm.maxNumStrBinLines = new Array(vm.carvingLinesNumber);
 
@@ -58,13 +59,22 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
             return;
         }
 
-        if (vm.carvingToolMode === CarverToolMode.TOGGLE_SELECTED) {
-            vm.maxNumStrBinLines[rowIdx][elemIdx] = "" + vm.carvingToolUsingDigit;
-        } else if (vm.carvingToolMode === CarverToolMode.INVERSE_SELECTED) {
-            vm.maxNumStrBinLines[rowIdx][elemIdx] = inverseBit(vm.maxNumStrBinLines[rowIdx][elemIdx]);
-        } else {
-            throw "Unexpected carvingToolMode: " + vm.carvingToolMode;
-        }
+        _.forEach(getElementCubicsIndices(rowIdx, elemIdx), function (idxs, i) {
+            if (vm.carvingToolMode === CarverToolMode.TOGGLE_SELECTED) {
+                vm.maxNumStrBinLines[idxs.rowCubIdx][idxs.colCubIdx] = "" + vm.carvingToolUsingDigit;
+            } else if (vm.carvingToolMode === CarverToolMode.INVERSE_SELECTED) {
+                vm.maxNumStrBinLines[idxs.rowCubIdx][idxs.colCubIdx] = inverseBit(vm.maxNumStrBinLines[idxs.rowCubIdx][idxs.colCubIdx]);
+            } else {
+                throw "Unexpected carvingToolMode: " + vm.carvingToolMode;
+            }
+        });
+    }
+
+    function getElementCubicsIndices(rowIdx, elemIdx) {
+        // vm.carvingToolSize
+        var rv = [];
+        rv.push({rowCubIdx: rowIdx, colCubIdx: elemIdx});
+        return rv;
     }
 
     function inverseBit(bit) {
