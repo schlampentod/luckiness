@@ -5,6 +5,11 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     var vm = this;
 
+    var CarverToolMode = {
+        TOGGLE_SELECTED: "TOGGLE_SELECTED",
+        INVERSE_SELECTED: "INVERSE_SELECTED"
+    };
+
     vm.watchForBinchChanges = false;
     vm.keepingInProbableRange = true;
 
@@ -17,7 +22,8 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     var valueLength = vm.maxNumStrBin.length; // 256 bits
 
-    vm.carvingLinesNumber = 16; // 8, 16, 32
+    vm.carvingLinesNumber = 8; // 8, 16, 32
+    vm.carvingToolMode = CarverToolMode.TOGGLE_SELECTED;
 
     vm.maxNumStrBinLines = new Array(vm.carvingLinesNumber);
 
@@ -48,10 +54,26 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     //
 
     function setElementValue(rowIdx, elemIdx) {
+
         if (vm.carvingToolUsingDigit == null) {
             return;
         }
-        vm.maxNumStrBinLines[rowIdx][elemIdx] = "" + vm.carvingToolUsingDigit;
+
+        if (vm.carvingToolMode === CarverToolMode.TOGGLE_SELECTED) {
+            vm.maxNumStrBinLines[rowIdx][elemIdx] = "" + vm.carvingToolUsingDigit;
+        } else if (vm.carvingToolMode === CarverToolMode.INVERSE_SELECTED) {
+            vm.maxNumStrBinLines[rowIdx][elemIdx] = inverseBit(vm.maxNumStrBinLines[rowIdx][elemIdx]);
+        } else {
+            throw "Unexpected carvingToolMode: " + vm.carvingToolMode;
+        }
+    }
+
+    function inverseBit(bit) {
+        if (bit === 1 || bit == "1") {
+            return "0";
+        }
+
+        return "1";
     }
 
     function getFinalNumberBin() {
@@ -110,6 +132,9 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
                 vm.carvingToolUsingDigit = "1";
             } else if (/[2]/g.test(char) || /[0]/g.test(char)) {
                 vm.carvingToolUsingDigit = "0";
+            } else if (/[3]/g.test(char)) {
+                vm.carvingToolUsingDigit = "3";
+                vm.carvingToolMode = CarverToolMode.INVERSE_SELECTED;
             } else {
                 vm.carvingToolUsingDigit = null;
             }
@@ -120,6 +145,9 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         });
 
         $(document).keyup(function (evt) {
+            if (vm.carvingToolUsingDigit === "3") {
+                vm.carvingToolMode = CarverToolMode.TOGGLE_SELECTED;
+            }
             vm.carvingToolUsingDigit = null;
             $timeout($scope.$apply());
         });

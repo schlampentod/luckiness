@@ -12,13 +12,25 @@
 
         <!-- -= {{carveCtrl.maxNumStrBin.length}}=- -->
 
-        <select ng-model="carveCtrl.carvingLinesNumber">
-            <option ng-value="{{8}}">8</option>
-            <option ng-value="{{16}}">16</option>
-            <option ng-value="{{32}}">32</option>
-            <option ng-value="{{64}}">64</option>
-            <option ng-value="{{128}}">128</option>
-        </select>
+        <label>
+            Field:
+            <select ng-model="carveCtrl.carvingLinesNumber">
+                <option ng-value="{{8}}">8</option>
+                <option ng-value="{{16}}">16</option>
+                <option ng-value="{{32}}">32</option>
+                <option ng-value="{{64}}">64</option>
+                <option ng-value="{{128}}">128</option>
+            </select>
+        </label>
+
+        <label>
+            Mode:
+            <select ng-model="carveCtrl.carvingToolMode">
+                <option value="TOGGLE_SELECTED">toggle</option>
+                <option value="INVERSE_SELECTED">inverse</option>
+            </select>
+        </label>
+
         <br />
 
         <!--<span style="font-size: 5px">{{carveCtrl.maxNumStrBin}}</span>-->
@@ -32,7 +44,6 @@
 
                 <div ng-repeat="elem in line track by $index" class="carv_board_pixel"
                      ng-mouseover="carveCtrl.onResetCarveBoardElement($parent.$index, $index)"
-                     ng-mousemove="carveCtrl.onResetCarveBoardElement($parent.$index, $index)"
                      ng-click="carveCtrl.onResetCarveBoardElement($parent.$index, $index)"
                      ng-class="{'px_off':elem=='0'}">
                     {{elem}}
