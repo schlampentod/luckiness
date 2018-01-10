@@ -16,7 +16,6 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     var minFeasibleNum = bigInt("1000000000000000000000000000000000000000000000000000000000000000000000000000");
 
     var MAX_NUMBER = luckyService.currentChooser.MAX_BIG_NUMBER;
-    var BOARD_INITIAL_NUMBER = MAX_NUMBER.minus(bigInt("1"));
 
     vm.maxNumStrBin = MAX_NUMBER.toString(2);
 
@@ -43,7 +42,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     vm.onResetCarvingBoard = function () {
         vm.watchForBinchChanges = false;
-        initCarvingBoard(BOARD_INITIAL_NUMBER.toString(2));
+        initCarvingBoard(getAppropriateRandom().toString(2));
     };
 
     init();
@@ -90,7 +89,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     function init() {
 
-        initCarvingBoard(BOARD_INITIAL_NUMBER.toString(2));
+        initCarvingBoard(getAppropriateRandom().toString(2));
 
         $scope.$watch(function () {
             return vm.maxNumStrBinLines;
@@ -110,7 +109,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
                 /// console.info("carved to: " + bnDecStr);
                 $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [bnDecStr]});
             } else {
-                initCarvingBoard(BOARD_INITIAL_NUMBER.toString(2));
+                initCarvingBoard(getAppropriateRandom().toString(2));
             }
 
         }, true);
@@ -174,9 +173,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     }
 
     function reSizeCarvingBoard() {
-
         var currentVal = getFinalNumberBin();
-        // BOARD_INITIAL_NUMBER.toString(2)
         initCarvingBoard(currentVal);
     }
 
@@ -204,6 +201,10 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
                 lineArray[elemIdx] = char;
             });
         });
+    }
+
+    function getAppropriateRandom() {
+        return bigInt.randBetween(minFeasibleNum, luckyService.currentChooser.MAX_BIG_NUMBER);
     }
 
 }]);
