@@ -79,8 +79,28 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     }
 
     function setValueUltimate(rowIdx, elemIdx, val) {
-        // TODO m.carvingFlip
+
         vm.maxNumStrBinLines[rowIdx][elemIdx] = "" + val;
+
+        if (vm.carvingFlip !== CarverFlipMode.NO_FLIP) {
+            var mirror = getMirrorIndexes(rowIdx, elemIdx);
+            vm.maxNumStrBinLines[mirror.rowMirIdx][mirror.colMirIdx] = "" + val;
+        }
+    }
+
+    function getMirrorIndexes(rowIdx, elemIdx) {
+
+        var maxLineIdx = vm.carvingLinesNumber - 1;
+        var maxElemIdx = getLineLength() - 1;
+
+
+        if (vm.carvingFlip === CarverFlipMode.FLIP_GOR) {
+            return {rowMirIdx: Math.abs(maxLineIdx - rowIdx), colMirIdx: elemIdx};
+        } else if (vm.carvingFlip === CarverFlipMode.FLIP_VER) {
+            return {rowMirIdx: rowIdx, colMirIdx: Math.abs(maxElemIdx - elemIdx)};
+        } else {
+            throw "Unexpected carvingFlip: " + vm.carvingFlip;
+        }
     }
 
     function getElementCubicsIndices(rowIdx, elemIdx) {
@@ -231,7 +251,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         console.info("Resetting carving board.");
 
-        var lineLength = valueLength / vm.carvingLinesNumber;
+        var lineLength = getLineLength();
 
         vm.maxNumStrBinLines = new Array(vm.carvingLinesNumber);
 
@@ -253,5 +273,10 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         return bigInt.randBetween(minFeasibleNum, luckyService.currentChooser.MAX_BIG_NUMBER);
     }
 
-}]);
+    function getLineLength() {
+        return valueLength / vm.carvingLinesNumber;
+    }
+}
+
+]);
 
