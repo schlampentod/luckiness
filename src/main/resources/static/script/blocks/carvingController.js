@@ -71,10 +71,33 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     }
 
     function getElementCubicsIndices(rowIdx, elemIdx) {
-        // vm.carvingToolSize
         var rv = [];
+
         rv.push({rowCubIdx: rowIdx, colCubIdx: elemIdx});
+
+        for (var i = 0; i < vm.carvingToolSize; i++) {
+
+            // addCubicIfAvailable(rv, rowIdx, elemIdx);
+
+            // addCubicIfAvailable(rv, rowIdx - i, elemIdx);
+            // addCubicIfAvailable(rv, rowIdx, elemIdx - i);
+
+            // addCubicIfAvailable(rv, rowIdx - i, elemIdx + i);
+            // addCubicIfAvailable(rv, rowIdx + i, elemIdx - i);
+
+            addCubicIfAvailable(rv, rowIdx - i, elemIdx - i);
+            addCubicIfAvailable(rv, rowIdx - i, elemIdx + i);
+            addCubicIfAvailable(rv, rowIdx + i, elemIdx - i);
+            addCubicIfAvailable(rv, rowIdx + i, elemIdx + i);
+        }
+
         return rv;
+    }
+
+    function addCubicIfAvailable(rv, itRowIdx, itElemIdx) {
+        if (vm.maxNumStrBinLines[itRowIdx] != null && vm.maxNumStrBinLines[itRowIdx][itElemIdx] != null) {
+            rv.push({rowCubIdx: itRowIdx, colCubIdx: itElemIdx});
+        }
     }
 
     function inverseBit(bit) {
