@@ -62,6 +62,17 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         initCarvingBoard(getAppropriateRandom().toString(2));
     };
 
+    vm.onInverseCarvingBoard = function () {
+        vm.watchForBinchChanges = false;
+
+        _.forEach(vm.maxNumStrBinLines, function (line, lineIdx) {
+            _.forEach(line, function (elem, elemIdx) {
+                setValueUltimate(lineIdx, elemIdx, inverseBit(vm.maxNumStrBinLines[lineIdx][elemIdx]));
+            });
+        });
+
+    };
+
     init();
 
 
