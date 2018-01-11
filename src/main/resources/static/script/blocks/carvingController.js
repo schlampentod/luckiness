@@ -18,6 +18,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     vm.watchForBinchChanges = false;
     vm.keepingInProbableRange = true;
+    vm.allowGroupOperations = false;
 
     var minFeasibleNum = bigInt("1000000000000000000000000000000000000000000000000000000000000000000000000000");
 
@@ -43,13 +44,23 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     };
 
     vm.onResetCarveBoardLine = function (rowIdx) {
+
+        if (!vm.allowGroupOperations) {
+            return;
+        }
+
         vm.watchForBinchChanges = false;
+
         _.forEach(vm.maxNumStrBinLines[rowIdx], function (lineArray, elemIdx) {
             setElementValue(rowIdx, elemIdx);
         });
     };
 
     vm.onResetCarveBoardCol = function (colIdx) {
+        if (!vm.allowGroupOperations) {
+            return;
+        }
+
         vm.watchForBinchChanges = false;
 
         _.forEach(vm.maxNumStrBinLines, function (line, lineIdx) {
