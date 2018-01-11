@@ -49,6 +49,14 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         });
     };
 
+    vm.onResetCarveBoardCol = function (colIdx) {
+        vm.watchForBinchChanges = false;
+
+        _.forEach(vm.maxNumStrBinLines, function (line, lineIdx) {
+            setElementValue(lineIdx, colIdx);
+        });
+    };
+
     vm.onResetCarvingBoard = function () {
         vm.watchForBinchChanges = false;
         initCarvingBoard(getAppropriateRandom().toString(2));

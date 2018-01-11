@@ -2,7 +2,7 @@
 
 <style>
     .key_controls_block .carv_board_line {padding:0px; display: flex;}
-    .key_controls_block .carv_board_line .carv_board_pixel {color: white; width: 20px; text-align: center; text-decoration:solid; font-size: 18px;  font-family: sans-serif; background-color:white; padding: 1px; margin: 1px;     border-radius: 5px;}
+    .key_controls_block .carv_board_line .carv_board_pixel {color: white; height: 23px; width: 23px; text-align: center; text-decoration:solid; font-size: 18px;  font-family: sans-serif; background-color:white; padding: 1px; margin: 1px;     border-radius: 5px;}
     .key_controls_block .carv_board_line .px_off{color: darkgrey; opacity: 0.3}
 </style>
 
@@ -57,15 +57,25 @@
         <div style="padding: 5px; background-color:#212">
             <div ng-repeat="line in carveCtrl.maxNumStrBinLines track by $index" class="carv_board_line">
 
-                <div class="carv_board_pixel" style="background-color: gray" ng-mouseover="carveCtrl.onResetCarveBoardLine($index)">
-                    _
+                <div class="carv_board_pixel" style="background-color: gray; font-size:10px"
+                     ng-mouseover="carveCtrl.onResetCarveBoardLine($index)"
+                     ng-style="$index=== 0 ? {'margin-top': '25px'} : {}">
+                    →
                 </div>
 
-                <div ng-repeat="elem in line track by $index" class="carv_board_pixel"
-                     ng-mouseover="carveCtrl.onResetCarveBoardElement($parent.$index, $index)"
-                     ng-click="carveCtrl.onResetCarveBoardElement($parent.$index, $index)"
-                     ng-class="{'px_off':elem=='0'}">
-                    {{elem}}
+                <div ng-repeat="elem in line track by $index">
+
+                    <div ng-if="$parent.$index==0" class="carv_board_pixel" style="background-color: gray; font-size:10px"
+                         ng-mouseover="carveCtrl.onResetCarveBoardCol($index)">
+                        ↓
+                    </div>
+
+                    <div ng-mouseover="carveCtrl.onResetCarveBoardElement($parent.$index, $index)"
+                         ng-click="carveCtrl.onResetCarveBoardElement($parent.$index, $index)"
+                         class="carv_board_pixel"
+                         ng-class="{'px_off':elem=='0'}">
+                        {{elem}}
+                    </div>
                 </div>
             </div>
         </div>
