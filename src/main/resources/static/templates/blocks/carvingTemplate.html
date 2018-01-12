@@ -55,7 +55,7 @@
         <!--<span style="font-size: 5px">{{carveCtrl.maxNumStrBin}}</span>-->
 
         <div style="padding: 5px; background-color:#212">
-            <div ng-repeat="line in carveCtrl.maxNumStrBinLines track by $index" class="carv_board_line">
+            <div ng-repeat="line in carveCtrl.carvingBoardLinesArrays track by $index" class="carv_board_line">
 
                 <div class="carv_board_pixel" style="background-color: gray; font-size:10px"
                      ng-mouseover="carveCtrl.onResetCarveBoardLine($index)"
