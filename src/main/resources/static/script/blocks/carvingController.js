@@ -201,12 +201,18 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [bnDecStr]});
     }
 
-    function fireArrayIfApplicable(targetArray) {
+    function fireArrayIfApplicable(targetArray, timeoutMs) {
         var finalNumBinStr = getFinalNumberBin(targetArray);
         var bn = bigInt(finalNumBinStr, 2);
 
         if (!vm.keepingInProbableRange || isCandidateInProbableRange(bn)) {
-            fireBigNumber(bn);
+            if (timeoutMs) {
+                $timeout(function () {
+                    fireBigNumber(bn);
+                }, timeoutMs);
+            } else {
+                fireBigNumber(bn);
+            }
         }
 
         return bn;
@@ -226,8 +232,8 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
             fireArrayIfApplicable(getClonedInversion(vm.maxNumStrBinLines));
 
-            var bn = fireArrayIfApplicable(vm.maxNumStrBinLines);
-            3
+            var bn = fireArrayIfApplicable(vm.maxNumStrBinLines, 30);
+
             if (vm.keepingInProbableRange && !isCandidateInProbableRange(bn)) {
                 initCarvingBoard(getAppropriateRandom().toString(2));
             }
