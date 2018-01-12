@@ -78,11 +78,23 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         _.forEach(vm.maxNumStrBinLines, function (line, lineIdx) {
             _.forEach(line, function (elem, elemIdx) {
-                setValueUltimate(lineIdx, elemIdx, inverseBit(vm.maxNumStrBinLines[lineIdx][elemIdx]));
+                setValueUltimate(vm.maxNumStrBinLines, lineIdx, elemIdx, inverseBit(vm.maxNumStrBinLines[lineIdx][elemIdx]));
+            });
+        });
+    };
+
+    function getClonedInversion() {
+
+        var clonedArray = _.cloneDeep(vm.maxNumStrBinLines);
+
+        _.forEach(clonedArray, function (line, lineIdx) {
+            _.forEach(line, function (elem, elemIdx) {
+                setValueUltimate(clonedArray, lineIdx, elemIdx, inverseBit(clonedArray[lineIdx][elemIdx]));
             });
         });
 
-    };
+        return clonedArray;
+    }
 
     init();
 
@@ -99,22 +111,22 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         _.forEach(getElementCubicsIndices(rowIdx, elemIdx), function (idxs, i) {
             if (vm.carvingToolMode === CarverToolMode.TOGGLE_SELECTED) {
-                setValueUltimate(idxs.rowCubIdx, idxs.colCubIdx, vm.carvingToolUsingDigit);
+                setValueUltimate(vm.maxNumStrBinLines, idxs.rowCubIdx, idxs.colCubIdx, vm.carvingToolUsingDigit);
             } else if (vm.carvingToolMode === CarverToolMode.INVERSE_SELECTED) {
-                setValueUltimate(idxs.rowCubIdx, idxs.colCubIdx, inverseBit(vm.maxNumStrBinLines[idxs.rowCubIdx][idxs.colCubIdx]));
+                setValueUltimate(vm.maxNumStrBinLines, idxs.rowCubIdx, idxs.colCubIdx, inverseBit(vm.maxNumStrBinLines[idxs.rowCubIdx][idxs.colCubIdx]));
             } else {
                 throw "Unexpected carvingToolMode: " + vm.carvingToolMode;
             }
         });
     }
 
-    function setValueUltimate(rowIdx, elemIdx, val) {
+    function setValueUltimate(targetArray, rowIdx, elemIdx, val) {
 
-        vm.maxNumStrBinLines[rowIdx][elemIdx] = "" + val;
+        targetArray[rowIdx][elemIdx] = "" + val;
 
         if (vm.carvingFlip !== CarverFlipMode.NO_FLIP) {
             var mirror = getMirrorIndexes(rowIdx, elemIdx);
-            vm.maxNumStrBinLines[mirror.rowMirIdx][mirror.colMirIdx] = "" + val;
+            targetArray[mirror.rowMirIdx][mirror.colMirIdx] = "" + val;
         }
     }
 
@@ -171,9 +183,9 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         return "1";
     }
 
-    function getFinalNumberBin() {
+    function getFinalNumberBin(fromArray) {
         var rv = "";
-        _.forEach(vm.maxNumStrBinLines, function (lineArray, lineIdx) {
+        _.forEach(fromArray, function (lineArray, lineIdx) {
             _.forEach(lineArray, function (elem, elemIdx) {
                 rv += elem;
             });
@@ -181,6 +193,23 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         // console.info("getFinalNumber: " + rv);
         return rv;
+    }
+
+    function fireBigNumber(bn) {
+        var bnDecStr = bn.toString(10);
+        /// console.info("carved to: " + bnDecStr);
+        $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [bnDecStr]});
+    }
+
+    function fireArrayIfApplicable(targetArray) {
+        var finalNumBinStr = getFinalNumberBin(targetArray);
+        var bn = bigInt(finalNumBinStr, 2);
+
+        if (!vm.keepingInProbableRange || isCandidateInProbableRange(bn)) {
+            fireBigNumber(bn);
+        }
+
+        return bn;
     }
 
     function init() {
@@ -195,16 +224,11 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
                 return;
             }
 
-            var finalNumBin = getFinalNumberBin();
-            var bn = bigInt(finalNumBin, 2);
+            fireArrayIfApplicable(getClonedInversion(vm.maxNumStrBinLines));
 
-            if (!vm.keepingInProbableRange
-                || (bn.lesserOrEquals(MAX_NUMBER) && minFeasibleNum.lesserOrEquals(bn))) {
-
-                var bnDecStr = bn.toString(10);
-                /// console.info("carved to: " + bnDecStr);
-                $scope.$emit(luckyConstants.TRY_KEYS_SEQUENCE_EVT, {keysArrayToTry: [bnDecStr]});
-            } else {
+            var bn = fireArrayIfApplicable(vm.maxNumStrBinLines);
+            3
+            if (vm.keepingInProbableRange && !isCandidateInProbableRange(bn)) {
                 initCarvingBoard(getAppropriateRandom().toString(2));
             }
 
@@ -268,8 +292,12 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         });
     }
 
+    function isCandidateInProbableRange(bigNum) {
+        return bigNum.lesserOrEquals(MAX_NUMBER) && minFeasibleNum.lesserOrEquals(bigNum);
+    }
+
     function reSizeCarvingBoard() {
-        var currentVal = getFinalNumberBin();
+        var currentVal = getFinalNumberBin(vm.maxNumStrBinLines);
         initCarvingBoard(currentVal);
     }
 
