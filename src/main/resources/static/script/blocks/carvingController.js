@@ -16,6 +16,13 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
         INVERSE_SELECTED: "INVERSE_SELECTED"
     };
 
+    var CarverToolType = {
+        FILLED_SQUARE_TOOL: "FILLED_SQUARE_TOOL",
+        EMPTY_SQUARE_TOOL: "EMPTY_SQUARE_TOOL",
+        BIASED_CROSS_TOOL: "BIASED_CROSS_TOOL",
+        STRAIT_CROSS_TOOL: "STRAIT_CROSS_TOOL"
+    };
+
     vm.watchForBinchChanges = false;
     vm.keepingInProbableRange = true;
     vm.allowGroupOperations = false;
@@ -30,7 +37,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     vm.carvingLinesNumber = 8; // 8, 16, 32
     vm.carvingToolMode = CarverToolMode.TOGGLE_SELECTED;
-    vm.carvingToolSize = 1;
+    vm.carvingToolSize = 1; // 1, 2, 3, 4
 
     vm.carvingFlip = CarverFlipMode.NO_FLIP;
 
