@@ -19,8 +19,8 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
     var CarverToolType = {
         FILLED_SQUARE_TOOL: "FILLED_SQUARE_TOOL",
         EMPTY_SQUARE_TOOL: "EMPTY_SQUARE_TOOL",
-        BIASED_CROSS_TOOL: "BIASED_CROSS_TOOL",
-        STRAIT_CROSS_TOOL: "STRAIT_CROSS_TOOL"
+        BEVEL_CROSS_TOOL: "BEVEL_CROSS_TOOL",
+        STRAIGHT_CROSS_TOOL: "STRAIGHT_CROSS_TOOL"
     };
 
     vm.watchForBinchChanges = false;
@@ -37,7 +37,8 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     vm.carvingLinesNumber = 8; // 8, 16, 32
     vm.carvingToolMode = CarverToolMode.TOGGLE_SELECTED;
-    vm.carvingToolSize = 1; // 1, 2, 3, 4
+    vm.carvingSelectedToolSize = 1; // 1, 2, 3, 4
+    vm.carvingSelectedToolType = CarverToolType.BEVEL_CROSS_TOOL;
 
     vm.carvingFlip = CarverFlipMode.NO_FLIP;
 
@@ -157,7 +158,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         rv.push({rowCubIdx: rowIdx, colCubIdx: elemIdx});
 
-        for (var i = 0; i < vm.carvingToolSize; i++) {
+        for (var i = 0; i < vm.carvingSelectedToolSize; i++) {
 
             // addCubicIfAvailable(rv, rowIdx, elemIdx);
 

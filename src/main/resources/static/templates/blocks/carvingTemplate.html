@@ -25,7 +25,7 @@
 
         <label>
             Mode:
-            <select ng-model="carveCtrl.carvingToolMode">
+            <select ng-model="carveCtrl.carvingToolMode" ng-disabled="true">
                 <option value="TOGGLE_SELECTED">toggle</option>
                 <option value="INVERSE_SELECTED">inverse</option>
             </select>
@@ -33,7 +33,17 @@
 
         <label>
             Brush:
-            <select ng-model="carveCtrl.carvingToolSize">
+            <select ng-model="carveCtrl.carvingSelectedToolType">
+                <option value="FILLED_SQUARE_TOOL">FILLED_SQUARE_TOOL</option>
+                <option value="EMPTY_SQUARE_TOOL">EMPTY_SQUARE_TOOL</option>
+                <option value="BEVEL_CROSS_TOOL">BEVEL_CROSS_TOOL</option>
+                <option value="STRAIGHT_CROSS_TOOL">STRAIGHT_CROSS_TOOL</option>
+            </select>
+        </label>
+
+        <label>
+            Size:
+            <select ng-model="carveCtrl.carvingSelectedToolSize">
                 <option ng-value="{{1}}">1</option>
                 <option ng-value="{{2}}">2</option>
                 <option ng-value="{{3}}">3</option>
