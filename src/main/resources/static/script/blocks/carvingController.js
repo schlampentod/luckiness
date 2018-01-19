@@ -155,12 +155,19 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     function getElementCubicsIndices(rowIdx, elemIdx) {
         var rv = [];
-        var minCubIdx = 0;
-        var maxCubIdx = vm.carvingSelectedToolSize - 1;
+
+        var lowerBoundLine = rowIdx - vm.carvingSelectedToolSize;
+        var upperBoundLine = rowIdx + vm.carvingSelectedToolSize;
+
+        var lowerBoundElem = elemIdx - vm.carvingSelectedToolSize;
+        var upperBoundElem = elemIdx + vm.carvingSelectedToolSize;
 
         if (vm.carvingSelectedToolType === CarverToolType.BEVEL_CROSS_TOOL) {
 
             addCubicIfAvailable(rv, rowIdx, elemIdx);
+
+            var minCubIdx = 0;
+            var maxCubIdx = vm.carvingSelectedToolSize - 1;
 
             for (var i = minCubIdx; i <= maxCubIdx; i++) {
                 addCubicIfAvailable(rv, rowIdx - i, elemIdx - i);
@@ -172,13 +179,17 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         } else if (vm.carvingSelectedToolType === CarverToolType.STRAIGHT_CROSS_TOOL) {
 
+            for (var i = lowerBoundLine; i <= upperBoundLine; i++) {
+                for (var j = lowerBoundElem; j <= upperBoundElem; j++) {
+
+                    if (i === rowIdx || j === elemIdx) {
+
+                        addCubicIfAvailable(rv, i, j);
+                    }
+                }
+            }
+
         } else if (vm.carvingSelectedToolType === CarverToolType.EMPTY_SQUARE_TOOL) {
-
-            var lowerBoundLine = rowIdx - vm.carvingSelectedToolSize;
-            var upperBoundLine = rowIdx + vm.carvingSelectedToolSize;
-
-            var lowerBoundElem = elemIdx - vm.carvingSelectedToolSize;
-            var upperBoundElem = elemIdx + vm.carvingSelectedToolSize;
 
             for (var i = lowerBoundLine; i <= upperBoundLine; i++) {
                 for (var j = lowerBoundElem; j <= upperBoundElem; j++) {
@@ -193,8 +204,9 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         } else if (vm.carvingSelectedToolType === CarverToolType.FILLED_SQUARE_TOOL) {
 
-            for (var i = rowIdx - vm.carvingSelectedToolSize; i <= rowIdx + vm.carvingSelectedToolSize; i++) {
-                for (var j = elemIdx - vm.carvingSelectedToolSize; j <= elemIdx + vm.carvingSelectedToolSize; j++) {
+            for (var i = lowerBoundLine; i <= upperBoundLine; i++) {
+                for (var j = lowerBoundElem; j <= upperBoundElem; j++) {
+
                     addCubicIfAvailable(rv, i, j);
                 }
             }
