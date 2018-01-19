@@ -174,23 +174,28 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         } else if (vm.carvingSelectedToolType === CarverToolType.EMPTY_SQUARE_TOOL) {
 
+            var lowerBoundLine = rowIdx - vm.carvingSelectedToolSize;
+            var upperBoundLine = rowIdx + vm.carvingSelectedToolSize;
+
+            var lowerBoundElem = elemIdx - vm.carvingSelectedToolSize;
+            var upperBoundElem = elemIdx + vm.carvingSelectedToolSize;
+
+            for (var i = lowerBoundLine; i <= upperBoundLine; i++) {
+                for (var j = lowerBoundElem; j <= upperBoundElem; j++) {
+
+                    if (i === lowerBoundLine || i === upperBoundLine
+                        || j === lowerBoundElem || j === upperBoundElem) {
+
+                        addCubicIfAvailable(rv, i, j);
+                    }
+                }
+            }
+
         } else if (vm.carvingSelectedToolType === CarverToolType.FILLED_SQUARE_TOOL) {
 
-            addCubicIfAvailable(rv, rowIdx, elemIdx);
-
-            for (var i = minCubIdx; i <= maxCubIdx; i++) {
-                for (var j = minCubIdx; j <= maxCubIdx; j++) {
-                    addCubicIfAvailable(rv, rowIdx, elemIdx - j);
-                    addCubicIfAvailable(rv, rowIdx, elemIdx + j);
-
-                    addCubicIfAvailable(rv, rowIdx - i, elemIdx);
-                    addCubicIfAvailable(rv, rowIdx + i, elemIdx);
-
-                    addCubicIfAvailable(rv, rowIdx - i, elemIdx - j);
-                    addCubicIfAvailable(rv, rowIdx + i, elemIdx + j);
-
-                    addCubicIfAvailable(rv, rowIdx - i, elemIdx + j);
-                    addCubicIfAvailable(rv, rowIdx + i, elemIdx - j);
+            for (var i = rowIdx - vm.carvingSelectedToolSize; i <= rowIdx + vm.carvingSelectedToolSize; i++) {
+                for (var j = elemIdx - vm.carvingSelectedToolSize; j <= elemIdx + vm.carvingSelectedToolSize; j++) {
+                    addCubicIfAvailable(rv, i, j);
                 }
             }
         }
@@ -202,8 +207,7 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
         var candidate = {rowCubIdx: itRowIdx, colCubIdx: itElemIdx};
 
-        if (vm.carvingBoardLinesArrays[itRowIdx] != null
-            && vm.carvingBoardLinesArrays[itRowIdx][itElemIdx] != null) {
+        if (vm.carvingBoardLinesArrays[itRowIdx] != null && vm.carvingBoardLinesArrays[itRowIdx][itElemIdx] != null) {
 
             if (_.includes(rv, candidate)) {
                 debugger;
