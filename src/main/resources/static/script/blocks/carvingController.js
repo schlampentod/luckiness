@@ -155,31 +155,61 @@ app.controller('carvingController', ['$scope', 'luckyService', 'luckyFactory', '
 
     function getElementCubicsIndices(rowIdx, elemIdx) {
         var rv = [];
+        var minCubIdx = 0;
+        var maxCubIdx = vm.carvingSelectedToolSize - 1;
 
-        rv.push({rowCubIdx: rowIdx, colCubIdx: elemIdx});
+        if (vm.carvingSelectedToolType === CarverToolType.BEVEL_CROSS_TOOL) {
 
-        for (var i = 0; i < vm.carvingSelectedToolSize; i++) {
+            addCubicIfAvailable(rv, rowIdx, elemIdx);
 
-            // addCubicIfAvailable(rv, rowIdx, elemIdx);
+            for (var i = minCubIdx; i <= maxCubIdx; i++) {
+                addCubicIfAvailable(rv, rowIdx - i, elemIdx - i);
+                addCubicIfAvailable(rv, rowIdx - i, elemIdx + i);
+                addCubicIfAvailable(rv, rowIdx + i, elemIdx - i);
+                addCubicIfAvailable(rv, rowIdx + i, elemIdx + i);
+            }
+        } else if (vm.carvingSelectedToolType === CarverToolType.BEVEL_CROSS_TOOL) {
 
-            // addCubicIfAvailable(rv, rowIdx - i, elemIdx);
-            // addCubicIfAvailable(rv, rowIdx, elemIdx - i);
+        } else if (vm.carvingSelectedToolType === CarverToolType.STRAIGHT_CROSS_TOOL) {
 
-            // addCubicIfAvailable(rv, rowIdx - i, elemIdx + i);
-            // addCubicIfAvailable(rv, rowIdx + i, elemIdx - i);
+        } else if (vm.carvingSelectedToolType === CarverToolType.EMPTY_SQUARE_TOOL) {
 
-            addCubicIfAvailable(rv, rowIdx - i, elemIdx - i);
-            addCubicIfAvailable(rv, rowIdx - i, elemIdx + i);
-            addCubicIfAvailable(rv, rowIdx + i, elemIdx - i);
-            addCubicIfAvailable(rv, rowIdx + i, elemIdx + i);
+        } else if (vm.carvingSelectedToolType === CarverToolType.FILLED_SQUARE_TOOL) {
+
+            addCubicIfAvailable(rv, rowIdx, elemIdx);
+
+            for (var i = minCubIdx; i <= maxCubIdx; i++) {
+                for (var j = minCubIdx; j <= maxCubIdx; j++) {
+                    addCubicIfAvailable(rv, rowIdx, elemIdx - j);
+                    addCubicIfAvailable(rv, rowIdx, elemIdx + j);
+
+                    addCubicIfAvailable(rv, rowIdx - i, elemIdx);
+                    addCubicIfAvailable(rv, rowIdx + i, elemIdx);
+
+                    addCubicIfAvailable(rv, rowIdx - i, elemIdx - j);
+                    addCubicIfAvailable(rv, rowIdx + i, elemIdx + j);
+
+                    addCubicIfAvailable(rv, rowIdx - i, elemIdx + j);
+                    addCubicIfAvailable(rv, rowIdx + i, elemIdx - j);
+                }
+            }
         }
 
         return rv;
     }
 
     function addCubicIfAvailable(rv, itRowIdx, itElemIdx) {
-        if (vm.carvingBoardLinesArrays[itRowIdx] != null && vm.carvingBoardLinesArrays[itRowIdx][itElemIdx] != null) {
-            rv.push({rowCubIdx: itRowIdx, colCubIdx: itElemIdx});
+
+        var candidate = {rowCubIdx: itRowIdx, colCubIdx: itElemIdx};
+
+        if (vm.carvingBoardLinesArrays[itRowIdx] != null
+            && vm.carvingBoardLinesArrays[itRowIdx][itElemIdx] != null) {
+
+            if (_.includes(rv, candidate)) {
+                debugger;
+            } else {
+                rv.push(candidate);
+            }
         }
     }
 
