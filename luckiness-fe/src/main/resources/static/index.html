@@ -1,0 +1,132 @@
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <link rel="apple-touch-icon" sizes="57x57" href="fav/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="fav/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="fav/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="fav/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="fav/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="fav/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="fav/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="fav/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="fav/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="fav/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+    <link rel="manifest" href="fav/manifest.json">
+    <link rel="stylesheet" media="all" href="https://cdn.rawgit.com/jtblin/angular-chart.js/0.8.0/dist/angular-chart.css">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="fav/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+        body {margin:0; position: absolute; top:30px; left:50%; transform:translate(-50%, 0%)}
+        .lucky_bars_container {background-color: #94e65a; padding:1px;}
+        .lucky_bar {width:999px; height:8px; background-color:#80BD9E; margin:1px; border-radius:2px;}
+        .lucky_bar_static_range {display: none; position:absolute; /*pointer-events: none; */ left: -720px; width:700px; text-align: right; font-size:9pt}
+        .lucky_bar_static_offset { position:absolute; /*pointer-events: none;*/ left: 1015px; margin-top: -3px; width: 100px; height: 40px; text-align:left}
+        .lucky_bar_static_offset * {border: none; font-size: 8pt; display: none;}
+        .lucky_bar_static_offset:hover * {display: inline;}
+        .lucky_slider {width:1px; top:1px; height:6px; position:relative; background-color:#9c220060; pointer-events:none;}
+        .lucky_slider img{display:none; position:relative; top:11px; left:-130px; height:10px;}
+        .lucky_bar:hover img {display: none;}
+        #mainCheckbox {position:absolute; left: 1006px;}
+        .mainCheckbox_1{position:absolute; left: 1027px;}
+        .key_controls_block {display:block; background-color:aliceblue; padding: 5px;}
+    </style>
+
+    <script src="4.17.4_lodash.min.js"></script>
+
+    <script src="3.2.1_jquery.min.js"></script>
+    <script src="1.6.4_angular.min.js"></script>
+    <script src="https://rawgithub.com/gsklee/ngStorage/master/ngStorage.js"></script>
+
+    <script src="http://jtblin.github.io/angular-chart.js/node_modules/chart.js/dist/Chart.js"></script>
+    <script src="http://jtblin.github.io/angular-chart.js/angular-chart.js"></script>
+
+
+    <!-- https://github.com/peterolson/BigInteger.js -->
+    <script src="BigInteger.min.js"></script>
+
+    <script src="script/binch.js"></script>
+
+    <script src="app.js"></script>
+    <script src="script/onlyHexaDigitsDirective.js"></script>
+    <script src="script/onlyDigitsDirective.js"></script>
+    <script src="script/onlyBinDirective.js"></script>
+    <script src="script/onlyOctDirective.js"></script>
+
+    <script src="luckyConstants.js"></script>
+    <script src="luckyFactory.js"></script>
+    <script src="luckyService.js"></script>
+    <script src="script/topMenuController.js"></script>
+
+    <script src="script/generationTabsController.js"></script>
+
+    <script src="script/blocks/blockForCalculatorController.js"></script>
+    <script src="script/blocks/sequenceGeneratorController.js"></script>
+    <script src="script/blocks/dummyKeysController.js"></script>
+    <script src="script/blocks/keyConversionController.js"></script>
+    <script src="script/blocks/randomGeneratorController.js"></script>
+    <script src="script/blocks/knownKeyController.js"></script>
+    <script src="script/blocks/trimmerController.js"></script>
+    <script src="script/blocks/primeKeyController.js"></script>
+    <script src="script/blocks/digitsGeneratorController.js"></script>
+    <script src="script/blocks/carvingController.js"></script>
+
+    <script src="script/myFoundKeysListController.js"></script>
+    <script src="script/histogramController.js"></script>
+
+    <script src="luckyController.js"></script>
+    <script src="luckyDirective.js"></script>
+    <script src="app_config.js"></script>
+    <script src="script/addressAnalyticsService.js"></script>
+    <script src="script/keyGenerationService.js"></script>
+
+    <script src="arrowPressedDirective.js"></script>
+    <script src="localStorageAccess.js"></script>
+
+
+    <script src="https://cdn.rawgit.com/SlexAxton/messageformat.js/v1.0.2/messageformat.js"></script>
+    <script src="https://cdn.rawgit.com/angular-translate/bower-angular-translate/2.16.0/angular-translate.js"></script>
+    <script src="https://cdn.rawgit.com/angular-translate/bower-angular-translate-interpolation-messageformat/2.16.0/angular-translate-interpolation-messageformat.js"></script>
+    <script src="https://cdn.rawgit.com/angular-translate/bower-angular-translate-storage-cookie/2.16.0/angular-translate-storage-cookie.js"></script>
+    <script src="https://cdn.rawgit.com/angular-translate/bower-angular-translate-storage-local/2.16.0/angular-translate-storage-local.js"></script>
+    <script src="https://cdn.rawgit.com/angular-translate/bower-angular-translate-loader-url/2.16.0/angular-translate-loader-url.js"></script>
+    <script src="https://cdn.rawgit.com/angular-translate/bower-angular-translate-loader-static-files/2.16.0/angular-translate-loader-static-files.js"></script>
+    <script src="https://cdn.rawgit.com/angular-translate/bower-angular-translate-handler-log/2.16.0/angular-translate-handler-log.js"></script>
+
+
+    <!--<script type="text/javascript">
+        var _userway_config = {
+        // uncomment the following line to override default position
+        // position: 1,
+        // uncomment the following line to override default language (e.g., fr, de, es, he, nl, etc.)
+        // language: 'en',
+        // uncomment the following line to override color set via widget
+        // color: '#053e67',
+            account: '5QfXXtewSj'
+        };
+    </script>
+
+    <script type="text/javascript" src="https://cdn.userway.org/widget.js"></script>-->
+
+    <script>
+         // var REST_CHECKY_ENDPOINT = "";
+         var REST_CHECKY_ENDPOINT = "http://localhost:8080";
+         // var REST_CHECKY_ENDPOINT = "http://192.168.1.102:8080";
+    </script>
+</head>
+
+
+<body ng-app="luckynes">
+
+    <ng-include src=" 'templates/mainTemplate.html' " ></ng-include>
+
+</body>
+
+</html>
