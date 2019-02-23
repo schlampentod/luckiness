@@ -27,19 +27,18 @@ public class PrivKeyFinderWorker implements Runnable {
     @Override
     public void run() {
 
-
         BigInteger bigKey = getRandomInRange();
 
         while (true) {
 
-            long globalCntr = Main.GLOBAL_COUNTER.incrementAndGet();
-            if ((globalCntr % 10_000_000) == 0) {
-                System.out.println("Handled: " + globalCntr / 1_000_000L + " M keys");
-            }
+            //long globalCntr = Main.GLOBAL_COUNTER.incrementAndGet();
+            //if ((globalCntr % 10_000_000) == 0) {
+            //    System.out.println("Handled: " + globalCntr / 1_000_000L + " M keys");
+            //}
 
             localCounter++;
 
-            if (localCounter > 10_000) {
+            if (localCounter > 10) {
                 bigKey = getRandomInRange();
                 localCounter = 0;
                 //System.out.println("Searching around: " + bigKey.toString(10));
@@ -52,7 +51,8 @@ public class PrivKeyFinderWorker implements Runnable {
             if (found) {
                 writer.append("found: " + bigKey.toString(10));
                 writer.flush();
-                //System.out.println("found: " + bigKey.toString(10));
+                System.out.println("found: " + bigKey.toString(10));
+                System.exit(0);
             }
         }
 

@@ -40,7 +40,7 @@ public class CheckRestController {
             return new CheckKeyResultDto(!checkBatchResponse.getFoundKeys().isEmpty(), checkBatchResponse.getFoundKeys());
 
         } catch (Exception e) {
-            System.out.println("Unable to check key: " + ExceptionUtils.getMessage(e));
+            log.debug("Unable to check key: " + ExceptionUtils.getMessage(e));
             return new CheckKeyResultDto(false, Collections.EMPTY_SET);
         } finally {
             if (checkBatchResponse != null) {
