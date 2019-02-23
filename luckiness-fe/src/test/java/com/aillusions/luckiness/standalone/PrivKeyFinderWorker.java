@@ -31,10 +31,10 @@ public class PrivKeyFinderWorker implements Runnable {
 
         while (true) {
 
-            //long globalCntr = Main.GLOBAL_COUNTER.incrementAndGet();
-            //if ((globalCntr % 10_000_000) == 0) {
-            //    System.out.println("Handled: " + globalCntr / 1_000_000L + " M keys");
-            //}
+            long globalCntr = Main.GLOBAL_COUNTER.incrementAndGet();
+            if ((globalCntr % 10_000_000) == 0) {
+                System.out.println("Handled: " + globalCntr / 1_000_000L + " M keys");
+            }
 
             localCounter++;
 

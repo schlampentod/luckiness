@@ -15,11 +15,7 @@ import java.math.BigInteger;
 public class BatchKeyChecker {
 
     @Autowired
-    private final DormantAddressBloomFilter bloomFilter;
-
-    public BatchKeyChecker() {
-        bloomFilter = new DormantAddressBloomFilter();
-    }
+    private DormantAddressBloomFilter bloomFilter;
 
     public CheckBatchResponse checkBatchFor(String providedKey) {
 
