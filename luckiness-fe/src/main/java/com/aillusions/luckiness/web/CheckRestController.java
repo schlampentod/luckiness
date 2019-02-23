@@ -34,7 +34,7 @@ public class CheckRestController {
         CheckBatchResponse checkBatchResponse = null;
         try {
 
-            log.info("Checking " + providedKey);
+            log.debug("Checking " + providedKey);
             KeyUtils.validateKeyValue(providedKey);
             checkBatchResponse = batchKeyChecker.checkBatchFor(providedKey);
             return new CheckKeyResultDto(!checkBatchResponse.getFoundKeys().isEmpty(), checkBatchResponse.getFoundKeys());
