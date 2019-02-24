@@ -21,14 +21,14 @@ import java.util.Comparator;
 @Setter
 public class LuckRestController {
 
-    // http://localhost:80/rest/v1/lucky/about
+    // http://localhost:8080/rest/v1/lucky/about
     @RequestMapping(value = "/about", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public AboutDto about() throws InterruptedException {
         return new AboutDto();
     }
 
-    // http://localhost:80/rest/v1/lucky/resolve/85373582762808404920801888792437094602169475096082456154754419692323304989563
+    // http://localhost:8080/rest/v1/lucky/resolve/85373582762808404920801888792437094602169475096082456154754419692323304989563
     @RequestMapping(value = "/resolve/{providedKey}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public AddressesResultDto resolve(@PathVariable String providedKey) throws InterruptedException {
@@ -53,7 +53,7 @@ public class LuckRestController {
 
     // TODO https://lbc.cryptoguru.org/trophies
     // TODO https://www.blockshack.com/
-    // http://localhost:80/rest/v1/lucky/known
+    // http://localhost:8080/rest/v1/lucky/known
     @RequestMapping(value = "/known", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public KnownKeysDto known() {
@@ -74,14 +74,14 @@ public class LuckRestController {
         return rv;
     }
 
-    // http://localhost:80/rest/v1/lucky/convert/base68/5KFQvLvrmhFEcMpYWLCjALW7UR7EPz8tyWuP56qmhu4GnVeNCGq
+    // http://localhost:8080/rest/v1/lucky/convert/base68/5KFQvLvrmhFEcMpYWLCjALW7UR7EPz8tyWuP56qmhu4GnVeNCGq
     @RequestMapping(value = "/convert/base68/{providedBase58Key}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public ConvertedKeyDto convertWIF(@PathVariable String providedBase58Key) {
         return new ConvertedKeyDto(KeyUtils.getKeyFromWIFBase58(providedBase58Key).getPrivKey().toString(10));
     }
 
-    // http://localhost:80/rest/v1/lucky/convert/hex/6B86B273FF34FCE19D6B804EFF5A3F5747ADA4EAA22F1D49C01E52DDB7875B4B
+    // http://localhost:8080/rest/v1/lucky/convert/hex/6B86B273FF34FCE19D6B804EFF5A3F5747ADA4EAA22F1D49C01E52DDB7875B4B
     @RequestMapping(value = "/convert/hex/{providedHexKey}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public ConvertedKeyDto convertHex(@PathVariable String providedHexKey) {

@@ -23,7 +23,7 @@ public class CheckRestController {
     @Autowired
     private KeyChecker keyChecker;
 
-    // http://localhost:80/rest/v1/checky/check/batch/245364787645342312142536754
+    // http://localhost:8080/rest/v1/checky/check/batch/245364787645342312142536754
     @RequestMapping(value = "/check/batch/{providedKey}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public CheckKeyResultDto check(@PathVariable String providedKey) throws InterruptedException {
