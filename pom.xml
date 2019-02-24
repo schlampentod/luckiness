@@ -10,6 +10,7 @@
 
     <modules>
         <module>luckiness-fe</module>
+        <module>luckiness-b8n-btc</module>
     </modules>
 
 </project>
